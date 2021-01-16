@@ -6,6 +6,8 @@ If you have already installed this, running it again later will allow you to upg
 
 The installer will setup a "Normal" difficulty survival server with mobs, nether and more.
 
+The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
+
 
 Buy Your Raspberry Pi (Or Other SBC)
 ====================================
@@ -27,10 +29,16 @@ Hardware Requirements
 - Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD)
 
 
-Overclocking
-============
+Note About Backups
+==================
 
-If your board is supported, this script will automatically set overclock settings to maximize performance.
+Please consider automating a backup of your world. You can first stop the server with the provided `stop` script, then run your backup, and then restart your server with the provided `server` script.
+
+
+Automated Overclocking
+======================
+
+If your board is supported and tested by me, the installer will automatically set overclock settings to maximize performance.
 
 Therefore, you must absolutely ensure your power supply is a good one. We'll be using a bit more power than normal.
 
@@ -38,7 +46,7 @@ You are welcome to adjust the overclock settings if desired. However, I would re
 
 I have chosen to be conservative with my overclocking for two reasons:
 
-1) I want you to get the best performance out of your Minecraft server, but also wish to ensure it is stable.
+1) I want you to get the best possible performance out of your Minecraft server, but also wish to ensure it is rock-solid stable.
 2) I do not want to void your warranty. I.E., I will NOT enable force_turbo.
 3) I do not wish to damage your Pi.
 
@@ -48,9 +56,13 @@ When I overwrite your /boot/config.txt file, I first create a backup of your ori
 Usage
 =====
 
+Run the installer immediately following a fresh reboot (to avoid having residual apps taking up RAM thereby resulting in less RAM allocated to your game server).
+
+The command is simple:
+
 `sudo ./install username`
 
-Where username is the Linux user you'd like to run the Minecraft server.
+`username` is the Linux user you'd like to run the Minecraft server.
 
 Example:
 
@@ -75,5 +87,4 @@ Troubleshooting
 
 ### Server gets killed by Linux
 Try `dmesg -T| grep -E -i -B100 'killed process'` after this happens to see why Linux killed the process. It is most likely you are running other applications on your system (which is a big no-no) and have run out of resources. You should only run this on a completely headless SBC, with no desktop environment, and nothing else running. You can adjust the amount of RAM allocated by editing the `server` script in ~/minecraft
-
 
