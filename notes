@@ -1,0 +1,95 @@
+These notes represent my initial notes when manually deploying for S14E08
+
+Using Raspberry Pi 4 with 4 GB RAM, overclocked to 1.95 GHz (instructions below)
+Kingston Endurance 128 GB microSD
+Good PSU (Required for overclocking)
+--------------------------------
+
+Download Raspberry Pi OS Lite
+
+Flash it to a Kingston Endurance microSD Card
+
+Add an empty file called SSH to the /boot partition of the card.
+
+SSH in and run:
+
+As root: sudo su
+apt update && apt upgrade
+apt dist-upgrade
+reboot
+
+Check current clock speed
+vcgencmd measure_clock arm
+
+I can see my clock is running at 600 MHz (0.6 GHz).
+
+Go with conservative values to ensure stability, though could increase voltage with a good PSU and even take the speed to 2GHz (or higher!)
+
+edit /boot/config.txt and go down to the line where arm_freq=800 is commented. add:
+over_voltage=2
+arm_freq=1750
+
+This adds 0.05V and increases CPU to 1.75 GHz (250 MHz above stock).
+
+Save and reboot
+
+Install OpenJDK 10 (latest at time of writing)
+apt install openjdk-10-jdk-headless
+
+Exit to pi user (or another user you have created).
+
+Download Mincraft: Java Edition Server from https://www.minecraft.net/en-us/download/server
+
+Run it: java -jar server.jar nogui
+
+Accept the EULA by editing the generated eula.txt
+
+Run the server (will take a while to generate world):
+Intial memory: 1GB, Max memory: 2GB (4GB SBC)
+Run: java -Xms1G -Xmx2G -jar server.jar nogui
+
+Connected two users who report no lag and great performance but getting warning in terminal.
+
+Create a bash script that opens the folder for a cron task, make it executable.
+
+#!/bin/bash
+cd "$(dirname "$0")"
+exec java -Xms1G -Xmx2G -jar server.jar --nogui
+
+Create the cron task
+crontab -e -u pi
+
+Add:
+@reboot /home/pi/minecraft/minecraft 
+
+Edited server.properties to change difficulty to Normal (was easy by default) and add a server name and MOTD.
+See https://minecraft.gamepedia.com/Server.properties
+
+I might set sync-chunk-writes=false
+To reduce lag, but not going to do that unless necessary
+
+I set clock to:
+over_voltage=4
+arm_freq=1900
+
+
+To prevent grief, I'm going to use Spigot (a bukkit fork)
+apt install git
+git config --global --unset core.autocrlf
+wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+
+java -jar BuildTools.jar
+
+move the spigot jar file to the minecraft server's root folder and adjust files to run that instead of server.jar
+
+Run the server once to generate Spigot folders
+
+download RedProtect from https://www.spigotmc.org/resources/redprotect-anti-grief-server-protection-region-management-1-7-1-16.15841/ and upload to the minecraft/plugins folder.
+
+send a SIGHUP to java instance to shutdown Minecraft server (will take a long time as chunks are saved).
+
+run the minecraft runs script again (shows redprotect is loaded).
+
+Send sighup and reboot.
+
+

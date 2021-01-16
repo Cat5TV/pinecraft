@@ -1,0 +1,275 @@
+#!/bin/bash
+
+# This feature on Category5 Technology TV sponsored by ameriDroid.com
+# USA-based SBC sales with unmatched support and fast shipping
+# To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
+
+ver="1.0"
+echo
+echo "Minecraft Server (Spigot) Installer for Raspberry Pi"
+echo "By Robbie Ferguson // The Bald Nerd"
+echo "For Category5 Technology TV - https://Category5.TV"
+echo "Installer Version: $ver"
+echo "Minecraft Version: Latest"
+echo
+echo "Sponsored by ameriDroid - https://ameridroid.com"
+echo
+
+if [[ $EUID -ne 0 ]]; then
+  echo "ERROR: This script must be run as root" 2>&1
+  exit 1
+fi
+
+user=$1
+if [[ $user == "" ]]; then
+  echo "Usage: $0 username"
+  exit 1
+fi
+
+validuser=$(getent passwd $user)
+if [[ $validuser == "" ]]; then
+  echo "User '$1' does not exist."
+  exit 1
+fi
+
+instdir="/home/$user/minecraft/"
+
+upgrade=0
+if [[ -e /home/$user ]]; then
+  if [[ -e ${instdir} ]]; then
+    if [[ ! -e ${instdir}cat5tv.ver ]]; then
+      echo "${instdir} already exists, but is not created by this installer."
+      echo "Please move or remove the folder and try again."
+      exit 1
+    else
+      read -r -p "Already installed. Upgrade? [y/N] " eula
+      echo
+      if [[ $eula =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        echo "Upgrading."
+        echo
+        upgrade=1
+      else
+        echo "Aborted."
+        exit 1
+      fi
+    fi
+  fi
+else
+  echo "Aborting: $user does not have a homedir."
+  exit 1
+fi
+
+echo "In order to proceed, you must read and accept the EULA at https://account.mojang.com/documents/minecraft_eula"
+read -r -p "Do you accept the EULA? [y/N] " eula
+echo ""
+if [[ $eula =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  echo "EULA accepted..."
+  echo
+  eula="accepted"
+  eula_stamp=$(date)
+else
+  echo "EULA not accepted. You are not permitted to install this software."
+  exit 1
+fi
+
+revision=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
+board="Unknown" # Default will be overridden if determined
+memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in GB
+mem=$(($memtotal / 1024)) # Amount of memory in MB
+memreservation=819 # Reserve 800 MB RAM for system
+gamemem=$(($mem - $memreservation)) # Calculate how much memory we can give to the game server (in MB)
+oc_volt=0
+oc_friendly="N/A - You'll need to overclock manually"
+
+if [[ "$revision" == *"b03111" ]] ||
+   [[ "$revision" == *"b03112" ]] ||
+   [[ "$revision" == *"c03111" ]] ||
+   [[ "$revision" == *"c03112" ]] ||
+   [[ "$revision" == *"d03114" ]]; then
+     board='Raspberry Pi 4'
+     boardnum=1
+     oc_volt=4
+     oc_freq=1900
+     oc_friendly="1.9 GHz"
+elif [[ "$revision" == *"c03130" ]]; then
+  board='Raspberry Pi 400'
+  boardnum=2
+  oc_volt=6
+  oc_freq=2000
+  oc_friendly="2.0 GHz"
+fi
+
+echo "Detected Hadware:  $board"
+echo "RAM to Allocate:   ${gamemem##*( )}MB"
+echo "Overclock To:      $oc_friendly"
+echo "Server User:       $user"
+echo
+
+if [[ ! $oc_volt == 0 ]]; then
+  echo "I will be overwriting your /boot/config.txt file to overclock this ${board}."
+  echo "I am not responsible for damage to your system, and you do this at your own risk."
+  echo
+fi
+
+read -r -p "Continue? [y/N] " install
+echo ""
+if [[ $install =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  echo "Proceeding..."
+  echo
+else
+  echo "Aborted."
+  exit 1
+fi
+
+updated=0 # Will use this to prevent running multiple apt updates
+java=$(which java)
+if [[ $java == "" ]]; then
+  printf "Installing java... "
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install openjdk-10-jdk-headless > /dev/null 2>&1
+  echo "Done."
+fi
+if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  printf "Installing git... "
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install git > /dev/null 2>&1
+  echo "Done."
+fi
+git config --global --unset core.autocrlf
+
+if [[ $upgrade == 0 ]]; then
+  mkdir $instdir
+fi
+cd $instdir
+
+# Install Spigot Minecraft Server rather than Vanilla. Great performance with possibility to mod.
+if [[ $upgrade == 1 ]]; then
+  rm -rf src
+fi
+mkdir src && cd src
+printf "Downloading server... "
+wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar > /dev/null 2>&1
+echo "Done."
+
+echo "Installing server. This will take a while."
+sleep 2
+java -jar BuildTools.jar
+spigot=$(ls ${instdir}src/spigot-*.jar)
+if [[ $spigot == "" ]]; then
+  echo "Sadly, it appears compiling Spigot failed."
+  exit 1
+else
+  echo "Done. Spigot compiled successfully."
+  cp $spigot $instdir
+  t=${spigot#*-}
+  version=$(basename $t .jar)
+fi
+echo
+echo "Your Minecraft server version: $version"
+echo
+
+###############################################
+# Create the scripts
+###############################################
+
+# Create the run script
+echo '#!/bin/bash
+cd "$(dirname "$0")"' > ${instdir}server
+echo "exec java -Xms${gamemem}M -Xmx${gamemem}M -jar `basename $spigot` --nogui" >> ${instdir}server
+chmod +x ${instdir}server
+# Need to generate the config and EULA
+if [[ $upgrade == 0 ]]; then
+  printf "Initializing your Minecraft server... "
+  ${instdir}server > /dev/null 2>&1
+  echo "Done."
+fi
+if [[ $eula == "accepted" ]]; then
+  echo "# https://account.mojang.com/documents/minecraft_eula ACCEPTED by user during installation
+# $eula_stamp
+eula=true" > ${instdir}eula.txt
+fi
+
+# Create the safe reboot script
+echo '#!/bin/bash
+if [[ $EUID -ne 0 ]]; then
+  echo "ERROR: This script must be run as root" 2>&1
+  exit 1
+fi
+pid=`pidof java`
+if [[ $pid != "" ]]; then
+  printf "Minecraft is running. Waiting."
+  kill -SIGHUP $pid
+fi
+while [[ $pid != "" ]]; do
+  pid=`pidof java`
+  sleep 3
+  printf "."
+done
+echo
+echo "Rebooting."
+/sbin/reboot' > ${instdir}reboot
+chmod +x ${instdir}reboot
+
+###############################################
+# /Create the scripts
+###############################################
+
+
+###############################################
+# Overclock
+###############################################
+
+if [[ ! $oc_volt == 0 ]]; then
+  echo "Overclocking your system to ${oc_friendly}."
+  datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+  cp /boot/config.txt /boot/config-${datestamp}.txt
+  echo "over_voltage=$oc_volt
+arm_freq=$oc_freq
+dtparam=audio=off" > /boot/config.txt
+fi
+
+###############################################
+# /Overclock
+###############################################
+
+
+echo $ver > ${instdir}cat5tv.ver
+
+# Set ownership to the user
+chown -R $user:$user $instdir
+
+
+
+###############################################
+# Install cronjob
+###############################################
+
+  # Dump current crontab to tmp file
+    crontab -u $user -l > /tmp/cron.tmp 2>&1
+
+  # Benchmark log
+  if ! grep -q "minecraft/server" /tmp/cron.tmp; then
+    printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
+    cronupdate=1
+  fi
+
+  # Import revised crontab
+  if [[ "$cronupdate" == "1" ]]
+  then
+    crontab -u $user /tmp/cron.tmp
+  fi
+
+  # Remove temp file
+  rm /tmp/cron.tmp
+
+###############################################
+# /Install cronjob
+###############################################
+
+echo "Reboot now to activate the server."
