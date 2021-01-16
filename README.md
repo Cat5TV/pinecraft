@@ -6,6 +6,25 @@ This installer will setup a Minecraft Server running the latest version of Spigo
 If you have already installed this, running it again later will allow you to upgrade.
 
 
+Buy Your Raspberry Pi (Or Other SBC)
+====================================
+
+This feature on Category5 Technology TV sponsored by ameriDroid.com
+
+USA-based SBC sales with unmatched support and fast shipping
+
+To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
+
+
+Hardware Requirements
+=====================
+
+- Minimum 4 GB RAM
+- GOOD Power Supply
+- Adequate Cooling for Overclock During Heavy Load
+- Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD)
+
+
 Overclocking
 ============
 
