@@ -1,9 +1,10 @@
-# minecraft
-Minecraft Server (Spigot) Installer for Raspberry Pi and Other SBCs
+# Minecraft Server (Spigot) Installer for Raspberry Pi and Other SBCs
 
 This installer will setup a Minecraft Server running the latest version of Spigot.
 
 If you have already installed this, running it again later will allow you to upgrade.
+
+The installer will setup a "Normal" difficulty survival server with mobs, nether and more.
 
 
 Buy Your Raspberry Pi (Or Other SBC)
