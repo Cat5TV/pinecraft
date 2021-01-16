@@ -85,7 +85,9 @@ oc_volt=0
 oc_friendly="N/A - You'll need to overclock manually"
 
 if (( $gamememMIN < 0 )); then
-  echo "||| YOU HAVE NO RAM |||"
+  echo "||| YOU DON'T HAVE ENOUGH AVAILABLE RAM |||"
+  echo
+  echo "Your system shows only $((${memavail} / 1024))MB RAM."
   echo
   echo "Either you have other things running, or your board"
   echo "is simply not good enough to run a Minecraft server."
