@@ -76,7 +76,7 @@ revision=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
 board="Unknown" # Default will be overridden if determined
 memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in GB
 mem=$(($memtotal / 1024)) # Amount of memory in MB
-memreservation=819 # Reserve 800 MB RAM for system
+memreservation=1 # Reserve 1 GB RAM for system (Failure to do this will cause "Error occurred during initialization of VM")
 gamemem=$(($mem - $memreservation)) # Calculate how much memory we can give to the game server (in MB)
 oc_volt=0
 oc_friendly="N/A - You'll need to overclock manually"
@@ -236,6 +236,22 @@ fi
 
 ###############################################
 # /Overclock
+###############################################
+
+
+###############################################
+# Tweak Server Configs
+###############################################
+
+if [[ $upgrade == 0 ]]; then
+  /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
+fi
+if [[ $upgrade == 0 ]]; then
+  /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
+fi
+
+###############################################
+# Tweak Server Configs
 ###############################################
 
 
