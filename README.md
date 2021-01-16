@@ -59,8 +59,20 @@ Example:
 Post-Install Scripts
 ====================
 
-## ~/minecraft/server
+### ~/minecraft/server
 Start the Minecraft server. This script is automatically run upon boot.
 
-## ~/minecraft/reboot
+### ~/minecraft/reboot
 When you need to reboot your Minecraft server, you must do so safely, otherwise all blocks that are stored in RAM will be lost (could be a full day's worth). Run this script to shutdown the Minecraft server software, store all blocks, and reboot the server. Note: It can easily take 15-20 minutes to stop the Minecraft server. Don't abort once you run this script. It is working hard to save all the blocks for your world and if you stop it or force a reboot, you will lose blocks.
+
+### ~/minecraft/stop
+Safely stop your Minecraft server. DO NOT reboot your system or power off unless you have first run this script and allowed it to complete.
+
+
+Troubleshooting
+===============
+
+### Server gets killed by Linux
+Try `dmesg -T| grep -E -i -B100 'killed process'` after this happens to see why Linux killed the process. It is most likely you are running other applications on your system (which is a big no-no) and have run out of resources. You should only run this on a completely headless SBC, with no desktop environment, and nothing else running. You can adjust the amount of RAM allocated by editing the `server` script in ~/minecraft
+
+

@@ -74,10 +74,13 @@ fi
 
 revision=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
 board="Unknown" # Default will be overridden if determined
-memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in GB
-mem=$(($memtotal / 1024)) # Amount of memory in MB
-memreservation=1420 # Reserve memory for system (Failure to do this will cause "Error occurred during initialization of VM")
+memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in KB
+memavail=$(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') # Amount of memory in KB
+memvariance=$(($memtotal - $memavail))
+mem=$((($memtotal - $memvariance) / 1024)) # Amount of memory in MB
+memreservation=$((($memavail * 20/100) / 1024)) # Reserve memory for system (Failure to do this will cause "Error occurred during initialization of VM")
 gamemem=$(($mem - $memreservation)) # Calculate how much memory we can give to the game server (in MB)
+gamememMIN=$((($mem * 80/100) - 1024)) # Figure a MINIMUM amount of memory to allocate
 oc_volt=0
 oc_friendly="N/A - You'll need to overclock manually"
 
@@ -100,10 +103,19 @@ elif [[ "$revision" == *"c03130" ]]; then
 fi
 
 echo "Detected Hadware:  $board"
-echo "RAM to Allocate:   ${gamemem##*( )}MB"
+echo "RAM to Allocate:   ${gamememMIN##*( )}MB - ${gamemem##*( )}MB"
 echo "Overclock To:      $oc_friendly"
 echo "Server User:       $user"
 echo
+
+if (( $gamememMIN < 1024 )); then
+  echo "WARNING: Either you have other things running, or your board"
+  echo "         is simply not good enough to run a Minecraft server."
+  echo "         It is recommended you abort. ONLY install this on a"
+  echo "         dedicated system with no desktop environment or other"
+  echo "         applications running".
+  echo
+fi
 
 if [[ ! $oc_volt == 0 ]]; then
   echo "I will be overwriting your /boot/config.txt file to overclock this ${board}."
@@ -181,7 +193,7 @@ echo
 # Create the run script
 echo '#!/bin/bash
 cd "$(dirname "$0")"' > ${instdir}server
-echo "exec java -Xms${gamemem}M -Xmx${gamemem}M -jar `basename $spigot` --nogui" >> ${instdir}server
+echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $spigot` --nogui" >> ${instdir}server
 chmod +x ${instdir}server
 # Need to generate the config and EULA
 if [[ $upgrade == 0 ]]; then
@@ -215,6 +227,22 @@ echo
 echo "Rebooting."
 /sbin/reboot' > ${instdir}reboot
 chmod +x ${instdir}reboot
+
+# Create the safe stop script
+echo '#!/bin/bash
+pid=`pidof java`
+if [[ $pid != "" ]]; then
+  printf "Stopping Minecraft Server. This will take time."
+  kill -SIGHUP $pid
+fi
+while [[ $pid != "" ]]; do
+  pid=`pidof java`
+  sleep 3
+  printf "."
+done
+echo
+echo "Done. Minecraft has been stopped safely."' > ${instdir}stop
+chmod +x ${instdir}stop
 
 ###############################################
 # /Create the scripts
