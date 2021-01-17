@@ -115,13 +115,20 @@ elif [[ "$revision" == *"c03130" ]]; then
   oc_friendly="2.0 GHz"
 fi
 
-echo "Detected Hadware:  $board"
-echo "RAM to Allocate:   ${gamememMIN##*( )}MB - ${gamemem##*( )}MB"
-echo "Overclock To:      $oc_friendly"
-echo "Server User:       $user"
-echo
-
-if (( $gamememMIN < 1024 )); then
+if (( $gamemem > 3800 )); then
+  kernel=$(uname -a)
+  if [[ ! "$kernel" == *"arm64"* ]]; then
+    echo "--------------------------------------------------------"
+    echo "WARNING: 32-Bit OS on 64-Bit Board!"
+    echo "Upgrade your distro to 64-bit to use your RAM."
+    echo "Since you are only using a 32-bit OS, you cannot"
+    echo "use more than 4 GB RAM for Minecraft. Abort and Upgrade."
+    echo "--------------------------------------------------------"
+    echo
+    gamemem=2500
+    gamememMIN=1500
+  fi
+else if (( $gamememMIN < 1024 )); then
   echo "WARNING: Either you have other things running, or your board"
   echo "         is simply not good enough to run a Minecraft server."
   echo "         It is recommended you abort. ONLY install this on a"
@@ -129,6 +136,13 @@ if (( $gamememMIN < 1024 )); then
   echo "         applications running".
   echo
 fi
+fi
+
+echo "Detected Hadware:  $board"
+echo "RAM to Allocate:   ${gamememMIN##*( )}MB - ${gamemem##*( )}MB"
+echo "Overclock To:      $oc_friendly"
+echo "Server User:       $user"
+echo
 
 if [[ ! $oc_volt == 0 ]]; then
   echo "I will be overwriting your /boot/config.txt file to overclock this ${board}."
@@ -292,7 +306,7 @@ if [[ $upgrade == 0 ]]; then
 fi
 
 ###############################################
-# Tweak Server Configs
+# /Tweak Server Configs
 ###############################################
 
 
