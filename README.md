@@ -24,12 +24,12 @@ To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
 Hardware Requirements
 =====================
 
-- A vanilla server install based on Debian (such as Raspberry Pi OS Lite) with nothing else running and no desktop environment
-- If your board has more than 4 GB RAM, you must use a 64-Bit OS to utilize it
-- Minimum 4 GB RAM
-- GOOD Power Supply
-- Adequate Cooling for Overclock During Heavy Load
-- Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD)
+- A vanilla server install based on Debian (such as Raspberry Pi OS Lite) with nothing else running and no desktop environment.
+- If your board has more than 4 GB RAM, you must use a 64-Bit OS to utilize it effectively. Running at 32-bit OS will result in less RAM dedicated to your Minecraft Server.
+- Minimum 4 GB RAM.
+- GOOD Power Supply.
+- Adequate Cooling for Overclock During Heavy Load.
+- Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD).
 
 
 Note About Backups
