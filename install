@@ -322,7 +322,7 @@ chown -R $user:$user $instdir
 ###############################################
 
   # Dump current crontab to tmp file
-    crontab -u $user -l > /tmp/cron.tmp 2>&1
+    crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
 
   # Benchmark log
   if ! grep -q "minecraft/server" /tmp/cron.tmp; then
