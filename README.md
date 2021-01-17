@@ -82,6 +82,13 @@ When you need to reboot your Minecraft server, you must do so safely, otherwise 
 Safely stop your Minecraft server. DO NOT reboot your system or power off unless you have first run this script and allowed it to complete.
 
 
+Log Files
+=========
+
+### ~/minecraft/logs/latest.log
+The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/latest.log` on your Minecraft Server to see what's happening. Logs are rotated and gzipped by date.
+
+
 Troubleshooting
 ===============
 
