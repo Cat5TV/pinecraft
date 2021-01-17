@@ -30,6 +30,7 @@ Hardware Requirements
 - GOOD Power Supply.
 - Adequate Cooling for Overclock During Heavy Load.
 - Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD).
+- Ethernet connection to network (don't use Wi-Fi).
 
 
 Note About Backups
