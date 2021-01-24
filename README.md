@@ -72,6 +72,9 @@ Example:
 
 `sudo ./install pi`
 
+###Important Note
+
+On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready.
 
 Post-Install Scripts
 ====================
