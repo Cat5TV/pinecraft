@@ -33,6 +33,14 @@ Hardware Requirements
 - Ethernet connection to network (don't use Wi-Fi).
 
 
+
+Software Requirements
+=====================
+
+- To play the game, you will need a valid Minecraft Java account, and to have Minecraft Java installed on your computer (Windows, Mac, AMD64 Linux). One account is required per player, and can be purchased from https://minecraft.com
+- Debian-based headless server distro for your single board computer. For a Raspberry Pi 4, opt for Raspberry Pi OS Lite.
+
+
 Note About Backups
 ==================
 
