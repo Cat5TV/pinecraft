@@ -346,5 +346,6 @@ chown -R $user:$user $instdir
 echo "Reboot now to activate the server."
 echo "Remember: First boot will take ~10 minutes to build your world. Be patient."
 echo
-echo "Reboot command: sudo ~/minecraft/reboot"
+echo "To reboot, run this command as the $user user:"
+echo "~/minecraft/reboot"
 echo
