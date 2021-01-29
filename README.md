@@ -43,6 +43,14 @@ Software Requirements
 **Note:** You do not need a Minecraft Java account in order to run the server. I.E., you could boot up a Pinecraft server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
 
 
+License
+=======
+
+This project (Pinecraft, the install script) is free, open source software. However, Minecraft itself is not (hence why we are distributing an installer, not a pre-compiled distro). In order to use your Minecraft server, you must first accept the Minecraft EULA found here: https://account.mojang.com/documents/minecraft_eula
+
+Of course, other projects utilized for Pinecraft carry other licenses (such as Java, Spigot, etc.). Ours is just an installer / configuration tool and we are not distributing any software.
+
+
 Note About Backups
 ==================
 
