@@ -1,6 +1,6 @@
 # Pinecraft
 
-## Minecraft Server (Spigot) Installer for Raspberry Pi and Other SBCs such a PINE64, ODROID and more
+## Minecraft Server (Spigot) Installer for Raspberry Pi 4 and Other SBCs such a PINE64, ODROID and more
 
 This installer will setup a Minecraft Server running the latest version of Spigot.
 
