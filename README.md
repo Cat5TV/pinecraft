@@ -89,6 +89,15 @@ When you need to reboot your Minecraft server, you must do so safely, otherwise 
 Safely stop your Minecraft server. DO NOT reboot your system or power off unless you have first run this script and allowed it to complete.
 
 
+Networking
+==========
+
+Your Minecraft server runs on port 25565. If you'd like others to be able to join your server, forward that port to your Minecraft server in your firewall.
+
+Within your LAN, you can access your Minecraft server by the IP address of your Raspberry Pi Minecraft server.
+
+**Note:** If you open up your server to the world you introduce the risk of someone connecting and griefing (damaging your builds). To protect your server world, either limit the logins to specific users (see Minecraft documentation), restrict your firewall to only allow trusted IPs that you specify (see your networking documentation) or if you truly want it to be a public server, add some mods to protect your world (see Spigot documentation).
+
 Log Files
 =========
 
