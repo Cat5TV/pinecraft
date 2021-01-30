@@ -10,7 +10,12 @@ The installer will setup a "Normal" difficulty survival server with mobs, nether
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
 
+Check out Pinecraft 1.0 on Category5 Technology TV:
+
 [![Pinecraft Installer 1.0 Featured on Category5 Technology TV](https://img.youtube.com/vi/-8-7fQmhn2k/0.jpg)](https://www.youtube.com/watch?v=-8-7fQmhn2k)
+
+
+Pinecraft Installer 1.0 Featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
 
 Current Server Info
