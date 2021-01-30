@@ -1,6 +1,6 @@
 # Pinecraft
 
-## Minecraft Server (Spigot) Installer for Raspberry Pi 4 and Other SBCs such a PINE64, ODROID and more
+## Minecraft Server Installer for Raspberry Pi 4 and Other SBCs such a PINE64, ODROID and more
 
 This installer will setup a Minecraft Server running the latest version of Spigot.
 
@@ -9,6 +9,18 @@ If you have already installed this, running it again later will allow you to upg
 The installer will setup a "Normal" difficulty survival server with mobs, nether and more.
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
+
+[![Pinecraft Installer 1.0 Featured on Category5 Technology TV](https://img.youtube.com/vi/-8-7fQmhn2k/0.jpg)](https://www.youtube.com/watch?v=-8-7fQmhn2k)
+
+
+Current Server Info
+===================
+
+Pinecraft is brand new, and is currently celebrating the release of version 1.0. There are plans for enhancements, and we welcome feature requests and feedback.
+
+Currently Pinecraft rolls out a fully configured Spigot installation. We've been getting some excellent feedback since publishing our first video about Pinecraft, and there are now plans to integrate other Minecraft servers. Star and Watch this repository to get updates when version 2.0 comes out.
+
+The current version of Pinecraft deploys a survival server. A future update will allow you to select between various gamemodes, including survival, creative, adventure and hardcore.
 
 
 Buy Your Raspberry Pi (Or Other SBC)
