@@ -168,11 +168,11 @@ if [[ $java == "" ]]; then
     apt-get update > /dev/null 2>&1
     updated=1
   fi
-  # First attemp is the default-jre package
-  apt-get -y install default-jre > /dev/null 2>&1
+  # First attemp is the default-jre-headless metapackage
+  apt-get -y install default-jre-headless > /dev/null 2>&1
   java=$(which java)
   if [[ $java == "" ]]; then
-    printf "Failed default package. Trying a specific version... "
+    printf "Failed default metapackage. Trying a specific version... "
     if [[ $updated == 0 ]]; then
       apt-get update > /dev/null 2>&1
       updated=1
