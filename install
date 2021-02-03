@@ -168,9 +168,26 @@ if [[ $java == "" ]]; then
     apt-get update > /dev/null 2>&1
     updated=1
   fi
-  apt-get -y install openjdk-10-jdk-headless > /dev/null 2>&1
-  echo "Done."
+  # First attemp is the default-jre package
+  apt-get -y install default-jre > /dev/null 2>&1
+  java=$(which java)
+  if [[ $java == "" ]]; then
+    printf "Failed default package. Trying a specific version... "
+    if [[ $updated == 0 ]]; then
+      apt-get update > /dev/null 2>&1
+      updated=1
+    fi
+    # Presumably the default-jre package didn't work on this distro, so try specific version
+    apt-get -y install openjdk-10-jdk-headless > /dev/null 2>&1
+  fi
+  java=$(which java)
+  if [[ $java == "" ]]; then
+    echo "Failed. Aborting. Install JDK first."
+  else
+    echo "Success."
+  fi
 fi
+
 if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   printf "Installing git... "
   if [[ $updated == 0 ]]; then
