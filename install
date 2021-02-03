@@ -117,7 +117,7 @@ fi
 
 if (( $gamemem > 3800 )); then
   kernel=$(uname -a)
-  if [[ ! "$kernel" == *"arm64"* ]]; then
+  if [[ ! "$kernel" == *"amd64"* ]] && [[ ! "$kernel" == *"arm64"* ]] && [[ ! "$kernel" == *"aarch64"* ]]; then
     echo "--------------------------------------------------------"
     echo "WARNING: 32-Bit OS on 64-Bit Board!"
     echo "Upgrade your distro to 64-bit to use your RAM."
