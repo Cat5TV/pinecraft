@@ -146,3 +146,12 @@ Troubleshooting
 ### Server gets killed by Linux
 Try `dmesg -T| grep -E -i -B100 'killed process'` after this happens to see why Linux killed the process. It is most likely you are running other applications on your system (which is a big no-no) and have run out of resources. You should only run this on a completely headless SBC, with no desktop environment, and nothing else running. You can adjust the amount of RAM allocated by editing the `server` script in ~/minecraft
 
+
+Post-Install Configuration
+==========================
+
+Give your Minecraft server a try before you start changing the config. It's very possible to break things if you modify the config, so it's a good start to test your server first, and then just tweak what's needed / desired.
+
+You'll find your config file here: ~/minecraft/server.properties
+
+Mojang Documentation: https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
