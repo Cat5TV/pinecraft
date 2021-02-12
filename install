@@ -284,7 +284,7 @@ dialog --infobox "Downloading server..." 3 34 ;
 wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar > /dev/null 2>&1
 #wget https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar
 
-dialog --infobox "Installing server. This will take a while..." 3 34 ;
+dialog --infobox "Installing server..." 3 34 ;
 java -jar BuildTools.jar
 spigot=$(ls ${instdir}src/spigot-*.jar)
 if [[ $spigot == "" ]]; then
