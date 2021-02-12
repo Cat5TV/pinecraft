@@ -18,30 +18,31 @@ Check out Pinecraft 1.0 on Category5 Technology TV:
 Pinecraft Installer 1.0 Featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
 
-Supported Server Versions
-=========================
-
-
 Server Versions
----------------
+===============
 
-**Spigot**
+**Paper**
 
-An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM.
-
-
-**Vanilla**
-
-Coming soon. Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher.
+A performance-optimized Minecraft server based on Spigot and compatible with Spigot plugins. [More Info](https://papermc.io/)
 
 
 **Fabric**
 
-Investigating. Because they use a GUI-based installer, I need to find out if there is a programmatic way to install (E.G., CLI arguments).
+A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
+
+
+**Spigot**
+
+An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM. Spigot was the original Pinecraft default server, circa Pinecraft 1.x. [More Info](https://www.spigotmc.org/)
+
+
+**Vanilla**
+
+Coming soon. Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher. [More Info](https://minecraft.net)
 
 
 Game Modes
-----------
+==========
 
 **Survival**
 
@@ -76,7 +77,6 @@ Hardware Requirements
 - Adequate Cooling for Overclock During Heavy Load.
 - Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD).
 - Ethernet connection to network (don't use Wi-Fi).
-
 
 
 Software Requirements
@@ -166,6 +166,16 @@ Log Files
 
 ### ~/minecraft/logs/latest.log
 The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/latest.log` on your Minecraft Server to see what's happening. Logs are rotated and gzipped by date.
+
+
+Version History
+===============
+
+Pinecraft 2.0 - Pinecraft now supports installation of Paper, Fabric, and Spigot. Also, previous versions deployed a Survival server. Now, user may choose Survival or Creative during install.
+
+Pinecraft 1.1 - New installer interface.
+
+Pinecraft 1.0 - Initial release, installs, configures and optimizes a Spigot Minecraft server, as seen on Category5 Technology TV.
 
 
 Troubleshooting

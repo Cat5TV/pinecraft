@@ -4,7 +4,9 @@
 # USA-based SBC sales with unmatched support and fast shipping
 # To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
 
-ver="1.2"
+# Corresponding video series: https://category5.tv/feature/minecraft
+
+ver="2.0"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -53,27 +55,49 @@ exec 3>&1
 result=$(dialog --title "Pinecraft $ver" \
          --menu "Choose your Minecraft server type:" 20 40 10 \
          "S"       "Spigot (Default)" \
+         "F"       "Fabric" \
+         "P"       "Paper" \
        2>&1 1>&3);
 
+vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
+
+url=""
 if [[ $? == 0 ]]; then
   case $result in
     S)
       flavor="Spigot"
       url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
       jarname="spigot-*.jar"
+      switches=""
       ;;
     F)
       flavor="Fabric"
       url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar"
-      jarname="notsureyet.jar"
+      jarname="fabric-server-launch.jar"
+      switches="server"
+      dlvanilla=1
       ;;
     V)
       flavor="Vanilla"
-      url="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
-      jarname="server.jar"
+      url=$vanilla
+      jarname="minecraft.jar"
+      switches=""
+      ;;
+    P)
+      flavor="Paper"
+      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/467/downloads/paper-1.16.5-467.jar"
+      jarname="minecraft.jar"
+      switches=""
       ;;
     esac
 else
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
+if [[ $url == "" ]]; then
   echo
   echo
   echo "Aborted."
@@ -368,11 +392,18 @@ if [[ $upgrade == 1 ]]; then
   rm -rf src
 fi
 mkdir src && cd src
-dialog --infobox "Downloading server..." 3 34 ;
-wget $url -O server.jar > /dev/null 2>&1
 
-dialog --infobox "Installing server..." 3 34 ;
-java -Xmx500M -jar server.jar
+# The server version requires the supplemental download of the vanilla server
+if [[ "$dlvanilla" = "1" ]]; then
+  dialog --infobox "Downloading Vanilla..." 3 34 ;
+  wget $vanilla -O ${instdir}server.jar > /dev/null 2>&1
+fi
+
+dialog --infobox "Downloading ${flavor}..." 3 34 ; sleep 1
+wget $url -O minecraft.jar > /dev/null 2>&1
+
+dialog --infobox "Installing ${flavor}..." 3 34 ;
+java -Xmx500M -jar minecraft.jar $switches
 
 jarfile=$(ls ${instdir}src/${jarname})
 if [[ $jarfile == "" ]]; then
@@ -402,10 +433,9 @@ cd "$(dirname "$0")"' > ${instdir}server
 echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
 chmod +x ${instdir}server
 # Need to generate the config and EULA
-if [[ $upgrade == 0 ]]; then
-  printf "Initializing your Minecraft server... "
+if [[ $upgrade == 0 ]] || [[ ! -e ${instdir}server.properties ]]; then
+  dialog --infobox "Initializing server..." 3 34 ; sleep 1
   ${instdir}server > /dev/null 2>&1
-  echo "Done."
 fi
 if [[ $eula == "accepted" ]]; then
   echo "# https://account.mojang.com/documents/minecraft_eula ACCEPTED by user during installation
@@ -488,7 +518,7 @@ if [[ -e ${instdir}server.properties ]]; then
   fi
 
   # These ones, however, are selected by the user, so we'll make these changes even if already installed
-  /bin/sed -i '/gamemode=/c\gamemode=${gamemode}' ${instdir}server.properties
+  /bin/sed -i "/gamemode=/c\gamemode=${gamemode}" ${instdir}server.properties
 
 fi
 
@@ -509,10 +539,10 @@ chown -R $user:$user $instdir
 # Install cronjob to auto-start server on boot
 ###############################################
 
-  if [[ "$cron" == "1" ]]; then
+# Dump current crontab to tmp file
+  crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
 
-    # Dump current crontab to tmp file
-      crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
+  if [[ "$cron" == "1" ]]; then
 
     # Add server to auto-load at boot if doesn't already exist in crontab
     if ! grep -q "minecraft/server" /tmp/cron.tmp; then
@@ -521,16 +551,21 @@ chown -R $user:$user $instdir
       cronupdate=1
     fi
 
-    # Import revised crontab
-    if [[ "$cronupdate" == "1" ]]
-    then
-      crontab -u $user /tmp/cron.tmp
-    fi
-
-    # Remove temp file
-    rm /tmp/cron.tmp
-
+  else
+    # Just in case it was previously enabled, disable it
+    # as this user requested not to auto-run
+    /bin/sed -i~ "\~@reboot ${instdir}server~d" /tmp/cron.tmp
+    cronupdate=1
   fi
+
+  # Import revised crontab
+  if [[ "$cronupdate" == "1" ]]
+  then
+    crontab -u $user /tmp/cron.tmp
+  fi
+
+  # Remove temp file
+  rm /tmp/cron.tmp
 
 ###############################################
 # /Install cronjob to auto-start server on boot
@@ -538,17 +573,31 @@ chown -R $user:$user $instdir
 
 if [[ -e ${instdir}server.properties ]]; then
   dialog --title "Success" \
-      --msgbox "\nMinecraft server $version installed." 8 50
+      --msgbox "\n$flavor Minecraft server installed successfully." 8 50
 else
   dialog --title "Warning" \
-      --msgbox "\nMinecraft server $version appears to have installed, but is not initializing correctly. It is unlikely to work until this is resolved." 9 50
+      --msgbox "\n$flavor appears to have installed, but is not initializing correctly. It is unlikely to work until this is resolved." 9 50
 fi
 
-echo
-echo
-echo "Reboot now to activate the server."
-echo "Remember: First boot will take ~10 minutes to build your world. Be patient."
-echo
-echo "To reboot, run this command as the $user user:"
-echo "sudo ~/minecraft/reboot"
-echo
+if [[ "$cron" == "1" ]]; then
+  echo
+  echo
+  echo "Reboot now to activate the server."
+  echo "Remember: First boot will take ~10 minutes to build your world. Be patient."
+  echo
+  echo "To reboot, run this command as the $user user:"
+  echo "sudo ~/minecraft/reboot"
+  echo
+else
+  echo
+  echo
+  echo "Installation complete."
+  echo
+  echo "Remember: The first time you load your server it will"
+  echo "take time to build your world. Be patient."
+  echo
+  echo "To start your server, run this command as the $user user:"
+  echo "~/minecraft/server"
+  echo
+fi
+
