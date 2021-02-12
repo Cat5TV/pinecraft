@@ -146,6 +146,8 @@ Troubleshooting
 ### Server gets killed by Linux
 Try `dmesg -T| grep -E -i -B100 'killed process'` after this happens to see why Linux killed the process. It is most likely you are running other applications on your system (which is a big no-no) and have run out of resources. You should only run this on a completely headless SBC, with no desktop environment, and nothing else running. You can adjust the amount of RAM allocated by editing the `server` script in ~/minecraft
 
+### Overclock says N/A
+The type of hardware you're using hasn't been tested by me, and I haven't added automatic overclocking for your board. You'll need to perform your own overclocking. If you do so successfully, please let me know what you had to do, and if I can test it, I may add it to a future update.
 
 Post-Install Configuration
 ==========================

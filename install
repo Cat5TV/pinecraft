@@ -4,33 +4,103 @@
 # USA-based SBC sales with unmatched support and fast shipping
 # To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
 
-ver="1.0"
-echo
-echo "Minecraft Server (Spigot) Installer for Raspberry Pi"
-echo "By Robbie Ferguson // The Bald Nerd"
-echo "For Category5 Technology TV - https://Category5.TV"
-echo "Installer Version: $ver"
-echo "Minecraft Version: Latest"
-echo
-echo "Sponsored by ameriDroid - https://ameridroid.com"
-echo
+ver="1.1"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
   exit 1
 fi
 
-user=$1
-if [[ $user == "" ]]; then
-  echo "Usage: $0 username"
-  exit 1
+# Prevent running multiple apt updates
+updated=0
+
+# dialog allows me to create a pretty installer
+# It is a required dependency since Pinecraft 1.1
+dialog=$(which dialog)
+if [[ $dialog == "" ]]; then
+  printf "Installing dialog... "
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install dialog > /dev/null 2>&1
+  dialog=$(which dialog)
+  if [[ $java == "" ]]; then
+    echo "Failed. Aborting. Install dialog first."
+    exit 0
+  else
+    echo "Success."
+  fi
 fi
 
-validuser=$(getent passwd $user)
-if [[ $validuser == "" ]]; then
-  echo "User '$1' does not exist."
-  exit 1
+dialog --title "Pinecraft $ver" \
+--msgbox "
+ Pinecraft: The Minecraft Server Installer
+      For Raspberry Pi and Other SBCs
+
+    By Robbie Ferguson // The Bald Nerd
+  https://category5.tv/feature/minecraft
+
+         Installer Version: $ver
+         Minecraft Version: Latest
+
+         Sponsored by ameriDroid
+         https://ameridroid.com/
+" 17 48
+
+# Username may be provided on CLI as in 1.0
+user=$1
+
+if [[ $user == "" ]]; then
+  validuser=""
+else
+  validuser=$(getent passwd $user)
 fi
+while [[ $validuser == "" ]]
+do
+
+  user=$(dialog --stdout --title "Linux User" \
+    --inputbox "Linux Username for Server" 8 50)
+
+  case $? in
+  0)
+   if [[ $user == "" ]]; then
+    validuser=""
+   else
+    validuser=$(getent passwd $user)
+   fi
+   if [[ $validuser == "" ]]; then
+     dialog --title "Error" \
+       --msgbox "\n $user does not exist." 6 50
+   fi
+   ;;
+  1)
+   echo
+   echo
+   echo "Aborted."
+   echo
+   exit 1 ;;
+  esac
+
+done
+
+
+dialog --title "End-User License Agreement"  --yesno "In order to proceed, you must read and accept the EULA at https://account.mojang.com/documents/minecraft_eula\n\nDo you accept the EULA?" 8 60
+
+  case $? in
+  0)
+   eula="accepted"
+   eula_stamp=$(date)
+   ;;
+  1)
+   echo
+   echo
+   echo "EULA not accepted. You are not permitted to install this software."
+   echo
+   exit 1 ;;
+  esac
+
+
 
 instdir="/home/$user/minecraft/"
 
@@ -38,13 +108,13 @@ upgrade=0
 if [[ -e /home/$user ]]; then
   if [[ -e ${instdir} ]]; then
     if [[ ! -e ${instdir}cat5tv.ver ]]; then
-      echo "${instdir} already exists, but is not created by this installer."
+      echo "${instdir} already exists, but is not created by Pinecraft."
       echo "Please move or remove the folder and try again."
       exit 1
     else
-      read -r -p "Already installed. Upgrade? [y/N] " eula
+      read -r -p "Already installed. Upgrade? [y/N] " upg
       echo
-      if [[ $eula =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      if [[ $upg =~ ^([yY][eE][sS]|[yY])$ ]]; then
         echo "Upgrading."
         echo
         upgrade=1
@@ -59,19 +129,7 @@ else
   exit 1
 fi
 
-echo "In order to proceed, you must read and accept the EULA at https://account.mojang.com/documents/minecraft_eula"
-read -r -p "Do you accept the EULA? [y/N] " eula
-echo ""
-if [[ $eula =~ ^([yY][eE][sS]|[yY])$ ]]; then
-  echo "EULA accepted..."
-  echo
-  eula="accepted"
-  eula_stamp=$(date)
-else
-  echo "EULA not accepted. You are not permitted to install this software."
-  exit 1
-fi
-
+# Gather some info about your system which will be used to determine the config
 revision=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
 board="Unknown" # Default will be overridden if determined
 memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in KB
@@ -82,18 +140,16 @@ memreservation=$((($memavail * 20/100) / 1024)) # Reserve memory for system (Fai
 gamemem=$(($mem - $memreservation)) # Calculate how much memory we can give to the game server (in MB)
 gamememMIN=$((($mem * 80/100) - 1024)) # Figure a MINIMUM amount of memory to allocate
 oc_volt=0
-oc_friendly="N/A - You'll need to overclock manually"
+oc_friendly="N/A"
 
 if (( $gamememMIN < 0 )); then
-  echo "||| YOU DON'T HAVE ENOUGH AVAILABLE RAM |||"
-  echo
-  echo "Your system shows only $((${memavail} / 1024))MB RAM."
-  echo
-  echo "Either you have other things running, or your board"
-  echo "is simply not good enough to run a Minecraft server."
-  echo
-  echo "Aborting."
-  echo
+  dialog --title "Error" \
+    --msgbox "
+YOU DON'T HAVE ENOUGH AVAILABLE RAM
+
+Your system shows only $((${memavail} / 1024))MB RAM.
+
+Either you have other things running, or your board is simply not good enough to run a Minecraft server." 13 50
   exit 1
 fi
 
@@ -117,53 +173,65 @@ fi
 
 if (( $gamemem > 3800 )); then
   kernel=$(uname -a)
-  if [[ ! "$kernel" == *"amd64"* ]] && [[ ! "$kernel" == *"arm64"* ]] && [[ ! "$kernel" == *"aarch64"* ]]; then
-    echo "--------------------------------------------------------"
-    echo "WARNING: 32-Bit OS on 64-Bit Board!"
-    echo "Upgrade your distro to 64-bit to use your RAM."
-    echo "Since you are only using a 32-bit OS, you cannot"
-    echo "use more than 4 GB RAM for Minecraft. Abort and Upgrade."
-    echo "--------------------------------------------------------"
-    echo
+  if [[ ! "$kernel" == *"amd64"* ]] && [[ ! "$kernel" == *"arm64"* ]] && [[ ! "$kernel" == *"aarch64"* ]] && [[ ! "$kernel" == *"x86_64"* ]]; then
+
+    dialog --title "Warning" \
+    --msgbox "
+WARNING: 32-Bit OS on 64-Bit Board!
+
+Upgrade your distro to 64-bit to use your RAM.
+
+Since you are only using a 32-bit OS, you cannot use more than 4 GB RAM for Minecraft. Abort and Upgrade." 13 50
+
     gamemem=2500
     gamememMIN=1500
+
   fi
 else if (( $gamememMIN < 1024 )); then
-  echo "WARNING: Either you have other things running, or your board"
-  echo "         is simply not good enough to run a Minecraft server."
-  echo "         It is recommended you abort. ONLY install this on a"
-  echo "         dedicated system with no desktop environment or other"
-  echo "         applications running".
-  echo
+  dialog --title "Warning" --yesno "\nWARNING: Either you have other things running, or your board is simply not good enough to run a Minecraft server. It is recommended you abort. ONLY install this on a dedicated system with no desktop environment or other applications running.\n\nWould you like to ABORT?" 14 50
+  case $? in
+  0)
+   echo
+   echo
+   echo "Aborted."
+   echo
+   exit 1 ;;
+  esac
 fi
 fi
 
-echo "Detected Hadware:  $board"
-echo "RAM to Allocate:   ${gamememMIN##*( )}MB - ${gamemem##*( )}MB"
-echo "Overclock To:      $oc_friendly"
-echo "Server User:       $user"
-echo
+dialog --title "Information" \
+--msgbox "
+Detected Hardware:
+$board
+
+RAM to Allocate:
+${gamememMIN##*( )}MB - ${gamemem##*( )}MB
+
+Overclock To:
+$oc_friendly
+
+Server User:
+$user" 17 50
 
 if [[ ! $oc_volt == 0 ]]; then
-  echo "I will be overwriting your /boot/config.txt file to overclock this ${board}."
-  echo "I am not responsible for damage to your system, and you do this at your own risk."
-  echo
+  dialog --title "Confirmation"  --yesno "\nI will be overwriting your /boot/config.txt file to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50
+  case $? in
+  1)
+   echo
+   echo
+   echo "Aborted."
+   echo
+   exit 1 ;;
+  esac
 fi
 
-read -r -p "Continue? [y/N] " install
-echo ""
-if [[ $install =~ ^([yY][eE][sS]|[yY])$ ]]; then
-  echo "Proceeding..."
-  echo
-else
-  echo "Aborted."
-  exit 1
-fi
+dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
-updated=0 # Will use this to prevent running multiple apt updates
 java=$(which java)
 if [[ $java == "" ]]; then
-  printf "Installing java... "
+  dialog --infobox "Installing Java..." 3 34 ;
+
   if [[ $updated == 0 ]]; then
     apt-get update > /dev/null 2>&1
     updated=1
@@ -172,7 +240,7 @@ if [[ $java == "" ]]; then
   apt-get -y install default-jre-headless > /dev/null 2>&1
   java=$(which java)
   if [[ $java == "" ]]; then
-    printf "Failed default metapackage. Trying a specific version... "
+    # Failed default metapackage. Trying a specific version.
     if [[ $updated == 0 ]]; then
       apt-get update > /dev/null 2>&1
       updated=1
@@ -182,20 +250,23 @@ if [[ $java == "" ]]; then
   fi
   java=$(which java)
   if [[ $java == "" ]]; then
-    echo "Failed. Aborting. Install JDK first."
-  else
-    echo "Success."
+    dialog --title "Error" \
+      --msgbox "\nJava installation failed. Please install the JDK first and try again." 8 50
+    echo
+    echo
+    echo "Failed."
+    echo
+    exit 0
   fi
 fi
 
 if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  printf "Installing git... "
+  dialog --infobox "Installing git..." 3 34 ;
   if [[ $updated == 0 ]]; then
     apt-get update > /dev/null 2>&1
     updated=1
   fi
   apt-get -y install git > /dev/null 2>&1
-  echo "Done."
 fi
 git config --global --unset core.autocrlf
 
@@ -209,30 +280,33 @@ if [[ $upgrade == 1 ]]; then
   rm -rf src
 fi
 mkdir src && cd src
-printf "Downloading server... "
+dialog --infobox "Downloading server..." 3 34 ;
 wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar > /dev/null 2>&1
-echo "Done."
+#wget https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar
 
-echo "Installing server. This will take a while."
-sleep 2
+dialog --infobox "Installing server. This will take a while..." 3 34 ;
 java -jar BuildTools.jar
 spigot=$(ls ${instdir}src/spigot-*.jar)
 if [[ $spigot == "" ]]; then
-  echo "Sadly, it appears compiling Spigot failed."
-  exit 1
+    dialog --title "Error" \
+      --msgbox "\nSadly, it appears compiling Spigot failed." 8 50
+    echo
+    echo
+    echo "Failed."
+    echo
+    exit 0
 else
-  echo "Done. Spigot compiled successfully."
   cp $spigot $instdir
   t=${spigot#*-}
   version=$(basename $t .jar)
 fi
-echo
-echo "Your Minecraft server version: $version"
-echo
+
 
 ###############################################
 # Create the scripts
 ###############################################
+
+dialog --infobox "Creating scripts..." 3 34 ; sleep 1
 
 # Create the run script
 echo '#!/bin/bash
@@ -298,7 +372,7 @@ chmod +x ${instdir}stop
 ###############################################
 
 if [[ ! $oc_volt == 0 ]]; then
-  echo "Overclocking your system to ${oc_friendly}."
+  dialog --infobox "Overclocking your system to ${oc_friendly}..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
   cp /boot/config.txt /boot/config-${datestamp}.txt
   echo "over_voltage=$oc_volt
@@ -315,6 +389,7 @@ fi
 # Tweak Server Configs
 ###############################################
 
+dialog --infobox "Applying config..." 3 34 ; sleep 1
 if [[ $upgrade == 0 ]]; then
   /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
 fi
@@ -327,6 +402,7 @@ fi
 ###############################################
 
 
+# Create a file to later let us know the version of Pinecraft used
 echo $ver > ${instdir}cat5tv.ver
 
 # Set ownership to the user
@@ -343,6 +419,7 @@ chown -R $user:$user $instdir
 
   # Add server to auto-load at boot if doesn't already exist in crontab
   if ! grep -q "minecraft/server" /tmp/cron.tmp; then
+    dialog --infobox "Enabling auto-run..." 3 34 ; sleep 1
     printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
     cronupdate=1
   fi
@@ -360,6 +437,11 @@ chown -R $user:$user $instdir
 # /Install cronjob
 ###############################################
 
+dialog --title "Success" \
+      --msgbox "\nMinecraft server $version installed." 8 50
+
+echo
+echo
 echo "Reboot now to activate the server."
 echo "Remember: First boot will take ~10 minutes to build your world. Be patient."
 echo
