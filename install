@@ -4,7 +4,7 @@
 # USA-based SBC sales with unmatched support and fast shipping
 # To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
 
-ver="1.1"
+ver="1.2"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -25,7 +25,7 @@ if [[ $dialog == "" ]]; then
   fi
   apt-get -y install dialog > /dev/null 2>&1
   dialog=$(which dialog)
-  if [[ $java == "" ]]; then
+  if [[ $dialog == "" ]]; then
     echo "Failed. Aborting. Install dialog first."
     exit 0
   else
@@ -47,6 +47,63 @@ dialog --title "Pinecraft $ver" \
          Sponsored by ameriDroid
          https://ameridroid.com/
 " 17 48
+
+
+exec 3>&1
+result=$(dialog --title "Pinecraft $ver" \
+         --menu "Choose your Minecraft server type:" 20 40 10 \
+         "S"       "Spigot (Default)" \
+       2>&1 1>&3);
+
+if [[ $? == 0 ]]; then
+  case $result in
+    S)
+      flavor="Spigot"
+      url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
+      jarname="spigot-*.jar"
+      ;;
+    F)
+      flavor="Fabric"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar"
+      jarname="notsureyet.jar"
+      ;;
+    V)
+      flavor="Vanilla"
+      url="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
+      jarname="server.jar"
+      ;;
+    esac
+else
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
+
+exec 3>&1
+result=$(dialog --title "Pinecraft $ver" \
+         --menu "Choose your game type:" 20 40 10 \
+         "S"       "Survival" \
+         "C"       "Creative" \
+       2>&1 1>&3);
+
+if [[ $? == 0 ]]; then
+  case $result in
+    S)
+      gamemode="survival"
+      ;;
+    C)
+      gamemode="creative"
+      ;;
+    esac
+else
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
 
 # Username may be provided on CLI as in 1.0
 user=$1
@@ -108,20 +165,22 @@ upgrade=0
 if [[ -e /home/$user ]]; then
   if [[ -e ${instdir} ]]; then
     if [[ ! -e ${instdir}cat5tv.ver ]]; then
-      echo "${instdir} already exists, but is not created by Pinecraft."
-      echo "Please move or remove the folder and try again."
-      exit 1
+      dialog --title "Error"\
+        --msgbox "\n${instdir} already exists, but is not created by Pinecraft.\n\nPlease move or remove the folder and try again." 11 50
+      exit 0
     else
-      read -r -p "Already installed. Upgrade? [y/N] " upg
-      echo
-      if [[ $upg =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        echo "Upgrading."
-        echo
-        upgrade=1
-      else
-        echo "Aborted."
-        exit 1
-      fi
+      dialog --title "Upgrade"  --yesno "\nPinecraft is already installed. Upgrade?" 8 40
+      case $? in
+      1)
+       echo
+       echo
+       echo "Aborted"
+       echo
+       exit 1 ;;
+      esac
+
+      upgrade=1
+
     fi
   fi
 else
@@ -212,7 +271,10 @@ Overclock To:
 $oc_friendly
 
 Server User:
-$user" 17 50
+$user
+
+Server Version:
+$flavor ($gamemode)" 20 50
 
 if [[ ! $oc_volt == 0 ]]; then
   dialog --title "Confirmation"  --yesno "\nI will be overwriting your /boot/config.txt file to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50
@@ -226,10 +288,25 @@ if [[ ! $oc_volt == 0 ]]; then
   esac
 fi
 
+dialog --title "Pinecraft $ver"  --yesno "Automatically load the server on boot?" 6 60
+
+
+  case $? in
+  0)
+   cron=1
+   ;;
+  1)
+   cron=0
+   ;;
+  esac
+
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
-java=$(which java)
-if [[ $java == "" ]]; then
+if type -p java > /dev/null; then
+    _java=java
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+else
   dialog --infobox "Installing Java..." 3 34 ;
 
   if [[ $updated == 0 ]]; then
@@ -238,18 +315,20 @@ if [[ $java == "" ]]; then
   fi
   # First attemp is the default-jre-headless metapackage
   apt-get -y install default-jre-headless > /dev/null 2>&1
-  java=$(which java)
-  if [[ $java == "" ]]; then
-    # Failed default metapackage. Trying a specific version.
-    if [[ $updated == 0 ]]; then
-      apt-get update > /dev/null 2>&1
-      updated=1
-    fi
+
+  if type -p java > /dev/null; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+  else
     # Presumably the default-jre package didn't work on this distro, so try specific version
     apt-get -y install openjdk-10-jdk-headless > /dev/null 2>&1
   fi
-  java=$(which java)
-  if [[ $java == "" ]]; then
+  if type -p java > /dev/null; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+  else
     dialog --title "Error" \
       --msgbox "\nJava installation failed. Please install the JDK first and try again." 8 50
     echo
@@ -258,6 +337,10 @@ if [[ $java == "" ]]; then
     echo
     exit 0
   fi
+fi
+
+if [[ "$_java" ]]; then
+  javaver=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
 fi
 
 if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
@@ -281,23 +364,23 @@ if [[ $upgrade == 1 ]]; then
 fi
 mkdir src && cd src
 dialog --infobox "Downloading server..." 3 34 ;
-wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar > /dev/null 2>&1
-#wget https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar
+wget $url -O server.jar > /dev/null 2>&1
 
 dialog --infobox "Installing server..." 3 34 ;
-java -jar BuildTools.jar
-spigot=$(ls ${instdir}src/spigot-*.jar)
-if [[ $spigot == "" ]]; then
+java -Xmx500M -jar server.jar
+
+jarfile=$(ls ${instdir}src/${jarname})
+if [[ $jarfile == "" ]]; then
     dialog --title "Error" \
-      --msgbox "\nSadly, it appears compiling Spigot failed." 8 50
+      --msgbox "\nSadly, it appears compiling failed." 8 50
     echo
     echo
     echo "Failed."
     echo
     exit 0
 else
-  cp $spigot $instdir
-  t=${spigot#*-}
+  cp $jarfile $instdir
+  t=${jarfile#*-}
   version=$(basename $t .jar)
 fi
 
@@ -311,7 +394,7 @@ dialog --infobox "Creating scripts..." 3 34 ; sleep 1
 # Create the run script
 echo '#!/bin/bash
 cd "$(dirname "$0")"' > ${instdir}server
-echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $spigot` --nogui" >> ${instdir}server
+echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
 chmod +x ${instdir}server
 # Need to generate the config and EULA
 if [[ $upgrade == 0 ]]; then
@@ -389,12 +472,19 @@ fi
 # Tweak Server Configs
 ###############################################
 
-dialog --infobox "Applying config..." 3 34 ; sleep 1
-if [[ $upgrade == 0 ]]; then
-  /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
-fi
-if [[ $upgrade == 0 ]]; then
-  /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
+if [[ -e ${instdir}server.properties ]]; then
+
+  dialog --infobox "Applying config..." 3 34 ; sleep 1
+  # These settings are my own defaults, so only do these during first install (not upgrade)
+  # Will not replace user-configured changes in the server.properties
+  if [[ $upgrade == 0 ]]; then
+    /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
+    /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
+  fi
+
+  # These ones, however, are selected by the user, so we'll make these changes even if already installed
+  /bin/sed -i '/gamemode=/c\gamemode=${gamemode}' ${instdir}server.properties
+
 fi
 
 ###############################################
@@ -411,34 +501,43 @@ chown -R $user:$user $instdir
 
 
 ###############################################
-# Install cronjob
+# Install cronjob to auto-start server on boot
 ###############################################
 
-  # Dump current crontab to tmp file
-    crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
+  if [[ "$cron" == "1" ]]; then
 
-  # Add server to auto-load at boot if doesn't already exist in crontab
-  if ! grep -q "minecraft/server" /tmp/cron.tmp; then
-    dialog --infobox "Enabling auto-run..." 3 34 ; sleep 1
-    printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
-    cronupdate=1
+    # Dump current crontab to tmp file
+      crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
+
+    # Add server to auto-load at boot if doesn't already exist in crontab
+    if ! grep -q "minecraft/server" /tmp/cron.tmp; then
+      dialog --infobox "Enabling auto-run..." 3 34 ; sleep 1
+      printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
+      cronupdate=1
+    fi
+
+    # Import revised crontab
+    if [[ "$cronupdate" == "1" ]]
+    then
+      crontab -u $user /tmp/cron.tmp
+    fi
+
+    # Remove temp file
+    rm /tmp/cron.tmp
+
   fi
 
-  # Import revised crontab
-  if [[ "$cronupdate" == "1" ]]
-  then
-    crontab -u $user /tmp/cron.tmp
-  fi
-
-  # Remove temp file
-  rm /tmp/cron.tmp
-
 ###############################################
-# /Install cronjob
+# /Install cronjob to auto-start server on boot
 ###############################################
 
-dialog --title "Success" \
+if [[ -e ${instdir}server.properties ]]; then
+  dialog --title "Success" \
       --msgbox "\nMinecraft server $version installed." 8 50
+else
+  dialog --title "Warning" \
+      --msgbox "\nMinecraft server $version appears to have installed, but is not initializing correctly. It is unlikely to work until this is resolved." 9 50
+fi
 
 echo
 echo

@@ -18,14 +18,42 @@ Check out Pinecraft 1.0 on Category5 Technology TV:
 Pinecraft Installer 1.0 Featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
 
-Current Server Info
-===================
+Supported Server Versions
+=========================
 
-Pinecraft is brand new, and is currently celebrating the release of version 1.0. There are plans for enhancements, and we welcome feature requests and feedback.
 
-Currently Pinecraft rolls out a fully configured Spigot installation. We've been getting some excellent feedback since publishing our first video about Pinecraft, and there are now plans to integrate other Minecraft servers. Star and Watch this repository to get updates when version 2.0 comes out.
+Server Versions
+---------------
 
-The current version of Pinecraft deploys a survival server. A future update will allow you to select between various gamemodes, including survival, creative, adventure and hardcore.
+**Spigot**
+
+An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM.
+
+
+**Vanilla**
+
+Coming soon. Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher.
+
+
+**Fabric**
+
+Investigating. Because they use a GUI-based installer, I need to find out if there is a programmatic way to install (E.G., CLI arguments).
+
+
+Game Modes
+----------
+
+**Survival**
+
+Players must collect resources, build structures, battle mobs, eat, and explore the world in an effort to thrive and survive.
+
+
+**Creative**
+
+Creative mode strips away the survival aspects of Minecraft and allows players to easily create and destroy structures and mechanisms with the inclusion of an infinite use of blocks and flying.
+
+
+We're open to suggestions. Let us know what you'd like to see.
 
 
 Buy Your Raspberry Pi (Or Other SBC)
