@@ -2,20 +2,22 @@
 
 ## Minecraft Server Installer for Raspberry Pi 4 and Other SBCs such a PINE64, ODROID and more
 
-This installer will setup a Minecraft Server running the latest version of Spigot.
+This installer simplifies the installation and setup of a Minecraft Server.
 
-If you have already installed this, running it again later will allow you to upgrade.
+If you have already installed this, running it again will allow you to upgrade.
 
-The installer will setup a "Normal" difficulty survival server with mobs, nether and more.
+The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
 
-Check out Pinecraft 1.0 on Category5 Technology TV:
+Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
 
 [![Pinecraft Installer 1.0 Featured on Category5 Technology TV](https://img.youtube.com/vi/-8-7fQmhn2k/0.jpg)](https://www.youtube.com/watch?v=-8-7fQmhn2k)
 
 
-Pinecraft Installer 1.0 Featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
+Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
+
+The current version of Pinecraft is 2.0.
 
 
 Server Versions
