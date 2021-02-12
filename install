@@ -51,6 +51,73 @@ dialog --title "Pinecraft $ver" \
 " 17 48
 
 
+dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
+
+if type -p java > /dev/null; then
+    _java=java
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+else
+  dialog --infobox "Installing Java..." 3 34 ;
+
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  # First attemp is the default-jre-headless metapackage
+  apt-get -y install default-jre-headless > /dev/null 2>&1
+
+  if type -p java > /dev/null; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+  else
+    # Presumably the default-jre package didn't work on this distro, so try specific version
+    apt-get -y install openjdk-11-jre-headless > /dev/null 2>&1
+#    apt-get -y install openjdk-10-jre-headless > /dev/null 2>&1
+  fi
+  if type -p java > /dev/null; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+  else
+    dialog --title "Error" \
+      --msgbox "\nJava installation failed. Please install the JRE first and try again." 8 50
+    echo
+    echo
+    echo "Failed."
+    echo
+    exit 0
+  fi
+fi
+
+javaver=0
+if [[ "$_java" ]]; then
+  javaver=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+fi
+
+if [[ ! "$javaver" > "1.9" ]]; then
+  dialog --title "Error" \
+      --msgbox "\n`which java` is version ${javaver}. You'll need a newer version of JRE." 8 50
+  echo
+  echo
+  echo "Failed."
+  echo
+  exit 0
+fi
+
+if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  dialog --infobox "Installing git..." 3 34 ;
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install git > /dev/null 2>&1
+fi
+git config --global --unset core.autocrlf
+
+
+
 exec 3>&1
 result=$(dialog --title "Pinecraft $ver" \
          --menu "Choose your Minecraft server type:" 20 40 10 \
@@ -318,8 +385,6 @@ if [[ ! $oc_volt == 0 ]]; then
 fi
 
 dialog --title "Pinecraft $ver"  --yesno "Automatically load the server on boot?" 6 60
-
-
   case $? in
   0)
    cron=1
@@ -329,58 +394,6 @@ dialog --title "Pinecraft $ver"  --yesno "Automatically load the server on boot?
    ;;
   esac
 
-dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
-
-if type -p java > /dev/null; then
-    _java=java
-elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    _java="$JAVA_HOME/bin/java"
-else
-  dialog --infobox "Installing Java..." 3 34 ;
-
-  if [[ $updated == 0 ]]; then
-    apt-get update > /dev/null 2>&1
-    updated=1
-  fi
-  # First attemp is the default-jre-headless metapackage
-  apt-get -y install default-jre-headless > /dev/null 2>&1
-
-  if type -p java > /dev/null; then
-    _java=java
-  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    _java="$JAVA_HOME/bin/java"
-  else
-    # Presumably the default-jre package didn't work on this distro, so try specific version
-    apt-get -y install openjdk-10-jdk-headless > /dev/null 2>&1
-  fi
-  if type -p java > /dev/null; then
-    _java=java
-  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    _java="$JAVA_HOME/bin/java"
-  else
-    dialog --title "Error" \
-      --msgbox "\nJava installation failed. Please install the JDK first and try again." 8 50
-    echo
-    echo
-    echo "Failed."
-    echo
-    exit 0
-  fi
-fi
-
-if [[ "$_java" ]]; then
-  javaver=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-fi
-
-if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  dialog --infobox "Installing git..." 3 34 ;
-  if [[ $updated == 0 ]]; then
-    apt-get update > /dev/null 2>&1
-    updated=1
-  fi
-  apt-get -y install git > /dev/null 2>&1
-fi
-git config --global --unset core.autocrlf
 
 if [[ $upgrade == 0 ]]; then
   mkdir $instdir
