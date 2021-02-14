@@ -131,13 +131,8 @@ Run the installer immediately following a fresh reboot (to avoid having residual
 
 The command is simple:
 
-`sudo ./install username`
+`sudo ./install`
 
-`username` is the Linux user you'd like to run the Minecraft server.
-
-Example:
-
-`sudo ./install pi`
 
 ### Important Note: First Boot
 
