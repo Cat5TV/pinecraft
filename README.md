@@ -133,10 +133,16 @@ The command is simple:
 
 `sudo ./install`
 
+Once installation is complete, you must reboot for the server to begin functioning. If you selected to auto-load at boot, your server will immediately begin generating the world on first boot. Otherwise, you'll need to run the server manually.
+
+To reboot **do not** use traditional Linux commands. You must use:
+
+`sudo ~/minecraft/reboot`
 
 ### Important Note: First Boot
 
 On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready. You can tail the log file if you'd like to see the progress, or sipmly retry connecting via Minecraft Java after a few minutes.
+
 
 Post-Install Scripts
 ====================
