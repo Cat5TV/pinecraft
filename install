@@ -307,16 +307,19 @@ if (( $gamemem > 12000 )); then
 fi
 oc_volt=0
 oc_friendly="N/A"
-
 if (( $gamememMIN < 0 )); then
   dialog --title "Error" \
     --msgbox "
 YOU DON'T HAVE ENOUGH AVAILABLE RAM
 
-Your system shows only $((${memavail} / 1024))MB RAM.
+Your system shows only $((${memavail} / 1024))MB RAM available, but with the applications running you have only $mem MB RAM available for allocation, which doesn't leave enough for overhead. Typically I'd want to be able to allocate at least 2 GB RAM.
 
-Either you have other things running, or your board is simply not good enough to run a Minecraft server." 13 50
-  exit 1
+Either you have other things running, or your board is simply not good enough to run a Minecraft server." 18 50
+   echo
+   echo
+   echo "Failed. Not enough memory available for Minecraft server."
+   echo
+   exit 0
 fi
 
 if [[ "$revision" == *"b03111" ]] ||
