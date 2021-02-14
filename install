@@ -96,7 +96,18 @@ if [[ "$_java" ]]; then
   javaver=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
 fi
 
-if [[ ! "$javaver" > "1.9" ]]; then
+ver=0
+for i in $(echo $javaver | tr "." "\n")
+do
+  if [[ $ver == 0 ]]; then
+    ver=$i
+  else
+    subver=$i
+    break
+  fi
+done
+
+if [[ $ver > 8 ]] || [[ $ver == 1 ]] && [[ $subver > 8 ]]; then
   dialog --title "Error" \
       --msgbox "\n`which java` is version ${javaver}. You'll need a newer version of JRE." 8 50
   echo
