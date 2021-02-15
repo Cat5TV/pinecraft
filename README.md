@@ -73,7 +73,7 @@ Buy Your Raspberry Pi (Or Other SBC)
 
 This feature on Category5 Technology TV sponsored by ameriDroid.com
 
-[![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)](https://ameridroid.com)
+[![ameriDroid](assets/ameridroid.png?raw=true)](https://ameridroid.com)
 
 USA-based SBC sales with unmatched support and fast shipping
 
