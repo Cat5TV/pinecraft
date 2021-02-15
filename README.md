@@ -202,3 +202,27 @@ Give your Minecraft server a try before you start changing the config. It's very
 You'll find your config file here: ~/minecraft/server.properties
 
 Mojang Documentation: https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
+
+
+Frequently Asked Questions
+==========================
+
+*How do I become admin? /op says I don't have permission.*
+
+After connecting to your server as the user you want to make admin, look at your `~/minecraft/logs/latest.log` file and find the UUID for that user.
+
+Edit `~/minecraft/ops.json` as follows:
+
+```
+[
+  {
+    "uuid": "UUID",
+    "name": "USERNAME",
+    "level": 4
+  }
+]
+```
+
+Replace UUID with your UUID, and USERNAME with the actual username. Then, restart your Pinecraft server with `~/minecraft/reboot`
+
+When your server comes back online, that user will be admin, and can now use the /op command to create other admins.
