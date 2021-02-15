@@ -207,6 +207,22 @@ Mojang Documentation: https://minecraft.gamepedia.com/Server.properties#Java_Edi
 Frequently Asked Questions
 ==========================
 
+Remember, Pinecraft Installer installs a Minecraft server like any other. Our goal is to make it easy for you to get up and running with an efficient, high-performance server, but we don't rework how the resulting server works in any way. Therefore, the official Minecraft docs are the perfect place to get help with your server configuration.
+
+That said, we get some questions regularly, and we're here to help if we can, so we'll record them here.
+
+
+**First, here are some helpful links:**
+
+Modify server.properties, the main config file for your server's settings
+https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
+
+**Find Plugins for Spigot / Paper / Fabric**
+https://www.spigotmc.org/resources/categories/spigot.4/?__cf_chl_jschl_tk__=e8b11c7a3a9c1243551efcd0c8ffe96c90aa74e2-1613356620-0-ATif14FeIvL6vgHkQ7PSHRb6iTqu8HChikWGbcScgn0X852INC73n21k7yWIlfILGreCUnrgbn8PuIGf-d4QNhtAjixoXr1_6fhLao0GWv3XpppN6yYPbQ5tKU1m8D6VW22c7wAfBVaUCBSWl-oXrMr3mYK3BRu9a8EQc91b8qKQsxHX-nA8UmYwerlCj9hsAip45YsUCd6n7i--d6vPHt581C3LZb_cjiCRAxxeaFlpfMP3hZjc7B303Alh_lyI9ZIlsfMpZ-gRkDggxPwuhenYyvwwHuHoJ0Qgn23PfzsVeO7dEIBX_iZbemQgkoabD8b_UII1Nw6RyLLcHM8WHV32KiNeoUSQ0LzrtPZw9M7O
+
+
+**And here are some FAQ's:**
+
 *How do I become admin? /op says I don't have permission.*
 
 After connecting to your server as the user you want to make admin, look at your `~/minecraft/logs/latest.log` file and find the UUID for that user.
