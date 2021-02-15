@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-ver="2.0"
+ver="2.1"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -128,18 +128,19 @@ fi
 git config --global --unset core.autocrlf
 
 
+vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
+flavor=""
 
 exec 3>&1
 result=$(dialog --title "Pinecraft $ver" \
          --menu "Choose your Minecraft server type:" 20 40 10 \
-         "S"       "Spigot (Default)" \
+         "P"       "Paper (Default)" \
          "F"       "Fabric" \
-         "P"       "Paper" \
+         "S"       "Spigot" \
+         "C"       "Cuberite (Experimental!)" \
+         "V"       "Vanilla" \
        2>&1 1>&3);
 
-vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
-
-url=""
 if [[ $? == 0 ]]; then
   case $result in
     S)
@@ -158,7 +159,7 @@ if [[ $? == 0 ]]; then
     V)
       flavor="Vanilla"
       url=$vanilla
-      jarname="minecraft.jar"
+      jarname="server.jar"
       switches=""
       ;;
     P)
@@ -166,6 +167,12 @@ if [[ $? == 0 ]]; then
       url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/467/downloads/paper-1.16.5-467.jar"
       jarname="minecraft.jar"
       switches=""
+      ;;
+    C)
+      flavor="Cuberite"
+      script="https://compile.cuberite.org"
+      executable="Cuberite"
+      compiler=1;
       ;;
     esac
 else
@@ -175,7 +182,7 @@ else
   echo
   exit 1
 fi
-if [[ $url == "" ]]; then
+if [[ $flavor == "" ]]; then
   echo
   echo
   echo "Aborted."
@@ -420,6 +427,39 @@ if [[ $upgrade == 1 ]]; then
 fi
 mkdir src && cd src
 
+# Install the tools needed to compile C code
+if [[ $compiler == 1 ]]; then
+
+  if [ $(dpkg-query -W -f='${Status}' gcc 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    dialog --infobox "Installing gcc..." 3 34 ;
+    if [[ $updated == 0 ]]; then
+      apt-get update > /dev/null 2>&1
+      updated=1
+    fi
+    apt-get -y install gcc > /dev/null 2>&1
+  fi
+
+  if [ $(dpkg-query -W -f='${Status}' g++ 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    dialog --infobox "Installing g++..." 3 34 ;
+    if [[ $updated == 0 ]]; then
+      apt-get update > /dev/null 2>&1
+      updated=1
+    fi
+    apt-get -y install g++ > /dev/null 2>&1
+  fi
+
+  if [ $(dpkg-query -W -f='${Status}' cmake 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    dialog --infobox "Installing cmake..." 3 34 ;
+    if [[ $updated == 0 ]]; then
+      apt-get update > /dev/null 2>&1
+      updated=1
+    fi
+    apt-get -y install cmake > /dev/null 2>&1
+  fi
+
+fi
+
+
 # The server version requires the supplemental download of the vanilla server
 if [[ "$dlvanilla" = "1" ]]; then
   dialog --infobox "Downloading Vanilla..." 3 34 ;
@@ -427,13 +467,40 @@ if [[ "$dlvanilla" = "1" ]]; then
 fi
 
 dialog --infobox "Downloading ${flavor}..." 3 34 ; sleep 1
-wget $url -O minecraft.jar > /dev/null 2>&1
+
+if [[ $jarname != "" ]]; then
+
+  wget $url -O minecraft.jar > /dev/null 2>&1
+
+elif [[ $script != "" ]]; then
+
+  wget $script -O minecraft.sh > /dev/null 2>&1
+
+else
+
+  # This should never happen. No URL or Script for selection
+  echo
+  echo
+  echo "Died."
+  echo
+  exit 0
+
+fi
 
 dialog --infobox "Installing ${flavor}..." 3 34 ;
-java -Xmx500M -jar minecraft.jar $switches
+if [[ $url == $vanilla ]]; then
+  # Vanilla doesn't need to be compiled, just copy the file
+  cp minecraft.jar server.jar
+elif [[ $flavor == "Cuberite" ]]; then
+  sh minecraft.sh -m Release -t 1
+  cuberiteresponse=$?
+else
+  java -Xmx500M -jar minecraft.jar $switches > /dev/null 2&>1
+fi
 
-jarfile=$(ls ${instdir}src/${jarname})
-if [[ $jarfile == "" ]]; then
+if [[ $flavor == "Cuberite" ]]; then
+
+  if [[ $cuberiteresponse != 0 ]]; then
     dialog --title "Error" \
       --msgbox "\nSadly, it appears compiling failed." 8 50
     echo
@@ -441,10 +508,27 @@ if [[ $jarfile == "" ]]; then
     echo "Failed."
     echo
     exit 0
+  else
+    mv cuberite/build-cuberite/Server/* $instdir
+  fi
+
 else
-  cp $jarfile $instdir
-  t=${jarfile#*-}
-  version=$(basename $t .jar)
+
+  jarfile=$(ls ${instdir}src/${jarname})
+  if [[ $jarfile == "" ]]; then
+    dialog --title "Error" \
+      --msgbox "\nSadly, it appears compiling failed." 8 50
+    echo
+    echo
+    echo "Failed."
+    echo
+    exit 0
+  else
+    cp $jarfile $instdir
+    t=${jarfile#*-}
+    version=$(basename $t .jar)
+  fi
+
 fi
 
 
@@ -457,7 +541,11 @@ dialog --infobox "Creating scripts..." 3 34 ; sleep 1
 # Create the run script
 echo '#!/bin/bash
 cd "$(dirname "$0")"' > ${instdir}server
-echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+if [[ $flavor == "Cuberite" ]]; then
+  echo ${instdir}cuberite/Cuberite >> ${instdir}server
+else
+  echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+fi
 chmod +x ${instdir}server
 # Need to generate the config and EULA
 if [[ $upgrade == 0 ]] || [[ ! -e ${instdir}server.properties ]]; then

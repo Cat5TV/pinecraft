@@ -42,9 +42,14 @@ A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
 An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM. Spigot was the original Pinecraft default server, circa Pinecraft 1.x. [More Info](https://www.spigotmc.org/)
 
 
+**Cuberite**
+
+Cuberite is an alternate server which, while written in C++ accepts connections from Java clients. Note that you will need to use an old client to connect (currently supports 1.12.2). Advantage to Cuberite is that it will run on extremely under-powered devices, such as older Raspberry Pi.
+
+
 **Vanilla**
 
-Coming soon. Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher. [More Info](https://minecraft.net)
+Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher. [More Info](https://minecraft.net)
 
 
 Game Modes
@@ -67,6 +72,8 @@ Buy Your Raspberry Pi (Or Other SBC)
 ====================================
 
 This feature on Category5 Technology TV sponsored by ameriDroid.com
+
+[![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)](https://ameridroid.com)
 
 USA-based SBC sales with unmatched support and fast shipping
 
@@ -177,6 +184,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.1 - Added Vanilla server. Label Paper as the new Default server version (previously was Spigot). Hide output of installers (to hide the misleading errors in Paper's installer). Added experimental support for Cuberite.
 
 Pinecraft 2.0 - Pinecraft now supports installation of Paper, Fabric, and Spigot. Also, previous versions deployed a Survival server. Now, user may choose Survival or Creative during install.
 
