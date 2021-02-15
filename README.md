@@ -218,7 +218,7 @@ Modify server.properties, the main config file for your server's settings
 https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
 
 **Find Plugins for Spigot / Paper / Fabric**
-https://www.spigotmc.org/resources/categories/spigot.4/?__cf_chl_jschl_tk__=e8b11c7a3a9c1243551efcd0c8ffe96c90aa74e2-1613356620-0-ATif14FeIvL6vgHkQ7PSHRb6iTqu8HChikWGbcScgn0X852INC73n21k7yWIlfILGreCUnrgbn8PuIGf-d4QNhtAjixoXr1_6fhLao0GWv3XpppN6yYPbQ5tKU1m8D6VW22c7wAfBVaUCBSWl-oXrMr3mYK3BRu9a8EQc91b8qKQsxHX-nA8UmYwerlCj9hsAip45YsUCd6n7i--d6vPHt581C3LZb_cjiCRAxxeaFlpfMP3hZjc7B303Alh_lyI9ZIlsfMpZ-gRkDggxPwuhenYyvwwHuHoJ0Qgn23PfzsVeO7dEIBX_iZbemQgkoabD8b_UII1Nw6RyLLcHM8WHV32KiNeoUSQ0LzrtPZw9M7O
+https://www.spigotmc.org/resources/categories/spigot.4/
 
 
 **And here are some FAQ's:**
