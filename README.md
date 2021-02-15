@@ -220,6 +220,8 @@ https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
 **Find Plugins for Spigot / Paper / Fabric**
 https://www.spigotmc.org/resources/categories/spigot.4/
 
+**Don't Forget:** Plugins can negatively impact server performance. Select carefully.
+
 
 **And here are some FAQ's:**
 
