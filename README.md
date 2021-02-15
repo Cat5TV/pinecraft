@@ -21,6 +21,8 @@ Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/b
 
 The current version of Pinecraft is 2.0.
 
+![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
+
 
 Server Versions
 ===============
