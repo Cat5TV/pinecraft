@@ -25,6 +25,7 @@
     }
   }
   file_put_contents($cfgfile,json_encode($config));
+  $load = sys_getloadavg();
 ?>
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>Pinecraft</title>
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -47,7 +48,8 @@ body {
 <body>
   <div id="topbar">
     <p>Pinecraft Settings Interface</p>
+    <p>Server Load: <?= $load[1] ?></p>
   </div>
-  <p>Coming soon.</p>
+  <p>Coming soon.<?php print_r($config) ?></p>
 </body>
 </html>
