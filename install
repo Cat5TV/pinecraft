@@ -13,6 +13,9 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# Install the web interface
+#psi=1
+
 # Prevent running multiple apt updates
 updated=0
 
@@ -564,10 +567,7 @@ if [[ $psi == 1 ]]; then
 
   cp ${base}/assets/psi.php /etc/pinecraft/psi/
 
-  echo "ver=$pcver
-instdir=$instdir
-flavor=$flavor
-" > /etc/pinecraft/psi/psi.cfg
+  printf '{"pcver":"%s","instdir":"%s","flavor":"%s"}\n' "$pcver" "$instdir" "$flavor" > /etc/pinecraft/psi/psi.json
 
   chown -R $user:$user /etc/pinecraft/
 fi
