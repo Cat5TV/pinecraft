@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-ver="2.1"
+pcver="2.1"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -15,6 +15,9 @@ fi
 
 # Prevent running multiple apt updates
 updated=0
+
+# Place the current folder in a variable to use as a base source folder
+base=$(pwd)
 
 # dialog allows me to create a pretty installer
 # It is a required dependency since Pinecraft 1.1
@@ -35,7 +38,7 @@ if [[ $dialog == "" ]]; then
   fi
 fi
 
-dialog --title "Pinecraft $ver" \
+dialog --title "Pinecraft $pcver" \
 --msgbox "
  Pinecraft: The Minecraft Server Installer
       For Raspberry Pi and Other SBCs
@@ -43,7 +46,7 @@ dialog --title "Pinecraft $ver" \
     By Robbie Ferguson // The Bald Nerd
   https://category5.tv/feature/minecraft
 
-         Installer Version: $ver
+         Installer Version: $pcver
          Minecraft Version: Latest
 
          Sponsored by ameriDroid
@@ -132,7 +135,7 @@ vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1e
 flavor=""
 
 exec 3>&1
-result=$(dialog --title "Pinecraft $ver" \
+result=$(dialog --title "Pinecraft $pcver" \
          --menu "Choose your Minecraft server type:" 20 40 10 \
          "P"       "Paper (Default)" \
          "F"       "Fabric" \
@@ -191,7 +194,7 @@ if [[ $flavor == "" ]]; then
 fi
 
 exec 3>&1
-result=$(dialog --title "Pinecraft $ver" \
+result=$(dialog --title "Pinecraft $pcver" \
          --menu "Choose your game type:" 20 40 10 \
          "S"       "Survival" \
          "C"       "Creative" \
@@ -405,7 +408,7 @@ if [[ ! $oc_volt == 0 ]]; then
   esac
 fi
 
-dialog --title "Pinecraft $ver"  --yesno "Automatically load the server on boot?" 6 60
+dialog --title "Pinecraft $pcver"  --yesno "Automatically load the server on boot?" 6 60
   case $? in
   0)
    cron=1
@@ -414,6 +417,16 @@ dialog --title "Pinecraft $ver"  --yesno "Automatically load the server on boot?
    cron=0
    ;;
   esac
+
+#dialog --title "Pinecraft $pcver"  --yesno "Install Pinecraft Settings Interface?" 6 60
+#  case $? in
+#  0)
+#   psi=1
+#   ;;
+#  1)
+#   psi=0
+#   ;;
+#  esac
 
 
 if [[ $upgrade == 0 ]]; then
@@ -532,6 +545,35 @@ else
 fi
 
 
+
+if [[ $psi == 1 ]]; then
+
+  # PHP interpreter / server for Pinecraft configuration interface
+  if [ $(dpkg-query -W -f='${Status}' php 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    dialog --infobox "Installing PHP..." 3 34 ;
+    if [[ $updated == 0 ]]; then
+      apt-get update > /dev/null 2>&1
+      updated=1
+    fi
+    apt-get -y install php-cli > /dev/null 2>&1
+  fi
+
+  if [[ ! -d /etc/pinecraft/psi/ ]]; then
+    mkdir -p /etc/pinecraft/psi
+  fi
+
+  cp ${base}/assets/psi.php /etc/pinecraft/psi/
+
+  echo "ver=$pcver
+instdir=$instdir
+flavor=$flavor
+" > /etc/pinecraft/psi/psi.cfg
+
+  chown -R $user:$user /etc/pinecraft/
+fi
+
+
+
 ###############################################
 # Create the scripts
 ###############################################
@@ -601,6 +643,21 @@ chmod +x ${instdir}stop
 
 
 ###############################################
+# Create config folders
+###############################################
+
+  if [[ ! -d /etc/pinecraft/pid/ ]]; then
+    mkdir -p /etc/pinecraft/pid
+  fi
+
+  chown -R $user:$user /etc/pinecraft/
+
+###############################################
+# /Create config folders
+###############################################
+
+
+###############################################
 # Overclock
 ###############################################
 
@@ -643,7 +700,7 @@ fi
 
 
 # Create a file to later let us know the version of Pinecraft used
-echo $ver > ${instdir}cat5tv.ver
+echo $pcver > ${instdir}cat5tv.ver
 
 # Set ownership to the user
 chown -R $user:$user $instdir
@@ -658,19 +715,26 @@ chown -R $user:$user $instdir
   crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
 
   if [[ "$cron" == "1" ]]; then
-
     # Add server to auto-load at boot if doesn't already exist in crontab
     if ! grep -q "minecraft/server" /tmp/cron.tmp; then
       dialog --infobox "Enabling auto-run..." 3 34 ; sleep 1
       printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
       cronupdate=1
     fi
-
   else
     # Just in case it was previously enabled, disable it
     # as this user requested not to auto-run
     /bin/sed -i~ "\~@reboot ${instdir}server~d" /tmp/cron.tmp
     cronupdate=1
+  fi
+
+  if [[ $psi == 1 ]]; then
+    if ! grep -q "pinecraft/psi/psi.php" /tmp/cron.tmp; then
+      dialog --infobox "Enabling Pinecraft SI..." 3 34 ; sleep 1
+      php=$(type -p php)
+      printf "\n@reboot $php -S 0.0.0.0:8088 /etc/pinecraft/psi/psi.php > /dev/null 2>&1\n" >> /tmp/cron.tmp
+      cronupdate=1
+    fi
   fi
 
   # Import revised crontab
