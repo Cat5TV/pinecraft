@@ -27,27 +27,27 @@ The current version of Pinecraft is 2.0.
 Server Versions
 ===============
 
-**Paper**
+**Paper** Supports Plugins / Fast Build Time
 
 A performance-optimized Minecraft server based on Spigot and compatible with Spigot plugins. [More Info](https://papermc.io/)
 
 
-**Fabric**
+**Fabric** Supports Plugins / Fast Build Time
 
 A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
 
 
-**Spigot**
+**Spigot** Supports Plugins / Slow Build Time
 
 An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM. Spigot was the original Pinecraft default server, circa Pinecraft 1.x. [More Info](https://www.spigotmc.org/)
 
 
-**Cuberite** (Currently Experimental)
+**Cuberite** (Currently Experimental) Slow Build Time
 
 Cuberite is an alternate server which, while written in C++ accepts connections from Java clients. Note that you will need to use an old client to connect (currently supports 1.12.2). Advantage to Cuberite is that it will run on extremely under-powered devices, such as older Raspberry Pi.
 
 
-**Vanilla**
+**Vanilla** Fast Build Time
 
 Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher. [More Info](https://minecraft.net)
 
@@ -99,6 +99,16 @@ Software Requirements
 - Debian-based headless server distro for your single board computer. For a Raspberry Pi 4, opt for Raspberry Pi OS Lite.
 
 **Note:** You do not need a Minecraft Java account in order to run the server. I.E., you could boot up a Pinecraft server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
+
+
+Plugin Support
+==============
+
+For any of the server versions which support plugins (see "Server Versions" above) simply place the plugin ZIP file in ~/minecraft/plugins and then run `~/minecraft/restart`
+
+Remember, adding plugins can have a negative impact on your server performance. Some plugins may also introduce bugs, glitches or other issues. Be selective about which plugins you add to your server.
+
+You can download plugins from https://www.spigotmc.org/resources/ or any other Bukkit / Spigot plugin resource.
 
 
 License
