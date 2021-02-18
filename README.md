@@ -1,6 +1,6 @@
 ![Pinecraft](assets/pinecraft-logo.png?raw=true)
 
-## Minecraft Server Installer for Raspberry Pi 4 and Other SBCs such a PINE64, ODROID and more
+## Minecraft Server Installer for Raspberry Pi, PINE64 and Other SBCs.
 
 This installer simplifies the installation and setup of a Minecraft Server.
 
