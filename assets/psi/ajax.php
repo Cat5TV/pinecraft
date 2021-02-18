@@ -29,6 +29,20 @@
       $df = disk_free_space($config->instdir);
       $response = '<div><h6 class="my-0">Game Disk Free</h6><small>' . $config->instdir . '</small></div><span class="text-muted">' . formatBytes($df) . '️</span>';
       break;
+    case 'uptime':
+      $str   = @file_get_contents('/proc/uptime');
+      $num   = floatval($str);
+      $secs  = fmod($num, 60); $num = intdiv($num, 60);
+      $mins  = $num % 60;      $num = intdiv($num, 60);
+      $hours = $num % 24;      $num = intdiv($num, 24);
+      $days  = $num;
+      $uptime = '';
+      if ($days > 0) $uptime .= floor($days) . 'd ';
+      if ($hours > 0) $uptime .= floor($hours) . 'h ';
+      if ($mins > 0) $uptime .= floor($mins) . 'm ';
+      if ($secs > 0) $uptime .= floor($secs) . 's ';
+      $response = '<div><h6 class="my-0">Server Uptime</h6></div><span class="text-muted">' . $uptime . '️</span>';
+      break;
   }
 
   echo $response;

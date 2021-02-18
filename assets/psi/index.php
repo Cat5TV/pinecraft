@@ -82,7 +82,6 @@
     <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="logo.webp" alt="" height="57" />
       <h2>Pinecraft Settings Interface</h2>
-      <p class="lead">Coming soon.</p>
     </div>
 
     <div class="row g-3">
@@ -110,6 +109,7 @@
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm" id="size"></li>
           <li class="list-group-item d-flex justify-content-between lh-sm" id="df"></li>
+          <li class="list-group-item d-flex justify-content-between bg-light" id="uptime"></li>
         </ul>
 
         <div class="text-end">
@@ -271,7 +271,35 @@
 
           <button class="w-100 btn btn-primary btn-lg" type="submit">Save Settings</button>
         </form>
+
+        <hr class="my-4">
+
+        <h4 class="mb-3">Danger Zone</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <button class="w-100 btn btn-warning btn-lg" type="submit">Power Off Server</button>
+            </div>
+            <div class="col-sm-6">
+              <button class="w-100 btn btn-secondary btn-lg" type="submit">Reboot Server</button>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <button class="w-100 btn btn-danger btn-lg" type="submit">Re-Generate World</button>
+            </div>
+          </div>
+        </form>
+
+
       </div>
+
+
+
+
     </div>
   </main>
 
@@ -286,7 +314,6 @@
 </div>
 
   <p><?php print_r($config) ?></p>
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>

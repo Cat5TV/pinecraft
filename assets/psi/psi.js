@@ -42,7 +42,21 @@ function df() {
   });
 }
 
+function uptime() {
+  $.ajax({
+    url : 'ajax.php',
+    data:{"query":"uptime"},
+    type: 'POST',
+    success: function(data){
+      $('#uptime').html(data);
+    }
+  });
+}
+
 $(document).ready(function() {
+
+  uptime();
+  setInterval(function(){ uptime(); }, 1000);
 
   running();
   setInterval(function(){ running(); }, 5000);
