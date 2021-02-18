@@ -1,0 +1,11 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  max-width: 960px;
+}
+
+#topbar {
+  color: #666;
+}

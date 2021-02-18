@@ -3,8 +3,14 @@
     Pinecraft Settings Interface (PSI)
     By Robbie Ferguson
   */
-  $cfgfile = '/etc/pinecraft/psi/psi.json';
-  $config = json_decode(file_get_contents($cfgfile));
+  require_once('functions.php');
+
+  if (!auth()) {
+    header('location:login.php');
+    exit();
+  }
+
+  $config = loadConfig();
 
   // Load Game Server Version
   if (file_exists($config->instdir . 'version_history.json')) {
@@ -52,9 +58,8 @@
   }
 
   // Store everything in the main config file
-  file_put_contents($cfgfile,json_encode($config));
+  file_put_contents($config->cfgfile,json_encode($config));
 
-  $load = sys_getloadavg();
 ?>
 <!doctype html>
 <html lang="en">
@@ -67,83 +72,54 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet">
   <meta name="theme-color" content="#7952b3">
-  <style>
-    body {
-      font-family: 'Open Sans', sans-serif;
-    }
-    .container {
-      max-width: 960px;
-    }
-  </style>
 </head>
 <body class="bg-light">
-  <div id="topbar" class="container">
-    <div class="row">
-      <div class="col-md-6 text-start fw-bold fs-3">Pinecraft Settings Interface</div>
-      <div class="col-md-6 text-end fs-5 font-monospace">Server Load: <?= $load[1] ?></div>
-    </div>
-  </div>
-  <p><?php print_r($config) ?></p>
 
 <div class="container">
   <main>
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-      <h2>Checkout form</h2>
-      <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      <img class="d-block mx-auto mb-4" src="logo.webp" alt="" height="57" />
+      <h2>Pinecraft Settings Interface</h2>
+      <p class="lead">Coming soon.</p>
     </div>
 
     <div class="row g-3">
+
       <div class="col-md-5 col-lg-4 order-md-last">
+
         <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-muted">Your cart</span>
-          <span class="badge bg-secondary rounded-pill">3</span>
+          <span class="text-muted">Server Status</span>
         </h4>
+
         <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between bg-light" id="running"></li>
+          <li class="list-group-item d-flex justify-content-between" id="load"></li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">Product name</h6>
-              <small class="text-muted">Brief description</small>
+              <h6 class="my-0">Server Type</h6>
             </div>
-            <span class="text-muted">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Second product</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$8</span>
+            <span class="text-muted"><?= $config->flavor ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">Third item</h6>
-              <small class="text-muted">Brief description</small>
+              <h6 class="my-0">Pinecraft Installer</h6>
             </div>
-            <span class="text-muted">$5</span>
+            <span class="text-muted"><?= $config->pcver ?></span>
           </li>
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <small>EXAMPLECODE</small>
-            </div>
-            <span class="text-success">−$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
-          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm" id="size"></li>
+          <li class="list-group-item d-flex justify-content-between lh-sm" id="df"></li>
         </ul>
 
-        <form class="card p-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
-            <button type="submit" class="btn btn-secondary">Redeem</button>
-          </div>
-        </form>
+        <div class="text-end">
+          <a href="login.php" class="btn btn-secondary">Logout</a>
+        </div>
+
       </div>
+
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing address</h4>
+        <h4 class="mb-3">Server Configuration</h4>
         <form class="needs-validation" novalidate>
           <div class="row g-3">
             <div class="col-sm-6">
@@ -293,7 +269,7 @@
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Save Settings</button>
         </form>
       </div>
     </div>
@@ -309,6 +285,11 @@
   </footer>
 </div>
 
+  <p><?php print_r($config) ?></p>
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <script src="psi.js"></script>
 </body>
 </html>

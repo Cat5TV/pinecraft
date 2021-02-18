@@ -565,7 +565,7 @@ if [[ $psi == 1 ]]; then
     mkdir -p /etc/pinecraft/psi
   fi
 
-  cp ${base}/assets/psi.php /etc/pinecraft/psi/
+  cp ${base}/assets/psi/* /etc/pinecraft/psi/
 
   printf '{"pcver":"%s","instdir":"%s","flavor":"%s"}\n' "$pcver" "$instdir" "$flavor" > /etc/pinecraft/psi/psi.json
 
@@ -732,7 +732,7 @@ chown -R $user:$user $instdir
     if ! grep -q "pinecraft/psi/psi.php" /tmp/cron.tmp; then
       dialog --infobox "Enabling Pinecraft SI..." 3 34 ; sleep 1
       php=$(type -p php)
-      printf "\n@reboot $php -S 0.0.0.0:8088 /etc/pinecraft/psi/psi.php > /dev/null 2>&1\n" >> /tmp/cron.tmp
+      printf "\n@reboot $php -S 0.0.0.0:8088 -t /etc/pinecraft/psi/ > /dev/null 2>&1\n" >> /tmp/cron.tmp
       cronupdate=1
     fi
   fi
