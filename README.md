@@ -6,7 +6,7 @@ This installer simplifies the installation and setup of a Minecraft Server.
 
 If you have already installed this, running it again will allow you to upgrade.
 
-[![Support Me on Patreon](https://cdn.zecheriah.com/img/patreon_button.png)](https://patreon.com/category5)
+[![Support Me on Patreon](https://cdn.zecheriah.com/img/patreon_button.png)](https://patreon.com/pinecraft)
 
 The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
 
