@@ -262,6 +262,10 @@ Edit `~/minecraft/ops.json` as follows:
 ]
 ```
 
-Replace UUID with your UUID, and USERNAME with the actual username. Then, restart your Pinecraft server with `~/minecraft/reboot`
+Replace UUID with your UUID, and USERNAME with the actual username.
+
+Here is a helpful tool I created to assist: https://category5.tv/tools/minecraft/uuid/
+
+Then, restart your Pinecraft server with `~/minecraft/reboot`
 
 When your server comes back online, that user will be admin, and can now use the /op command to create other admins.
