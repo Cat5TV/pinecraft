@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.2"
+pcver="2.3"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -650,6 +650,7 @@ dialog --infobox "Creating scripts..." 3 34 ; sleep 1
 
 # Create the run script
 echo '#!/bin/bash
+user=$(whoami); if [[ $user != "'${user}'" ]]; then echo "Cannot run as ${user} - expecting '${user}'"; exit; fi
 cd "$(dirname "$0")"' > ${instdir}server
 if [[ $flavor == "Cuberite" ]]; then
   echo ${instdir}cuberite/Cuberite >> ${instdir}server
