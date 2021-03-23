@@ -21,7 +21,7 @@ Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 2.3.
+The current version of Pinecraft is 2.4.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -196,6 +196,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.4 - Upgrade Software: Fabric (0.7.2), Paper (1.16.5-566).
 
 Pinecraft 2.3 - Prevent user from running ~/minecraft/server as root/sudo.
 

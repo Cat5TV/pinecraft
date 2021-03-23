@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.3"
+pcver="2.4"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -157,7 +157,7 @@ if [[ $? == 0 ]]; then
       ;;
     F)
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.6.1.51/fabric-installer-0.6.1.51.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.2/fabric-installer-0.7.2.jar"
       jarname="fabric-server-launch.jar"
       switches="server"
       dlvanilla=1
@@ -169,8 +169,9 @@ if [[ $? == 0 ]]; then
       switches=""
       ;;
     P)
+      # https://papermc.io/downloads
       flavor="Paper"
-      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/467/downloads/paper-1.16.5-467.jar"
+      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/566/downloads/paper-1.16.5-566.jar"
       jarname="minecraft.jar"
       switches=""
       ;;
@@ -278,8 +279,11 @@ if [[ $? == 0 ]]; then
       ;;
     esac
 else
-  # Default: Randomly generated at worldgen
-  seed=""
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
 fi
 
 # Input custom seed
