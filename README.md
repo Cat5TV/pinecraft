@@ -252,7 +252,7 @@ https://www.spigotmc.org/resources/categories/spigot.4/
 
 **And here are some FAQ's:**
 
-*How do I become admin? /op says I don't have permission.*
+### How do I become admin? /op says I don't have permission.
 
 After connecting to your server as the user you want to make admin, look at your `~/minecraft/logs/latest.log` file and find the UUID for that user.
 
@@ -275,3 +275,13 @@ Here is a helpful tool I created to assist: https://category5.tv/tools/minecraft
 Then, restart your Pinecraft server with `~/minecraft/reboot`
 
 When your server comes back online, that user will be admin, and can now use the /op command to create other admins.
+
+### How do I re-generate my world?
+
+To completely destroy your world and regenerate it, you simply need to remove the files.
+
+Step 1: Stop your Minecraft server. `~/minecraft/stop`
+
+Step 2: Remove the world (this cannot be undone): `rm -rf ~/minecraft/world*`
+
+Step 3: Restart your Minecraft server by whichever means you prefer (E.G., reboot your server with `sudo ~/minecraft/reboot`) - Remember, the first time the server loads, it will generate a new world. Give it 10 minutes or so before you attempt to connect.
