@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.1"
+pcver="2.2"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -196,6 +196,7 @@ if [[ $flavor == "" ]]; then
   exit 1
 fi
 
+
 exec 3>&1
 result=$(dialog --title "Pinecraft $pcver" \
          --menu "Choose your game type:" 20 40 10 \
@@ -218,6 +219,73 @@ else
   echo "Aborted."
   echo
   exit 1
+fi
+
+exec 3>&1
+result=$(dialog --title "Pinecraft $pcver" \
+         --menu "Choose your game seed:" 20 40 10 \
+         "A"       "Random (Default)" \
+         "B"       "Custom" \
+         "C"       "Category5 TV RPi Server" \
+         "D"       "Minecraft Title Screen" \
+         "E"       "Slime Farm" \
+         "F"       "Obsidian Farm" \
+         "G"       "Woodland Mansion" \
+         "H"       "Triple Island Ocean Monument" \
+         "I"       "Spruce Village and Coral Reef" \
+         "J"       "Shipwreck Village" \
+         "K"       "Underwater Temple" \
+         "L"       "Diamond Paradise" \
+       2>&1 1>&3);
+
+if [[ $? == 0 ]]; then
+  case $result in
+    A)
+      seed=""
+      ;;
+    B)
+      seed="custom"
+      ;;
+    C)
+      seed="-4385290424787160722"
+      ;;
+    D)
+      seed="2151901553968352745"
+      ;;
+    E)
+      seed="7000"
+      ;;
+    F)
+      seed="-8880302588844065321"
+      ;;
+    G)
+      seed="throwlow"
+      ;;
+    H)
+      seed="6073041046072376055"
+      ;;
+    I)
+      seed="673900667"
+      ;;
+    J)
+      seed="-613756530319979507"
+      ;;
+    K)
+      seed="-5181140359215069925"
+      ;;
+    L)
+      seed="1785852800490497919"
+      ;;
+    esac
+else
+  # Default: Randomly generated at worldgen
+  seed=""
+fi
+
+# Input custom seed
+if [[ $seed == "custom" ]]; then
+  seed=$(dialog --stdout --title "Custom World Seed" \
+    --inputbox "Enter your custom world seed" 8 50)
 fi
 
 # Username may be provided on CLI as in 1.0
@@ -691,6 +759,7 @@ if [[ -e ${instdir}server.properties ]]; then
 
   # These ones, however, are selected by the user, so we'll make these changes even if already installed
   /bin/sed -i "/gamemode=/c\gamemode=${gamemode}" ${instdir}server.properties
+  /bin/sed -i "/level-seed=/c\level-seed=${seed}" ${instdir}server.properties
 
 fi
 

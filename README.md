@@ -21,7 +21,7 @@ Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 2.1.
+The current version of Pinecraft is 2.2.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -196,6 +196,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.2 - Added seed selection and custom seed input.
 
 Pinecraft 2.1 - Added Vanilla server. Label Paper as the new Default server version (previously was Spigot). Hide output of installers (to hide the misleading errors in Paper's installer). Added experimental support for Cuberite.
 
