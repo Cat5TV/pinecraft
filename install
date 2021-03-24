@@ -6,12 +6,26 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.5"
+pcver="2.6"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
   exit 1
 fi
+
+# Get the LAN IP address
+
+  # test the route based on $host and treat that as the interface
+  interface=""
+  host=github.com
+  host_ip=$(getent ahosts "$host" | awk '{print $1; exit}')
+  interface=`ip route get "$host_ip" | grep -Po '(?<=(dev )).*(?= src| proto)' | cut -f 1 -d " "`
+  ip=$(/sbin/ip -f inet addr show $interface | grep -Po 'inet \K[\d.]+' | head -n 1)
+  if [[ $ip == "" ]]; then
+    # Never reply with a blank string - instead, use localhost if no IP is found
+    # This would be the case if no network connection is non-existent
+    ip="127.0.0.1"
+  fi
 
 # Install the web interface
 #psi=1
@@ -132,6 +146,15 @@ if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -e
   apt-get -y install git > /dev/null 2>&1
 fi
 git config --global --unset core.autocrlf
+
+if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  dialog --infobox "Installing screen..." 3 34 ;
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install screen > /dev/null 2>&1
+fi
 
 
 vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
@@ -482,6 +505,26 @@ else if (( $gamememMIN < 1024 )); then
 fi
 fi
 
+dialog --title "Pinecraft $pcver"  --yesno "Automatically load the server on boot?" 6 60
+  case $? in
+  0)
+   cron=1
+   ;;
+  1)
+   cron=0
+   ;;
+  esac
+
+#dialog --title "Pinecraft $pcver"  --yesno "Install Pinecraft Settings Interface?" 6 60
+#  case $? in
+#  0)
+#   psi=1
+#   ;;
+#  1)
+#   psi=0
+#   ;;
+#  esac
+
 dialog --title "Information" \
 --msgbox "
 Detected Hardware:
@@ -511,30 +554,15 @@ if [[ ! $oc_volt == 0 ]]; then
   esac
 fi
 
-dialog --title "Pinecraft $pcver"  --yesno "Automatically load the server on boot?" 6 60
-  case $? in
-  0)
-   cron=1
-   ;;
-  1)
-   cron=0
-   ;;
-  esac
 
-#dialog --title "Pinecraft $pcver"  --yesno "Install Pinecraft Settings Interface?" 6 60
-#  case $? in
-#  0)
-#   psi=1
-#   ;;
-#  1)
-#   psi=0
-#   ;;
-#  esac
+###############################################
+# Finished Asking Questions: Begin Installation
+###############################################
 
 if [[ $upgrade == 1 ]] || [[ $replace == 1 ]]; then
   if [[ -e ${instdir}stop ]]; then
     dialog --infobox "Stopping server..." 3 22 ;
-    ${instdir}stop > /dev/null 2>&1
+    su - $user -c "${instdir}stop" > /dev/null 2>&1
   fi
 fi
 if [[ $replace == 1 ]]; then
@@ -724,16 +752,7 @@ if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
   exit 1
 fi
-pid=`pidof java`
-if [[ $pid != "" ]]; then
-  printf "Minecraft is running. Waiting."
-  kill -SIGHUP $pid
-fi
-while [[ $pid != "" ]]; do
-  pid=`pidof java`
-  sleep 3
-  printf "."
-done
+su - $user -c "${instdir}stop"
 echo
 echo "Rebooting."
 /sbin/reboot' > ${instdir}reboot
@@ -741,19 +760,78 @@ chmod +x ${instdir}reboot
 
 # Create the safe stop script
 echo '#!/bin/bash
-pid=`pidof java`
-if [[ $pid != "" ]]; then
-  printf "Stopping Minecraft Server. This will take time."
-  kill -SIGHUP $pid
+user=$(whoami);
+if [[ $user != "'${user}'" ]]; then
+  if su - '$user' -c "/usr/bin/screen -list" | grep -q Pinecraft; then
+    printf "Stopping Minecraft Server. This will take time."
+    su - '$user' -c "screen -S Pinecraft -p 0 -X stuff \"stop^M\""
+    running=1
+  fi
+  while [[ $running == 1 ]]; do
+    if ! su - '$user' -c "/usr/bin/screen -list" | grep -q Pinecraft; then
+      running=0
+    fi
+    sleep 3
+    printf "."
+  done
+else
+  if /usr/bin/screen -list | grep -q Pinecraft; then
+    printf "Stopping Minecraft Server. This will take time."
+    screen -S Pinecraft -p 0 -X stuff "stop^M"
+    running=1
+  fi
+  while [[ $running == 1 ]]; do
+    if ! /usr/bin/screen -list | grep -q Pinecraft; then
+      running=0
+    fi
+    sleep 3
+    printf "."
+  done
 fi
-while [[ $pid != "" ]]; do
-  pid=`pidof java`
-  sleep 3
-  printf "."
-done
 echo
 echo "Done. Minecraft has been stopped safely."' > ${instdir}stop
-chmod +x ${instdir}stop
+chmod a+x ${instdir}stop
+
+# Create the service
+echo '#/bin/bash
+set -e
+
+### BEGIN INIT INFO
+# Provides:       pinecraft
+# Required-Start: $remote_fs $network
+# Required-Stop:  $remote_fs
+# Default-Stop:   0 1 6
+# Short-Description: Minecraft server powered by Pinecraft Installer
+### END INIT INFO
+
+case "$1" in
+
+stop)
+      '${instdir}'stop
+    ;;
+
+status)
+      user=$(whoami); if [ $user != "'${user}'" ]; then echo "Cannot run as ${user} - expecting '${user}'"; exit; fi
+      if screen -ls | grep -q Pinecraft; then
+        echo 1
+      else
+        echo 0
+      fi
+    ;;
+
+*)
+
+    echo "usage: $0 <stop|status>" >&2
+
+    exit 1
+esac
+' > /etc/init.d/pinecraft
+chmod a+x /etc/init.d/pinecraft
+
+# Make the stop command run automatically at shutdown
+sudo ln -s ${instdir}stop /etc/rc0.d/K01stop-pinecraft
+# Make the stop command run automatically at reboot
+sudo ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 
 ###############################################
 # /Create the scripts
@@ -831,20 +909,22 @@ chown -R $user:$user $instdir
 # Install cronjob to auto-start server on boot
 ###############################################
 
-# Dump current crontab to tmp file
+# Dump current crontab to tmp file, empty if doesn't exist
   crontab -u $user -l > /tmp/cron.tmp 2>/dev/null
 
   if [[ "$cron" == "1" ]]; then
+    # Remove previous entry (in case it's an old version)
+    /bin/sed -i~ "\~${instdir}server~d" /tmp/cron.tmp
     # Add server to auto-load at boot if doesn't already exist in crontab
     if ! grep -q "minecraft/server" /tmp/cron.tmp; then
       dialog --infobox "Enabling auto-run..." 3 34 ; sleep 1
-      printf "\n@reboot ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
+      printf "\n@reboot /usr/bin/screen -dmS Pinecraft ${instdir}server > /dev/null 2>&1\n" >> /tmp/cron.tmp
       cronupdate=1
     fi
   else
     # Just in case it was previously enabled, disable it
     # as this user requested not to auto-run
-    /bin/sed -i~ "\~@reboot ${instdir}server~d" /tmp/cron.tmp
+    /bin/sed -i~ "\~${instdir}server~d" /tmp/cron.tmp
     cronupdate=1
   fi
 
@@ -870,6 +950,18 @@ chown -R $user:$user $instdir
 # /Install cronjob to auto-start server on boot
 ###############################################
 
+###############################################
+# Run the server now
+###############################################
+
+  dialog --infobox "Starting the server..." 3 26 ;
+  su - $user -c "/usr/bin/screen -dmS Pinecraft ${instdir}server"
+
+###############################################
+# /Run the server now
+###############################################
+
+
 if [[ -e ${instdir}server.properties ]]; then
   dialog --title "Success" \
       --msgbox "\n$flavor Minecraft server installed successfully." 8 50
@@ -878,25 +970,17 @@ else
       --msgbox "\n$flavor appears to have installed, but is not initializing correctly. It is unlikely to work until this is resolved." 9 50
 fi
 
-if [[ "$cron" == "1" ]]; then
-  echo
-  echo
-  echo "Reboot now to activate the server."
-  echo "Remember: First boot will take ~10 minutes to build your world. Be patient."
-  echo
-  echo "To reboot, run this command as the $user user:"
-  echo "sudo ~/minecraft/reboot"
-  echo
-else
+clear
   echo
   echo
   echo "Installation complete."
   echo
-  echo "Remember: The first time you load your server it will"
-  echo "take time to build your world. Be patient."
+  echo "Minecraft server is now running on $ip"
   echo
-  echo "To start your server, run this command as the $user user:"
-  echo "~/minecraft/server"
+  echo "Remember: World generation can take a few minutes. Be patient."
   echo
-fi
+  echo "Documentation: https://github.com/Cat5TV/Pinecraft"
+  echo
+  echo "Support The Project: https://patreon.com/Pinecraft"
+  echo
 

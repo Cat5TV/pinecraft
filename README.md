@@ -21,7 +21,7 @@ Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 2.5.
+The current version of Pinecraft is 2.6.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -168,13 +168,13 @@ On first boot, your Minecraft Server will generate the world. This can take arou
 Post-Install Scripts
 ====================
 
-### ~/minecraft/server
-Start the Minecraft server. This script is automatically run upon boot.
+`~/minecraft/server`
+Start the Minecraft server. This script is automatically run upon boot if you selected this feature.
 
-### ~/minecraft/reboot
+`~/minecraft/reboot`
 When you need to reboot your Minecraft server, you must do so safely, otherwise all blocks that are stored in RAM will be lost (could be a full day's worth). Run this script to shutdown the Minecraft server software, store all blocks, and reboot the server. Note: It can easily take 15-20 minutes to stop the Minecraft server. Don't abort once you run this script. It is working hard to save all the blocks for your world and if you stop it or force a reboot, you will lose blocks.
 
-### ~/minecraft/stop
+`~/minecraft/stop`
 Safely stop your Minecraft server. DO NOT reboot your system or power off unless you have first run this script and allowed it to complete.
 
 
@@ -196,6 +196,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.6 - Minecraft server now running on "Pinecraft" screen session. ~/minecraft/stop no longer looks for Java PID to send SIGHUP, but rather sends the stop command to the "Pinecraft" screen session. Minecraft server now starts automatically upon installation complete; No need to reboot. User can now attach "Pinecraft" screen session to access the Minecraft server console (handy for running op commands). The safe stop command now executes automatically at system shutdown or reboot.
 
 Pinecraft 2.5 - Fix initialization issue on new Pinecraft servers following root patch introduced in 2.3. Improve upgrade process and add option to fully remove previous install and replace with a new install (create a new world as well).
 
