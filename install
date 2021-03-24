@@ -803,6 +803,7 @@ if [[ -e ${instdir}server.properties ]]; then
   # These settings are my own defaults, so only do these during first install (not upgrade)
   # Will not replace user-configured changes in the server.properties
   if [[ $upgrade == 0 ]]; then
+    /bin/sed -i '/enable-query=/c\enable-query=true' ${instdir}server.properties
     /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
     /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
     /bin/sed -i "/level-seed=/c\level-seed=${seed}" ${instdir}server.properties
