@@ -359,15 +359,16 @@ if [[ $upgrade == 0 ]]; then
          "A"       "Random (Default)" \
          "B"       "Custom" \
          "C"       "Category5 TV RPi Server" \
-         "D"       "Minecraft Title Screen" \
-         "E"       "Slime Farm" \
-         "F"       "Obsidian Farm" \
-         "G"       "Woodland Mansion" \
-         "H"       "Triple Island Ocean Monument" \
-         "I"       "Spruce Village and Coral Reef" \
-         "J"       "Shipwreck Village" \
-         "K"       "Underwater Temple" \
-         "L"       "Diamond Paradise" \
+         "D"       "Jeff's Tutorial World" \
+         "E"       "Minecraft Title Screen" \
+         "F"       "Slime Farm" \
+         "G"       "Obsidian Farm" \
+         "H"       "Woodland Mansion" \
+         "I"       "Triple Island Ocean Monument" \
+         "J"       "Spruce Village and Coral Reef" \
+         "K"       "Shipwreck Village" \
+         "L"       "Underwater Temple" \
+         "M"       "Diamond Paradise" \
        2>&1 1>&3);
 
   if [[ $? == 0 ]]; then
@@ -382,30 +383,33 @@ if [[ $upgrade == 0 ]]; then
       seed="-4385290424787160722"
       ;;
     D)
-      seed="2151901553968352745"
+      seed="6421417242871949536"
       ;;
     E)
-      seed="7000"
+      seed="2151901553968352745"
       ;;
     F)
-      seed="-8880302588844065321"
+      seed="7000"
       ;;
     G)
-      seed="throwlow"
+      seed="-8880302588844065321"
       ;;
     H)
-      seed="6073041046072376055"
+      seed="throwlow"
       ;;
     I)
-      seed="673900667"
+      seed="6073041046072376055"
       ;;
     J)
-      seed="-613756530319979507"
+      seed="673900667"
       ;;
     K)
-      seed="-5181140359215069925"
+      seed="-613756530319979507"
       ;;
     L)
+      seed="-5181140359215069925"
+      ;;
+    M)
       seed="1785852800490497919"
       ;;
     esac
