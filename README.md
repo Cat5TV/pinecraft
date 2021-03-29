@@ -14,7 +14,7 @@ The installer will setup a "Normal" difficulty server and allow you to select be
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
 
-**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documnentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
+**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
 
 
 Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
