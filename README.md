@@ -157,7 +157,7 @@ An ideal seed for colossal builds. The level plains of Paradise Valley are surro
 - Woodland Mansion
 - Triple Island Ocean Monument
 - Spruce Village and Coral Reef
-- Shipwreck Villag
+- Shipwreck Village
 - Underwater Temple
 - Diamond Paradise
 
