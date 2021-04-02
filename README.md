@@ -143,7 +143,11 @@ The world used in Jeff's tutorials such as [Easy XP and Loot with Minecraft Zomb
 
 **All Biome World** [via u/Plebiain](https://www.reddit.com/r/minecraftseeds/comments/h84n1j/spawn_on_a_mushroom_island_in_a_small_ocean/)
 
-This incredible seed provides all biomes within easy reach of one another. It also includes many structures, making it an exciting seed to explore.
+This seed provides all biomes within easy reach of one another. It also includes many structures, making it an exciting seed to explore.
+
+**Paradise Valley** [via Reddit/SpaceBoiArt](https://www.reddit.com/r/minecraftseeds/comments/ia3dog/created_a_new_world_and_spawned_in_this_awesome/)
+
+An ideal seed for colossal builds. The level plains of Paradise Valley are surrounded by mountains, with resource-rich forests only a short journey from spawn.
 
 **Other Included World Seeds**
 
