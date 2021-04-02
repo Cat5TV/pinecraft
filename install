@@ -369,6 +369,7 @@ if [[ $upgrade == 0 ]]; then
          "K"       "Shipwreck Village" \
          "L"       "Underwater Temple" \
          "M"       "Diamond Paradise" \
+         "N"       "All Biome World" \
        2>&1 1>&3);
 
   if [[ $? == 0 ]]; then
@@ -412,6 +413,10 @@ if [[ $upgrade == 0 ]]; then
     M)
       seed="1785852800490497919"
       ;;
+    N)
+      seed="1083719637794"
+      ;;
+      
     esac
   else
     echo
