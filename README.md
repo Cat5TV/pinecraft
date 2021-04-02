@@ -133,13 +133,17 @@ Level Seeds
 
 During installation, you can choose from one of our provided level seeds, or use your own.
 
-**Category5 TV RPi Server**
+**Category5 TV RPi Server** [via Category5 Technology TV](https://cat5.tv/minecraft)
 
 Complete with the mystical floating tree at spawn! Head North West to -396 ~ 148 to [find the town nether portal](https://youtu.be/-8-7fQmhn2k?t=824), which takes only a little work to get up and running.
 
-**Jeff's Tutorial World**
+**Jeff's Tutorial World** [via Category5 Technology TV](https://cat5.tv/minecraft)
 
 The world used in Jeff's tutorials such as [Easy XP and Loot with Minecraft Zombie Grinder XP Farm NO REDSTONE](https://youtu.be/5b570XG0pf4) and [Trading Hack: Giving Villagers a Job in Minecraft - Villager Professions](https://youtu.be/NJ4aaOQHqhM)
+
+**All Biome World** [via u/Plebiain](https://www.reddit.com/r/minecraftseeds/comments/h84n1j/spawn_on_a_mushroom_island_in_a_small_ocean/)
+
+This incredible seed provides all biomes within easy reach of one another. It also includes many structures, making it an exciting seed to explore.
 
 **Other Included World Seeds**
 
