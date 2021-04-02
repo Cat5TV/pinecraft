@@ -128,6 +128,32 @@ Remember, adding plugins can have a negative impact on your server performance. 
 You can download plugins from https://www.spigotmc.org/resources/ or any other Bukkit / Spigot plugin resource.
 
 
+Level Seeds
+===========
+
+During installation, you can choose from one of our provided level seeds, or use your own.
+
+**Category5 TV RPi Server**
+
+Complete with the mystical floating tree at spawn! Head North West to -396 ~ 148 to [find the town nether portal](https://youtu.be/-8-7fQmhn2k?t=824), which takes only a little work to get up and running.
+
+**Jeff's Tutorial World**
+
+The world used in Jeff's tutorials such as [Easy XP and Loot with Minecraft Zombie Grinder XP Farm NO REDSTONE](https://youtu.be/5b570XG0pf4) and [Trading Hack: Giving Villagers a Job in Minecraft - Villager Professions](https://youtu.be/NJ4aaOQHqhM)
+
+**Other Included World Seeds**
+
+- Minecraft Title Screen
+- Slime Farm
+- Obsidian Farm
+- Woodland Mansion
+- Triple Island Ocean Monument
+- Spruce Village and Coral Reef
+- Shipwreck Villag
+- Underwater Temple
+- Diamond Paradise
+
+
 License
 =======
 
