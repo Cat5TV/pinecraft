@@ -141,7 +141,7 @@ Complete with the mystical floating tree at spawn! Head North West to -396 ~ 148
 
 The world used in Jeff's tutorials such as [Easy XP and Loot with Minecraft Zombie Grinder XP Farm NO REDSTONE](https://youtu.be/5b570XG0pf4) and [Trading Hack: Giving Villagers a Job in Minecraft - Villager Professions](https://youtu.be/NJ4aaOQHqhM)
 
-**All Biome World** [via u/Plebiain](https://www.reddit.com/r/minecraftseeds/comments/h84n1j/spawn_on_a_mushroom_island_in_a_small_ocean/)
+**All Biome World** [via Reddit/Plebiain](https://www.reddit.com/r/minecraftseeds/comments/h84n1j/spawn_on_a_mushroom_island_in_a_small_ocean/)
 
 This seed provides all biomes within easy reach of one another. It also includes many structures, making it an exciting seed to explore.
 
