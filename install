@@ -471,10 +471,14 @@ Either you have other things running, or your board is simply not good enough to
    exit 0
 fi
 
-if [[ "$revision" == *"b03111" ]] ||
+if
+   [[ "$revision" == *"a03111" ]] ||
+   [[ "$revision" == *"b03111" ]] ||
    [[ "$revision" == *"b03112" ]] ||
+   [[ "$revision" == *"b03114" ]] ||
    [[ "$revision" == *"c03111" ]] ||
    [[ "$revision" == *"c03112" ]] ||
+   [[ "$revision" == *"c03114" ]] ||
    [[ "$revision" == *"d03114" ]]; then
      board='Raspberry Pi 4'
      boardnum=1
