@@ -34,7 +34,7 @@ Base OS
 
 Pinecraft Installer has been tested on Raspberry Pi OS Lite, and Ubuntu Server 12.04 64-Bit for Raspberry Pi.
 
-If you have a Raspberry Pi 4 with 8 GB RAM, Ubuntu Server is the recommended option since it will allow you to utilize more RAM than the 32-Bit Raspberry Pi OS Lite.
+For the Raspberry Pi 4 Ubuntu Server 64-bit is the recommended option. It will work on all versions of the board, but also has the advantage of being fully 64-bit, unlike Raspberry Pi OS Lite, which is 32-bit.
 
 Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications. Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
