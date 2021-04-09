@@ -232,7 +232,7 @@ From within the screen session, detach (exit) by pressing `CTRL-A` followed by `
 ### Scripts
 
 `~/minecraft/server`
-Start the Minecraft server. This script is automatically run upon boot if you selected this feature.
+Start the Minecraft server. This script is automatically run upon boot if you selected this feature. Of course, if you specified for Pinecraft to automatically load your Minecraft server on boot, you generally won't need this script.
 
 `~/minecraft/reboot`
 When you need to reboot your Minecraft server, you must do so safely, otherwise all blocks that are stored in RAM will be lost (could be a full day's worth). Run this script to shutdown the Minecraft server software, store all blocks, and reboot the server. Note: It can easily take 15-20 minutes to stop the Minecraft server. Don't abort once you run this script. It is working hard to save all the blocks for your world and if you stop it or force a reboot, you will lose blocks.
