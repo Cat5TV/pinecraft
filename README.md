@@ -17,9 +17,9 @@ The installer attempts to detect things like how much RAM you have (and availabl
 **Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
 
 
-Check out the first release, Pinecraft 1.0 on Category5 Technology TV:
+Check out Pinecraft 2.6 on Category5 Technology TV:
 
-[![Pinecraft Installer 1.0 Featured on Category5 Technology TV](https://img.youtube.com/vi/-8-7fQmhn2k/0.jpg)](https://www.youtube.com/watch?v=-8-7fQmhn2k)
+[![Pinecraft Installer 2.6 Featured on Category5 Technology TV](https://img.youtube.com/vi/1A4FtaiNkrg/0.jpg)](https://www.youtube.com/watch?v=1A4FtaiNkrg)
 
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
@@ -214,8 +214,22 @@ To reboot **do not** use traditional Linux commands. You must use:
 On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready. You can tail the log file if you'd like to see the progress, or sipmly retry connecting via Minecraft Java after a few minutes.
 
 
-Post-Install Scripts
-====================
+Post-Install
+============
+
+### Commands
+
+If you opted to have Pinecraft load your Minecraft server at boot, your Minecraft server will be running in a screen session.
+
+All commands are run as the user you originally specified in Pinecraft Installer (do not run as *root*, for example).
+
+`screen -ls` will reveal running screen sessions. There should be one called *Pinecraft*.
+
+`screen -r Pinecraft` re-attaches to the Pinecraft screen session (the Minecraft console) where you can enter console commands directly.
+
+From within the screen session, detach (exit) by pressing `CTRL-A` followed by `D`. This will detach the screen session but leave your Minecaft server running.
+
+### Scripts
 
 `~/minecraft/server`
 Start the Minecraft server. This script is automatically run upon boot if you selected this feature.
