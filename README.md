@@ -221,7 +221,7 @@ Post-Install
 
 If you opted to have Pinecraft load your Minecraft server at boot, your Minecraft server will be running in a screen session.
 
-All commands are run as the user you originally specified in Pinecraft Installer (do not run as *root*, for example).
+**Important Note:** All commands must be run as the user you originally specified in Pinecraft Installer (do not run as *root*, for example).
 
 `screen -ls` will reveal running screen sessions. There should be one called *Pinecraft*.
 
