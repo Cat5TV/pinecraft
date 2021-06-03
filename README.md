@@ -32,13 +32,13 @@ The current version of Pinecraft is 2.6.
 Base OS
 =======
 
-Pinecraft Installer has been tested on Raspberry Pi OS Lite, and Ubuntu Server 12.04 64-Bit for Raspberry Pi.
+Pinecraft Installer has been tested on Raspberry Pi OS Lite, and Ubuntu Server 20.04 64-Bit for Raspberry Pi.
 
 For the Raspberry Pi 4 Ubuntu Server 64-bit is the recommended option. It will work on all versions of the board, but also has the advantage of being fully 64-bit, unlike Raspberry Pi OS Lite, which is 32-bit.
 
 Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications. Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
-Download Ubuntu Server 12.04 64-Bit here: https://ubuntu.com/download/raspberry-pi/thank-you?version=20.04.2&architecture=server-arm64+raspi
+Download Ubuntu Server 20.04 64-Bit here: https://ubuntu.com/download/raspberry-pi/thank-you?version=20.04.2&architecture=server-arm64+raspi
 
 
 Server Versions
