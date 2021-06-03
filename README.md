@@ -24,7 +24,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 2.6.
+The current version of Pinecraft is 2.7.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -264,6 +264,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.7 - Forge modded server now included as one of the server options.
 
 Pinecraft 2.6 - Minecraft server now running on "Pinecraft" screen session. ~/minecraft/stop no longer looks for Java PID to send SIGHUP, but rather sends the stop command to the "Pinecraft" screen session. Minecraft server now starts automatically upon installation complete; No need to reboot. User can now attach "Pinecraft" screen session to access the Minecraft server console (handy for running op commands). The safe stop command now executes automatically at system shutdown or reboot.
 
