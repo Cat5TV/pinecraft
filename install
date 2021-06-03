@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.6"
+pcver="2.7"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -165,6 +165,7 @@ result=$(dialog --title "Pinecraft $pcver" \
          --menu "Choose your Minecraft server type:" 20 40 10 \
          "P"       "Paper (Default)" \
          "F"       "Fabric" \
+         "R"       "Forge (Untested)" \
          "S"       "Spigot" \
          "C"       "Cuberite (Experimental!)" \
          "V"       "Vanilla" \
@@ -184,6 +185,12 @@ if [[ $? == 0 ]]; then
       jarname="fabric-server-launch.jar"
       switches="server"
       dlvanilla=1
+      ;;
+    R)
+      flavor="Forge"
+      url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
+      jarname="forge-1.16.5-36.1.0.jar"
+      switches="--installServer ."
       ;;
     V)
       flavor="Vanilla"
@@ -307,7 +314,8 @@ if [[ -e /home/$user ]]; then
   if [[ -e ${instdir} ]]; then
     if [[ ! -e ${instdir}cat5tv.ver ]]; then
       dialog --title "Error"\
-        --msgbox "\n${instdir} already exists, but is not created by Pinecraft.\n\nPlease move or remove the folder and try again." 11 50
+        --msgbox "\n${instdir} already exists, but is either not created by Pinecraft or is from a failed installation.\n\nPlease move or remove the folder and try again." 12 50
+      clear
       exit 0
     else
 
@@ -596,7 +604,6 @@ if [[ $upgrade == 0 ]]; then
 fi
 cd $instdir
 
-# Install Spigot Minecraft Server rather than Vanilla. Great performance with possibility to mod.
 if [[ $upgrade == 1 ]]; then
   rm -rf src
 fi
@@ -706,6 +713,11 @@ else
 
 fi
 
+
+if [[ $flavor == "Forge" ]]; then
+  mv ${instdir}src/libraries ${instdir}
+  mv ${instdir}src/minecraft_server*.jar ${instdir}
+fi
 
 
 if [[ $psi == 1 ]]; then

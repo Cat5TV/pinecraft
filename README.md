@@ -54,6 +54,11 @@ A performance-optimized Minecraft server based on Spigot and compatible with Spi
 A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
 
 
+**Forge** Supports Plugins / Fast Build Time
+
+Yet another modular Minecraft server. [More Info](https://files.minecraftforge.net/net/minecraftforge/forge/)
+
+
 **Spigot** Supports Plugins / Slow Build Time
 
 An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM. Spigot was the original Pinecraft default server, circa Pinecraft 1.x. [More Info](https://www.spigotmc.org/)
