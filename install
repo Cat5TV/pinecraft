@@ -181,7 +181,7 @@ if [[ $? == 0 ]]; then
       ;;
     F)
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.2/fabric-installer-0.7.2.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.3/fabric-installer-0.7.3.jar"
       jarname="fabric-server-launch.jar"
       switches="server"
       dlvanilla=1
@@ -201,7 +201,7 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/566/downloads/paper-1.16.5-566.jar"
+      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/775/downloads/paper-1.16.5-775.jar"
       jarname="minecraft.jar"
       switches=""
       ;;
