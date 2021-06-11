@@ -36,6 +36,8 @@ Currently, Pinecraft Installer always installs the latest version of Minecraft a
 
 In a future update, Pinecraft Installer will allow you to select which version of Minecraft Server to install (E.G., 1.16.5 or 1.17). For now, though, it will always be the latest available version.
 
+Note that you may need to update or even upgrade your base OS for 1.17 to work since Mojang has updated many of the library requirements and older distros do not have current enough versions.
+
 
 Base OS
 =======
@@ -46,7 +48,7 @@ For the Raspberry Pi 4 Ubuntu Server 64-bit is the recommended option. It will w
 
 Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications. Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
-Download Ubuntu Server 20.04 64-Bit here: https://ubuntu.com/download/raspberry-pi/thank-you?version=20.04.2&architecture=server-arm64+raspi
+Download Ubuntu Server 21.04 64-Bit here: https://ubuntu.com/download/raspberry-pi/thank-you?version=21.04&architecture=server-arm64+raspi
 
 
 Server Versions
