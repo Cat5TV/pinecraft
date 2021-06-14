@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.7"
+pcver="2.8"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -73,42 +73,61 @@ dialog --title "Pinecraft $pcver" \
 
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
+javaminver=16; # The minimum version of Java for Minecraft Server to run
+javamaxver=16; # The current max version available in known repositories that Minecraft Server can run on
+
+
+if [[ $updated == 0 ]]; then
+  dialog --infobox "Updating repositories..." 3 34 ;
+  apt-get update > /dev/null 2>&1
+  updated=1
+fi
+
 if type -p java > /dev/null; then
-    _java=java
+  _java=java
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    _java="$JAVA_HOME/bin/java"
+fi
+
+vercount=javamaxver
+(( ++vercount ))
+while (( --vercount >= $javaminver )); do
+  javaver=0
+  if [[ "$_java" ]]; then
+    javaver=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+  fi
+
+  ver=0
+  for i in $(echo $javaver | tr "." "\n")
+  do
+    if [[ $ver == 0 ]]; then
+      ver=$i
+    else
+      subver=$i
+      break
+    fi
+  done
+
+  if (( $ver < $javaminver )); then
+    dialog --infobox "Installing Java ${vercount}..." 3 38 ;
+    apt-get -y install openjdk-${vercount}-jre-headless > /dev/null 2>&1
+  fi
+
+done
+
+# Java installed?
+if type -p java > /dev/null; then
+  _java=java
 elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
     _java="$JAVA_HOME/bin/java"
 else
-  dialog --infobox "Installing Java..." 3 34 ;
-
-  if [[ $updated == 0 ]]; then
-    apt-get update > /dev/null 2>&1
-    updated=1
-  fi
-  # First attemp is the default-jre-headless metapackage
-  apt-get -y install default-jre-headless > /dev/null 2>&1
-
-  if type -p java > /dev/null; then
-    _java=java
-  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    _java="$JAVA_HOME/bin/java"
-  else
-    # Presumably the default-jre package didn't work on this distro, so try specific version
-    apt-get -y install openjdk-11-jre-headless > /dev/null 2>&1
-#    apt-get -y install openjdk-10-jre-headless > /dev/null 2>&1
-  fi
-  if type -p java > /dev/null; then
-    _java=java
-  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
-    _java="$JAVA_HOME/bin/java"
-  else
-    dialog --title "Error" \
-      --msgbox "\nJava installation failed. Please install the JRE first and try again." 8 50
-    echo
-    echo
-    echo "Failed."
-    echo
-    exit 0
-  fi
+  dialog --title "Error" \
+    --msgbox "\nJava installation failed. Please install the latest JRE first and try again." 8 50
+  echo
+  echo
+  echo "Failed."
+  echo
+  exit 0
 fi
 
 javaver=0
@@ -127,7 +146,8 @@ do
   fi
 done
 
-if [[ $ver > 8 ]] || [[ $ver == 1 ]] && [[ $subver > 8 ]]; then
+# minimum version of Java supported by Minecraft Server
+if (( $ver < $javaminver )); then
   dialog --title "Error" \
       --msgbox "\n`which java` is version ${javaver}. You'll need a newer version of JRE." 8 50
   echo
