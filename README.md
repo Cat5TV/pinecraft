@@ -36,7 +36,7 @@ Currently, Pinecraft Installer always installs the latest version of Minecraft a
 
 In a future update, Pinecraft Installer will allow you to select which version of Minecraft Server to install (E.G., 1.16.5 or 1.17). For now, though, it will always be the latest available version.
 
-Note that you may need to update or even upgrade your base OS for 1.17 to work since Mojang has updated java requirements (v16) and older distros do not have current enough versions.
+Note that you may need to update or even switch your base OS for 1.17 to work since Mojang has updated java requirements (v16) and older distros do not have current enough versions. Early reports are that Raspberry Pi OS Lite is not [currently] sufficient. Please see the Base OS information below.
 
 
 Base OS
