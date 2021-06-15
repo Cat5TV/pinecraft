@@ -61,6 +61,7 @@ A performance-optimized Minecraft server based on Spigot and compatible with Spi
 
 A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
 
+Note: Most Fabric mods will also require you install the Fabric API, which must be downloaded manually and placed in the `~/minecraft/mods` folder. Get the Fabric API here: https://www.curseforge.com/minecraft/mc-mods/fabric-api
 
 **Forge** Supports Plugins / Fast Build Time
 
