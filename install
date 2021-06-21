@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="2.8"
+pcver="2.9"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -73,7 +73,7 @@ dialog --title "Pinecraft $pcver" \
 
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
-javaminver=16; # The minimum version of Java for Minecraft Server to run
+javaminver=8; # The minimum version of Java for Minecraft Server to run
 javamaxver=16; # The current max version available in known repositories that Minecraft Server can run on
 
 
@@ -109,7 +109,7 @@ while (( --vercount >= $javaminver )); do
   done
 
   if (( $ver < $javaminver )); then
-    dialog --infobox "Installing Java ${vercount}..." 3 38 ;
+    dialog --infobox "Trying to install Java ${vercount}..." 3 38 ;
     apt-get -y install openjdk-${vercount}-jre-headless > /dev/null 2>&1
   fi
 
@@ -147,7 +147,7 @@ do
 done
 
 # minimum version of Java supported by Minecraft Server
-if (( $ver < $javaminver )); then
+if [[ $ver > 8 ]] || [[ $ver == 1 ]] && [[ $subver > 8 ]]; then
   dialog --title "Error" \
       --msgbox "\n`which java` is version ${javaver}. You'll need a newer version of JRE." 8 50
   echo
@@ -176,8 +176,20 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
   apt-get -y install screen > /dev/null 2>&1
 fi
 
+mcver="1.16.5"
+if [[ $ver == 16 ]]; then # Java version 16 allows 1.17
+  mcver="1.17"
+fi
+
+
 # https://www.minecraft.net/en-us/download/server
-vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
+if [[ $mcver == "1.17" ]]; then
+  # 1.17
+  vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
+else
+  # 1.16.5
+  vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
+fi
 flavor=""
 
 exec 3>&1
@@ -197,19 +209,20 @@ if [[ $? == 0 ]]; then
       flavor="Spigot"
       url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
       jarname="spigot-*.jar"
-      switches=""
+      switches="--rev ${mcver}"
       ;;
     F)
       # https://fabricmc.net/use/
       flavor="Fabric"
       url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.4/fabric-installer-0.7.4.jar"
       jarname="fabric-server-launch.jar"
-      switches="server"
+      switches="server -mcversion ${mcver}"
       dlvanilla=1
       ;;
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
+      mcver="1.16.5" # 1.17 not yet available
       url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
       jarname="forge-1.16.5-36.1.0.jar"
       switches="--installServer ."
@@ -223,12 +236,17 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/26/downloads/paper-1.17-26.jar"
+      if [[ $mcver == "1.17" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
+      else
+        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
+      fi
       jarname="minecraft.jar"
       switches=""
       ;;
     C)
       flavor="Cuberite"
+      mcver="1.12" # Cuberite is a whole other beast
       script="https://compile.cuberite.org"
       executable="Cuberite"
       compiler=1;
@@ -587,7 +605,7 @@ Server User:
 $user
 
 Server Version:
-$flavor ($gamemode)" 20 50
+$flavor $mcver ($gamemode)" 20 50
 
 if [[ ! $oc_volt == 0 ]]; then
   dialog --title "Confirmation"  --yesno "\nI will be overwriting your /boot/config.txt file to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50

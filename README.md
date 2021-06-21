@@ -24,7 +24,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 2.8.
+The current version of Pinecraft is 2.9.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -275,6 +275,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 2.9 - Pinecraft Installer will now attempt to install the latest Java. If that fails, it will try installing older versions until it finds one that works on your system. If the version of Java is older than 16, Pinecraft Installer will install 1.16.5. If, however, Java 16 is successful, the Minecraft version will default to 1.17.
 
 Pinecraft 2.8 - Ensure Java version 16 is installed, which is required for Minecraft 1.17.
 
