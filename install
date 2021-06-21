@@ -176,7 +176,7 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
   apt-get -y install screen > /dev/null 2>&1
 fi
 
-
+# https://www.minecraft.net/en-us/download/server
 vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
 flavor=""
 
@@ -200,13 +200,15 @@ if [[ $? == 0 ]]; then
       switches=""
       ;;
     F)
+      # https://fabricmc.net/use/
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.3/fabric-installer-0.7.3.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.4/fabric-installer-0.7.4.jar"
       jarname="fabric-server-launch.jar"
       switches="server"
       dlvanilla=1
       ;;
     R)
+      # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
       jarname="forge-1.16.5-36.1.0.jar"
@@ -221,7 +223,7 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/775/downloads/paper-1.16.5-775.jar"
+      url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/26/downloads/paper-1.17-26.jar"
       jarname="minecraft.jar"
       switches=""
       ;;

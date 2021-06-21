@@ -32,11 +32,13 @@ The current version of Pinecraft is 2.8.
 MINECRAFT 1.17
 ==============
 
-Currently, Pinecraft Installer always installs the latest version of Minecraft available for each server type. As each server type begins supporting 1.17, that will be the version Pinecraft Installer will install. As of June 10, 2021, Vanilla and Fabric are running 1.17. Paper is still on 1.16.5, as are Spigot and Forge, though once they support 1.17 you can run Pinecraft Installer again to upgrade.
+Currently, Pinecraft Installer always installs the latest version of Minecraft available for each server type. As each server type begins supporting 1.17, that will be the version Pinecraft Installer will install. As of June 10, 2021, Vanilla, Fabric Spigot and Paper are running 1.17. Forge is still 1.16.5, though once they support 1.17 you can run Pinecraft Installer again to upgrade.
 
 In a future update, Pinecraft Installer will allow you to select which version of Minecraft Server to install (E.G., 1.16.5 or 1.17). For now, though, it will always be the latest available version.
 
 Note that you may need to update or even switch your base OS for 1.17 to work since Mojang has updated java requirements (v16) and older distros do not have current enough versions. Early reports are that Raspberry Pi OS Lite is not [currently] sufficient. Please see the Base OS information below.
+
+Always have an up-to-date backup of your world files.
 
 
 Base OS
