@@ -27,6 +27,9 @@ fi
     ip="127.0.0.1"
   fi
 
+# Version comparison which allows comparing 1.16.5 to 1.14.0 (for example)
+function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+
 # Install the web interface
 #psi=1
 
@@ -55,6 +58,19 @@ if [[ $dialog == "" ]]; then
   fi
 fi
 
+
+dialog --title "Pinecraft $pcver" \
+--msgbox "
+
+       Play on our high-performance
+             Minecraft servers!
+
+       https://patreon.com/Pinecraft
+
+" 12 48
+
+
+
 dialog --title "Pinecraft $pcver" \
 --msgbox "
  Pinecraft: The Minecraft Server Installer
@@ -64,11 +80,11 @@ dialog --title "Pinecraft $pcver" \
   https://category5.tv/feature/minecraft
 
          Installer Version: $pcver
-         Minecraft Version: Latest
 
          Sponsored by ameriDroid
          https://ameridroid.com/
-" 17 48
+" 16 48
+
 
 
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
@@ -182,116 +198,6 @@ if [[ $ver == 16 ]]; then # Java version 16 allows 1.17
 fi
 
 
-# https://www.minecraft.net/en-us/download/server
-if [[ $mcver == "1.17" ]]; then
-  # 1.17
-  vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
-else
-  # 1.16.5
-  vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
-fi
-flavor=""
-
-exec 3>&1
-result=$(dialog --title "Pinecraft $pcver" \
-         --menu "Choose your Minecraft server type:" 20 40 10 \
-         "P"       "Paper (Default)" \
-         "F"       "Fabric" \
-         "R"       "Forge (Untested)" \
-         "S"       "Spigot" \
-         "C"       "Cuberite (Experimental!)" \
-         "V"       "Vanilla" \
-       2>&1 1>&3);
-
-if [[ $? == 0 ]]; then
-  case $result in
-    S)
-      flavor="Spigot"
-      url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
-      jarname="spigot-*.jar"
-      switches="--rev ${mcver}"
-      ;;
-    F)
-      # https://fabricmc.net/use/
-      flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.4/fabric-installer-0.7.4.jar"
-      jarname="fabric-server-launch.jar"
-      switches="server -mcversion ${mcver}"
-      dlvanilla=1
-      ;;
-    R)
-      # https://files.minecraftforge.net/net/minecraftforge/forge/
-      flavor="Forge"
-      mcver="1.16.5" # 1.17 not yet available
-      url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
-      jarname="forge-1.16.5-36.1.0.jar"
-      switches="--installServer ."
-      ;;
-    V)
-      flavor="Vanilla"
-      url=$vanilla
-      jarname="server.jar"
-      switches=""
-      ;;
-    P)
-      # https://papermc.io/downloads
-      flavor="Paper"
-      if [[ $mcver == "1.17" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
-      else
-        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
-      fi
-      jarname="minecraft.jar"
-      switches=""
-      ;;
-    C)
-      flavor="Cuberite"
-      mcver="1.12" # Cuberite is a whole other beast
-      script="https://compile.cuberite.org"
-      executable="Cuberite"
-      compiler=1;
-      ;;
-    esac
-else
-  echo
-  echo
-  echo "Aborted."
-  echo
-  exit 1
-fi
-if [[ $flavor == "" ]]; then
-  echo
-  echo
-  echo "Aborted."
-  echo
-  exit 1
-fi
-
-
-exec 3>&1
-result=$(dialog --title "Pinecraft $pcver" \
-         --menu "Choose your game type:" 20 40 10 \
-         "S"       "Survival" \
-         "C"       "Creative" \
-       2>&1 1>&3);
-
-if [[ $? == 0 ]]; then
-  case $result in
-    S)
-      gamemode="survival"
-      ;;
-    C)
-      gamemode="creative"
-      ;;
-    esac
-else
-  echo
-  echo
-  echo "Aborted."
-  echo
-  exit 1
-fi
-
 # Username may be provided on CLI as in 1.0
 user=$1
 
@@ -303,8 +209,17 @@ fi
 while [[ $validuser == "" ]]
 do
 
-  user=$(dialog --stdout --title "Linux User" \
-    --inputbox "Linux Username for Server" 8 50)
+  users=$(cat /etc/passwd | grep '/home' | cut -d: -f1)
+  count=1
+  declare -a usersarr=()
+  for username in $users; do
+    if [[ -d /home/${username}/ ]]; then
+      usersarr+=("${username}" "/home/${username}/minecraft/")
+    fi
+  done
+
+  exec 3>&1
+  user=$(dialog --title "Linux User" --menu "Linux User to run Minecraft Server:" 20 50 10 "${usersarr[@]}" 2>&1 1>&3);
 
   case $? in
   0)
@@ -327,22 +242,6 @@ do
   esac
 
 done
-
-
-dialog --title "End-User License Agreement"  --yesno "In order to proceed, you must read and accept the EULA at https://account.mojang.com/documents/minecraft_eula\n\nDo you accept the EULA?" 8 60
-
-  case $? in
-  0)
-   eula="accepted"
-   eula_stamp=$(date)
-   ;;
-  1)
-   echo
-   echo
-   echo "EULA not accepted. You are not permitted to install this software."
-   echo
-   exit 1 ;;
-  esac
 
 
 
@@ -399,74 +298,91 @@ else
   exit 1
 fi
 
+
+
 # Get the level seed, but only if this is a new install
 if [[ $upgrade == 0 ]]; then
   exec 3>&1
   result=$(dialog --title "Pinecraft $pcver" \
-         --menu "Choose your game seed:" 20 40 10 \
-         "A"       "Random (Default)" \
-         "B"       "Custom" \
-         "C"       "Category5 TV RPi Server" \
-         "D"       "Jeff's Tutorial World" \
-         "E"       "Minecraft Title Screen" \
-         "F"       "Slime Farm" \
-         "G"       "Obsidian Farm" \
-         "H"       "Woodland Mansion" \
-         "I"       "Triple Island Ocean Monument" \
-         "J"       "Spruce Village and Coral Reef" \
-         "K"       "Shipwreck Village" \
-         "L"       "Underwater Temple" \
-         "M"       "Diamond Paradise" \
-         "N"       "All Biome World" \
-         "O"       "Paradise Valley" \
+         --menu "Choose your game seed:" 20 50 10 \
+         "A"       "Random (Default, ${mcver})" \
+         "B"       "Custom (${mcver})" \
+         "C"       "Category5 TV RPi Server (1.16.5)" \
+         "D"       "Jeff's Tutorial World (1.16.5)" \
+         "E"       "Minecraft Title Screen (1.9.4)" \
+         "F"       "Slime Farm (1.16.5)" \
+         "G"       "Obsidian Farm (1.9.4)" \
+         "H"       "Woodland Mansion (1.12.2)" \
+         "I"       "Triple Island Ocean Monument (1.14.4)" \
+         "J"       "Spruce Village and Coral Reef (1.14.4)" \
+         "K"       "Shipwreck Village (1.14.4)" \
+         "L"       "Underwater Temple (1.9.4)" \
+         "M"       "Diamond Paradise (1.9.4)" \
+         "N"       "All Biome World (1.12.2)" \
+         "O"       "Paradise Valley (1.16.5)" \
        2>&1 1>&3);
 
   if [[ $? == 0 ]]; then
     case $result in
     A)
       seed=""
+      mcverANY=1
       ;;
     B)
       seed="custom"
+      mcverANY=1
       ;;
     C)
       seed="-4385290424787160722"
+      mcver="1.16.5"
       ;;
     D)
       seed="6421417242871949536"
+      mcver="1.16.5"
       ;;
     E)
       seed="2151901553968352745"
+      mcver="1.9.4" # Was actually part of 1.7.3 but that was a beta client, and Spigot only goes back to 1.9. Probably not usable?
       ;;
     F)
       seed="7000"
+      mcver="1.16.5"
       ;;
     G)
       seed="-8880302588844065321"
+      mcver="1.9.4" # Originally on 1.9
       ;;
     H)
       seed="throwlow"
+      mcver="1.12.2" # Originally on 1.12
       ;;
     I)
       seed="6073041046072376055"
+      mcver="1.14.4" # OP didn't say what version, so I have to guess
       ;;
     J)
       seed="673900667"
+      mcver="1.14.4"
       ;;
     K)
       seed="-613756530319979507"
+      mcver="1.14.4"
       ;;
     L)
       seed="-5181140359215069925"
+      mcver="1.9.4" # Was on 1.8 but Spigot only goes back to 1.9
       ;;
     M)
       seed="1785852800490497919"
+      mcver="1.9.4" # Was on 1.8 but Spigot only goes back to 1.9
       ;;
     N)
       seed="1083719637794"
+      mcver="1.12.2"
       ;;
     O)
       seed="4725084288293652062"
+      mcver="1.16.5"
       ;;
 
     esac
@@ -485,6 +401,157 @@ if [[ $upgrade == 0 ]]; then
   fi
 
 fi
+
+
+# https://www.minecraft.net/en-us/download/server
+if [[ $mcver == "1.17" ]]; then
+  # 1.17
+  vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
+else
+  # 1.16.5
+  vanilla="https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"
+fi
+flavor=""
+
+
+declare -a flavors=()
+
+# Supports 1.14+
+if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
+  flavors+=("F" "Fabric (Default, ${mcver})")
+fi
+
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+  flavors+=("P" "Paper (${mcver})")
+fi
+
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]]; then
+  flavors+=("R" "Forge (${mcver})")
+fi
+
+# Supports 1.9+
+if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.9") ]; then
+  flavors+=("S" "Spigot (${mcver})")
+fi
+
+# 1.12 only
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
+  flavors+=("C" "Cuberite (1.12)")
+fi
+
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+  flavors+=("V" "Vanilla (${mcver})")
+fi
+
+exec 3>&1
+result=$(dialog --title "Pinecraft $pcver" --menu "Choose your Minecraft server type:" 20 40 10 "${flavors[@]}" 2>&1 1>&3);
+
+if [[ $? == 0 ]]; then
+  case $result in
+    S)
+      flavor="Spigot"
+      url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
+      jarname="spigot-*.jar"
+      switches="--rev ${mcver}"
+      ;;
+    F)
+      # https://fabricmc.net/use/
+      flavor="Fabric"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.4/fabric-installer-0.7.4.jar"
+      jarname="fabric-server-launch.jar"
+      switches="server -mcversion ${mcver} -downloadMinecraft"
+      ;;
+    R)
+      # https://files.minecraftforge.net/net/minecraftforge/forge/
+      flavor="Forge"
+      mcver="1.16.5" # 1.17 not yet available
+      url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
+      jarname="forge-1.16.5-36.1.0.jar"
+      switches="--installServer ."
+      ;;
+    V)
+      flavor="Vanilla"
+      url=$vanilla
+      jarname="server.jar"
+      switches=""
+      ;;
+    P)
+      # https://papermc.io/downloads
+      flavor="Paper"
+      if [[ $mcver == "1.17" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
+      else
+        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
+      fi
+      jarname="minecraft.jar"
+      switches=""
+      ;;
+    C)
+      flavor="Cuberite"
+      mcver="1.12" # Cuberite is a whole other beast
+      script="https://compile.cuberite.org"
+      executable="Cuberite"
+      compiler=1;
+      ;;
+    esac
+else
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
+if [[ $flavor == "" ]]; then
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
+
+
+exec 3>&1
+result=$(dialog --title "Pinecraft $pcver $mcver" \
+         --menu "Choose your game type:" 20 40 10 \
+         "S"       "Survival" \
+         "C"       "Creative" \
+       2>&1 1>&3);
+
+if [[ $? == 0 ]]; then
+  case $result in
+    S)
+      gamemode="survival"
+      ;;
+    C)
+      gamemode="creative"
+      ;;
+    esac
+else
+  echo
+  echo
+  echo "Aborted."
+  echo
+  exit 1
+fi
+
+
+
+dialog --title "End-User License Agreement"  --yesno "In order to proceed, you must read and accept the EULA at https://account.mojang.com/documents/minecraft_eula\n\nDo you accept the EULA?" 8 60
+
+  case $? in
+  0)
+   eula="accepted"
+   eula_stamp=$(date)
+   ;;
+  1)
+   echo
+   echo
+   echo "EULA not accepted. You are not permitted to install this software."
+   echo
+   exit 1 ;;
+  esac
+
+
 
 
 # Gather some info about your system which will be used to determine the config
@@ -735,6 +802,11 @@ if [[ $flavor == "Cuberite" ]]; then
   fi
 
 else
+
+  # The installer also created or obtained the Minecraft server.jar file. Include it.
+  if [[ -e ${instdir}src/server.jar ]]; then
+    cp -f ${instdir}src/server.jar $instdir
+  fi
 
   jarfile=$(ls ${instdir}src/${jarname})
   if [[ $jarfile == "" ]]; then

@@ -32,7 +32,7 @@ The current version of Pinecraft is 2.9.
 MINECRAFT 1.17
 ==============
 
-Currently, Pinecraft Installer always installs the latest version of Minecraft available for each server type. As each server type begins supporting 1.17, that will be the version Pinecraft Installer will install. As of June 10, 2021, Vanilla, Fabric Spigot and Paper are running 1.17. Forge is still 1.16.5, though once they support 1.17 you can run Pinecraft Installer again to upgrade.
+Currently, Pinecraft Installer always installs the latest version of Minecraft available for each server type. As each server type begins supporting 1.17, that will be the version Pinecraft Installer will install. As of June 10, 2021, Vanilla, Fabric, Spigot and Paper are running 1.17. Forge is still 1.16.5, though once they support 1.17 you can run Pinecraft Installer again to upgrade.
 
 In a future update, Pinecraft Installer will allow you to select which version of Minecraft Server to install (E.G., 1.16.5 or 1.17). For now, though, it will always be the latest available version.
 
@@ -54,16 +54,17 @@ Download Ubuntu Server 21.04 64-Bit here: https://ubuntu.com/download/raspberry-
 Server Versions
 ===============
 
-**Paper** Supports Plugins / Fast Build Time
-
-A performance-optimized Minecraft server based on Spigot and compatible with Spigot plugins. [More Info](https://papermc.io/)
-
-
 **Fabric** Supports Plugins / Fast Build Time
 
 A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
 
 Note: Most Fabric mods will also require you install the Fabric API, which must be downloaded manually and placed in the `~/minecraft/mods` folder. Get the Fabric API here: https://www.curseforge.com/minecraft/mc-mods/fabric-api
+
+
+**Paper** Supports Plugins / Fast Build Time
+
+A performance-optimized Minecraft server based on Spigot and compatible with Spigot plugins. [More Info](https://papermc.io/)
+
 
 **Forge** Supports Plugins / Fast Build Time
 
@@ -276,7 +277,7 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
-Pinecraft 2.9 - Pinecraft Installer will now attempt to install the latest Java. If that fails, it will try installing older versions until it finds one that works on your system. If the version of Java is older than 16, Pinecraft Installer will install 1.16.5. If, however, Java 16 is successful, the Minecraft version will default to 1.17.
+Pinecraft 2.9 - Pinecraft Installer will now attempt to install the latest Java. If that fails, it will try installing older versions until it finds one that works on your system. If the version of Java is older than 16, Pinecraft Installer will install 1.16.5. If, however, Java 16 is successful, the Minecraft version will default to 1.17 for custom or random seeds. Choosing a seed from an older version of Minecraft will hide incompatible server flavors and attempt to install the server version that is compatible with the selected seed. Linux username is now automatically detected and presented as a selection list. The default server was changed from to Fabric (formerly Paper).
 
 Pinecraft 2.8 - Ensure Java version 16 is installed, which is required for Minecraft 1.17.
 
