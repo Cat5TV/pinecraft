@@ -1022,14 +1022,50 @@ if [[ -e ${instdir}server.properties ]]; then
   # These settings are my own defaults, so only do these during first install (not upgrade)
   # Will not replace user-configured changes in the server.properties
   if [[ $upgrade == 0 ]]; then
-    /bin/sed -i '/enable-query=/c\enable-query=true' ${instdir}server.properties
-    /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
-    /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
-    /bin/sed -i "/level-seed=/c\level-seed=${seed}" ${instdir}server.properties
+
+    # Enable Query
+      # Change the value if it exists
+      /bin/sed -i '/enable-query=/c\enable-query=true' ${instdir}server.properties
+      # Add it if it doesn't exist
+      if ! grep -q "enable-query=" ${instdir}server.properties; then
+        echo "enable-query=true" >> ${instdir}server.properties
+      fi
+
+    # Set game difficulty to Normal (default is Easy, but we want at least SOME challenge)
+      # Change the value if it exists
+      /bin/sed -i '/difficulty=/c\difficulty=normal' ${instdir}server.properties
+      # Add it if it doesn't exist
+      if ! grep -q "difficulty=" ${instdir}server.properties; then
+        echo "difficulty=normal" >> ${instdir}server.properties
+      fi
+
+    # Set the view distance to something the Raspberry Pi can handle quite well
+      # Change the value if it exists
+      /bin/sed -i '/view-distance=/c\view-distance=7' ${instdir}server.properties
+      # Add it if it doesn't exist
+      if ! grep -q "view-distance=" ${instdir}server.properties; then
+        echo "view-distance=7" >> ${instdir}server.properties
+      fi
+
+    # Level Seed
+      # Change the value if it exists
+      /bin/sed -i "/level-seed=/c\level-seed=${seed}" ${instdir}server.properties
+      # Add it if it doesn't exist
+      if ! grep -q "level-seed=" ${instdir}server.properties; then
+        echo "level-seed=${seed}" >> ${instdir}server.properties
+      fi
+
   fi
 
   # These ones, however, are selected by the user, so we'll make these changes even if already installed
-  /bin/sed -i "/gamemode=/c\gamemode=${gamemode}" ${instdir}server.properties
+
+    # Game Mode (User Selected During Install)
+      # Change the value if it exists
+      /bin/sed -i "/gamemode=/c\gamemode=${gamemode}" ${instdir}server.properties
+      # Add it if it doesn't exist
+      if ! grep -q "gamemode=" ${instdir}server.properties; then
+        echo "gamemode=${gamemode}" >> ${instdir}server.properties
+      fi
 
 fi
 
