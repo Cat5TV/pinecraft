@@ -194,7 +194,7 @@ fi
 
 mcver="1.16.5"
 if [[ $ver == 16 ]]; then # Java version 16 allows 1.17
-  mcver="1.17"
+  mcver="1.17.1"
 fi
 
 
@@ -404,7 +404,9 @@ fi
 
 
 # https://www.minecraft.net/en-us/download/server
-if [[ $mcver == "1.17" ]]; then
+if [[ $mcver == "1.17.1" ]]; then
+  vanilla="https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar"
+elif [[ $mcver == "1.17" ]]; then
   # 1.17
   vanilla="https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar"
 else
@@ -421,12 +423,12 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (Default, ${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
   flavors+=("P" "Paper (${mcver})")
 fi
 
 if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]]; then
-  flavors+=("R" "Forge (${mcver})")
+  flavors+=("R" "Forge (1.16.5)")
 fi
 
 # Supports 1.9+
@@ -439,7 +441,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
@@ -478,7 +480,9 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.17" ]]; then
+      if [[ $mcver == "1.17.1" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/100/downloads/paper-1.17.1-100.jar"
+      elif [[ $mcver == "1.17" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
       else
         url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
