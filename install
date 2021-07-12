@@ -90,7 +90,7 @@ dialog --title "Pinecraft $pcver" \
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
 javaminver=8; # The minimum version of Java for Minecraft Server to run
-javamaxver=17; # The current max version available in known repositories that Minecraft Server can run on
+javamaxver=16; # The current max version available in known repositories that Minecraft Server can run on - As of 1.17.1, JRE 17 is not supported (only 16). Hopefully this will be fixed soon as modern distros like Debian Bullseye don't have JRE 16 in repos.
 
 
 if [[ $updated == 0 ]]; then
