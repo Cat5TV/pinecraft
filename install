@@ -90,7 +90,7 @@ dialog --title "Pinecraft $pcver" \
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
 javaminver=8; # The minimum version of Java for Minecraft Server to run
-javamaxver=16; # The current max version available in known repositories that Minecraft Server can run on
+javamaxver=17; # The current max version available in known repositories that Minecraft Server can run on
 
 
 if [[ $updated == 0 ]]; then
@@ -124,7 +124,7 @@ while (( --vercount >= $javaminver )); do
     fi
   done
 
-  if (( $ver < $javaminver )); then
+  if (( $ver < $javamaxver )); then
     dialog --infobox "Trying to install Java ${vercount}..." 3 38 ;
     apt-get -y install openjdk-${vercount}-jre-headless > /dev/null 2>&1
   fi
@@ -193,7 +193,7 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
 fi
 
 mcver="1.16.5"
-if [[ $ver == 16 ]]; then # Java version 16 allows 1.17
+if (( $ver >= 16 )); then # Java version 16+ allows 1.17
   mcver="1.17.1"
 fi
 
