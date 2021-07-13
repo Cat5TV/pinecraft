@@ -1006,9 +1006,40 @@ if [[ ! $oc_volt == 0 ]]; then
   dialog --infobox "Overclocking your system to ${oc_friendly}..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
   cp /boot/config.txt /boot/config-${datestamp}.txt
-  echo "over_voltage=$oc_volt
-arm_freq=$oc_freq
-dtparam=audio=off" > /boot/config.txt
+  
+  # Update over_voltage in /boot/config.txt
+  if [ `grep "over_voltage=" /boot/config.txt` ]
+  then
+    sed -r 's,(over_voltage=).*$,\1'"$oc_volt"',' /boot/config.txt > config.int
+  else
+    cp /boot/config.txt config.int
+	echo "over_voltage=$oc_volt" >> config.int
+  fi
+  
+  mv config.int /boot/config.txt
+  
+  # Update arm_freq in /boot/config.txt
+  if [ `grep "arm_freq=" /boot/config.txt` ]
+  then
+    sed -r 's,(arm_freq=).*$,\1'"$oc_freq"',' /boot/config.txt > config.int
+  else
+    cp /boot/config.txt config.int
+	echo "over_voltage=$oc_freq" >> config.int
+  fi
+  
+  mv config.int /boot/config.txt
+  
+  # Update dtparam=audio in /boot/config.txt
+  if [ `grep "dtparam=audio=" /boot/config.txt` ]
+  then
+    sed -r 's,(dtparam=audio=).*$,\1off,' /boot/config.txt > config.int
+  else
+    cp /boot/config.txt config.int
+	echo "dtparam=audio=off" >> config.int
+  fi
+
+  mv config.int /boot/config.txt
+
 fi
 
 ###############################################
