@@ -1020,17 +1020,17 @@ if [[ ! $oc_volt == 0 ]]; then
 
   # Replace existing overclock settings or add new ones if none exist
 
-  /bin/sed -i -- 's,over_voltage=,over_voltage=${oc_volt},g' $configfile
+  /bin/sed -i -- "/over_voltage=/c\over_voltage=${oc_volt}" $configfile
   if ! grep -q "over_voltage=" $configfile; then
     echo "over_voltage=$oc_volt" >> $configfile
   fi
 
-  /bin/sed -i -- 's,arm_freq=,arm_freq=${oc_freq},g' $configfile
+  /bin/sed -i -- "/arm_freq=/c\arm_freq=${oc_freq}" $configfile
   if ! grep -q "arm_freq=" $configfile; then
     echo "arm_freq=${oc_freq}" >> $configfile
   fi
 
-  /bin/sed -i -- 's,dtparam=audio=,dtparam=audio=off,g' $configfile
+  /bin/sed -i -- "/dtparam=audio=/c\dtparam=audio=off" $configfile
   if ! grep -q "dtparam=audio=" $configfile; then
     echo "dtparam=audio=" >> $configfile
   fi
