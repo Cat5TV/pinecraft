@@ -1005,10 +1005,31 @@ sudo ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 if [[ ! $oc_volt == 0 ]]; then
   dialog --infobox "Overclocking your system to ${oc_friendly}..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-  cp /boot/config.txt /boot/config-${datestamp}.txt
-  echo "over_voltage=$oc_volt
-arm_freq=$oc_freq
-dtparam=audio=off" > /boot/config.txt
+  # Generic
+  configfile=/boot/config.txt
+  # Ubuntu
+  if [[ -e /boot/firmware/config.txt ]]; then
+    configfile=/boot/formware/config.txt
+  fi
+  cp $configfile /boot/config-${datestamp}.txt
+
+  # Replace existing overclock settings or add new ones if none exist
+
+  /bin/sed -i -- 's,over_voltage=,over_voltage=${oc_volt},g' $configfile
+  if ! grep -q "over_voltage=" $configfile; then
+    echo "over_voltage=$oc_volt" >> $configfile
+  fi
+
+  /bin/sed -i -- 's,arm_freq=,arm_freq=${oc_freq},g' $configfile
+  if ! grep -q "arm_freq=" $configfile; then
+    echo "arm_freq=${oc_freq}" >> $configfile
+  fi
+
+  /bin/sed -i -- 's,dtparam=audio=,dtparam=audio=off,g' $configfile
+  if ! grep -q "dtparam=audio=" $configfile; then
+    echo "dtparam=audio=" >> $configfile
+  fi
+
 fi
 
 ###############################################
