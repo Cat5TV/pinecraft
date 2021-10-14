@@ -27,6 +27,16 @@ fi
     ip="127.0.0.1"
   fi
 
+
+# Determine where the config.txt file is
+  # Generic
+  configfile=/boot/config.txt
+  # Ubuntu
+  if [[ -e /boot/firmware/config.txt ]]; then
+    configfile=/boot/firmware/config.txt
+  fi
+
+
 # Version comparison which allows comparing 1.16.5 to 1.14.0 (for example)
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
 
@@ -679,7 +689,7 @@ Server Version:
 $flavor $mcver ($gamemode)" 20 50
 
 if [[ ! $oc_volt == 0 ]]; then
-  dialog --title "Confirmation"  --yesno "\nI will be overwriting your /boot/config.txt file to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50
+  dialog --title "Confirmation"  --yesno "\nI will be modifying ${configfile} to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50
   case $? in
   1)
    echo
@@ -1005,12 +1015,7 @@ sudo ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 if [[ ! $oc_volt == 0 ]]; then
   dialog --infobox "Overclocking your system to ${oc_friendly}..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-  # Generic
-  configfile=/boot/config.txt
-  # Ubuntu
-  if [[ -e /boot/firmware/config.txt ]]; then
-    configfile=/boot/formware/config.txt
-  fi
+
   cp $configfile /boot/config-${datestamp}.txt
 
   # Replace existing overclock settings or add new ones if none exist
