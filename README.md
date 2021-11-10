@@ -29,16 +29,14 @@ The current version of Pinecraft is 3.0.
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
 
-MINECRAFT 1.17
-==============
+MINECRAFT VERSION
+=================
 
-Currently, Pinecraft Installer always installs the latest version of Minecraft available for each server type. As each server type begins supporting 1.17, that will be the version Pinecraft Installer will install. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly (currently several times per week) and update Pinecraft as quickly as possible following an update.
+Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
-As of June 21, 2021, Vanilla, Fabric Spigot and Paper are running 1.17. Forge is still 1.16.5, though once they support 1.17 you can run Pinecraft Installer again to upgrade.
+**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base OS section below.
 
-**Note:** If you run Pinecraft Installer and are not getting 1.17 as an option, make sure you are using the recommended distro. See the Base OS section below.
-
-Note that you may need to update or even switch your base OS for 1.17 to work since Mojang has updated java requirements (v16) and older distros do not have current enough versions. Early reports are that Raspberry Pi OS Lite is not [currently] sufficient. Please see the Base OS information below.
+Note that as system requirements change for Minecraft, you may need to update or even switch your base OS since older distros may not have current enough versions of needed libraries. Please see the Base OS information below, which will be updated along with these requirements.
 
 Always have an up-to-date backup of your world files.
 
