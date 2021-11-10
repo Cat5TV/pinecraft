@@ -461,6 +461,9 @@ result=$(dialog --title "Pinecraft $pcver" --menu "Choose your Minecraft server 
 if [[ $? == 0 ]]; then
   case $result in
     S)
+      # https://hub.spigotmc.org/jenkins/job/BuildTools/
+      # NOTE: BuildTools (Spigot) AUTOMATICALLY ensures the correct Minecraft version is installed (see switches below)
+      #       No need to update the script manually.
       flavor="Spigot"
       url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
       jarname="spigot-*.jar"
@@ -469,16 +472,20 @@ if [[ $? == 0 ]]; then
     F)
       # https://fabricmc.net/use/
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.7.4/fabric-installer-0.7.4.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.9.0/fabric-installer-0.9.0.jar"
       jarname="fabric-server-launch.jar"
       switches="server -mcversion ${mcver} -downloadMinecraft"
       ;;
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      mcver="1.16.5" # 1.17 not yet available
-      url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
-      jarname="forge-1.16.5-36.1.0.jar"
+      if [[ $mcver == "1.17.1" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
+        jarname="forge-1.17.1-37.0.107-installer.jar"
+      else
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
+        jarname="forge-1.16.5-36.1.0.jar"
+      fi
       switches="--installServer ."
       ;;
     V)
@@ -491,7 +498,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.17.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/100/downloads/paper-1.17.1-100.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/377/downloads/paper-1.17.1-377.jar"
       elif [[ $mcver == "1.17" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
       else
