@@ -277,6 +277,10 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
+Pinecraft 3.1 - All applicable installers support 1.18. The Java version has been increased to 17, and the installer improved.
+
+Pinecraft 3.0 - All applicable installers support 1.17.1. A few bug fixes.
+
 Pinecraft 2.9 - Pinecraft Installer will now attempt to install the latest Java. If that fails, it will try installing older versions until it finds one that works on your system. If the version of Java is older than 16, Pinecraft Installer will install 1.16.5. If, however, Java 16 is successful, the Minecraft version will default to 1.17 for custom or random seeds. Choosing a seed from an older version of Minecraft will hide incompatible server flavors and attempt to install the server version that is compatible with the selected seed. Linux username is now automatically detected and presented as a selection list. The default server was changed from to Fabric (formerly Paper).
 
 Pinecraft 2.8 - Ensure Java version 16 is installed, which is required for Minecraft 1.17.

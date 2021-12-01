@@ -13,6 +13,8 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # Get the LAN IP address
 
   # test the route based on $host and treat that as the interface
@@ -69,7 +71,7 @@ if [[ $dialog == "" ]]; then
 fi
 
 
-dialog --title "Pinecraft $pcver" \
+dialog --title "Pinecraft Installer $pcver" \
 --msgbox "
 
        Play on our high-performance
@@ -81,7 +83,7 @@ dialog --title "Pinecraft $pcver" \
 
 
 
-dialog --title "Pinecraft $pcver" \
+dialog --title "Pinecraft Installer $pcver" \
 --msgbox "
  Pinecraft: The Minecraft Server Installer
       For Raspberry Pi and Other SBCs
@@ -100,8 +102,7 @@ dialog --title "Pinecraft $pcver" \
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
 javaminver=8; # The minimum version of Java for Minecraft Server to run
-javamaxver=16; # The current max version available in known repositories that Minecraft Server can run on - As of 1.17.1, JRE 17 is not supported (only 16). Hopefully this will be fixed soon as modern distros like Debian Bullseye don't have JRE 16 in repos.
-
+javamaxver=17; # The current max version available in known repositories that Minecraft Server can run on.
 
 if [[ $updated == 0 ]]; then
   dialog --infobox "Updating repositories..." 3 34 ;
@@ -134,9 +135,19 @@ while (( --vercount >= $javaminver )); do
     fi
   done
 
+  result=$(dpkg-query -W --showformat='${Status}\n' openjdk-${vercount}-jre-headless | grep "install ok installed")
+  if [ ! "$result" = "" ]; then
+    break
+  fi
+
   if (( $ver < $javamaxver )); then
-    dialog --infobox "Trying to install Java ${vercount}..." 3 38 ;
+    dialog --infobox "Trying to install JRE ${vercount}..." 3 38 ;
     apt-get -y install openjdk-${vercount}-jre-headless > /dev/null 2>&1
+  fi
+
+  result=$(dpkg-query -W --showformat='${Status}\n' openjdk-${vercount}-jre-headless | grep "install ok installed")
+  if [ ! "$result" = "" ]; then
+    break
   fi
 
 done
@@ -203,8 +214,8 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
 fi
 
 mcver="1.16.5"
-if (( $ver >= 16 )); then # Java version 16+ allows 1.17
-  mcver="1.17.1"
+if (( $ver >= 16 )); then # Java version 16+ allows 1.18
+  mcver="1.18"
 fi
 
 
@@ -263,13 +274,13 @@ if [[ -e /home/$user ]]; then
   if [[ -e ${instdir} ]]; then
     if [[ ! -e ${instdir}cat5tv.ver ]]; then
       dialog --title "Error"\
-        --msgbox "\n${instdir} already exists, but is either not created by Pinecraft or is from a failed installation.\n\nPlease move or remove the folder and try again." 12 50
+        --msgbox "\n${instdir} already exists, but is either not created by Pinecraft Installer or is from a failed installation.\n\nPlease move or remove the folder and try again." 12 50
       clear
       exit 0
     else
 
       exec 3>&1
-      result=$(dialog --title "Pinecraft $pcver" \
+      result=$(dialog --title "Pinecraft Installer $pcver" \
          --menu "Pinecraft is already installed:" 9 40 4 \
          "U"       "Upgrade Software (Keep World)" \
          "R"       "Remove Previous and Reinstall" \
@@ -313,7 +324,7 @@ fi
 # Get the level seed, but only if this is a new install
 if [[ $upgrade == 0 ]]; then
   exec 3>&1
-  result=$(dialog --title "Pinecraft $pcver" \
+  result=$(dialog --title "Pinecraft Installer $pcver" \
          --menu "Choose your game seed:" 20 50 10 \
          "A"       "Random (Default, ${mcver})" \
          "B"       "Custom (${mcver})" \
@@ -435,12 +446,12 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (Default, ${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
   flavors+=("P" "Paper (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]]; then
-  flavors+=("R" "Forge (1.16.5)")
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]]; then
+  flavors+=("R" "Forge (${mcver})")
 fi
 
 # Supports 1.9+
@@ -453,12 +464,12 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
 exec 3>&1
-result=$(dialog --title "Pinecraft $pcver" --menu "Choose your Minecraft server type:" 20 40 10 "${flavors[@]}" 2>&1 1>&3);
+result=$(dialog --title "Pinecraft Installer $pcver" --menu "Choose your Minecraft server type:" 20 40 10 "${flavors[@]}" 2>&1 1>&3);
 
 if [[ $? == 0 ]]; then
   case $result in
@@ -474,20 +485,21 @@ if [[ $? == 0 ]]; then
     F)
       # https://fabricmc.net/use/
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.9.0/fabric-installer-0.9.0.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.10.1/fabric-installer-0.10.1.jar"
       jarname="fabric-server-launch.jar"
       switches="server -mcversion ${mcver} -downloadMinecraft"
       ;;
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      if [[ $mcver == "1.17.1" ]]; then
+      if [[ $mcver == "1.18" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.5/forge-1.18-38.0.5-installer.jar"
+      elif [[ $mcver == "1.17.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
-        jarname="forge-1.17.1-37.0.107-installer.jar"
       else
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
-        jarname="forge-1.16.5-36.1.0.jar"
       fi
+      jarname="forge-installer.jar"
       switches="--installServer ."
       ;;
     V)
@@ -499,8 +511,10 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.17.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/377/downloads/paper-1.17.1-377.jar"
+      if [[ $mcver == "1.18" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/20/downloads/paper-1.18-20.jar"
+      elif [[ $mcver == "1.17.1" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/391/downloads/paper-1.17.1-391.jar"
       elif [[ $mcver == "1.17" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
       else
@@ -534,7 +548,7 @@ fi
 
 
 exec 3>&1
-result=$(dialog --title "Pinecraft $pcver $mcver" \
+result=$(dialog --title "Pinecraft Installer $pcver $mcver" \
          --menu "Choose your game type:" 20 40 10 \
          "S"       "Survival" \
          "C"       "Creative" \
@@ -660,7 +674,7 @@ else if (( $gamememMIN < 1024 )); then
 fi
 fi
 
-dialog --title "Pinecraft $pcver"  --yesno "Automatically load the server on boot?" 6 60
+dialog --title "Pinecraft Installer $pcver"  --yesno "Automatically load the server on boot?" 6 60
   case $? in
   0)
    cron=1
@@ -670,7 +684,7 @@ dialog --title "Pinecraft $pcver"  --yesno "Automatically load the server on boo
    ;;
   esac
 
-#dialog --title "Pinecraft $pcver"  --yesno "Install Pinecraft Settings Interface?" 6 60
+#dialog --title "Pinecraft Installer $pcver"  --yesno "Install Pinecraft Settings Interface?" 6 60
 #  case $? in
 #  0)
 #   psi=1
@@ -831,6 +845,18 @@ else
     cp -f ${instdir}src/server.jar $instdir
   fi
 
+  # Fabric and Forge use a libraries folder, so we'll keep that.
+  if [[ -d ${instdir}src/libraries ]]; then
+    mv ${instdir}src/libraries ${instdir}
+    cp ${SCRIPT_DIR}/assets/server.properties ${instdir}
+  fi
+
+  if [[ $flavor == "Forge" ]]; then
+    # The forge installer removes itself and creates instead a minecraft.jar file
+    # Use this instead to measure whether compile was successful
+    jarname="minecraft.jar"
+  fi
+
   jarfile=$(ls ${instdir}src/${jarname})
   if [[ $jarfile == "" ]]; then
     dialog --title "Error" \
@@ -846,12 +872,6 @@ else
     version=$(basename $t .jar)
   fi
 
-fi
-
-
-if [[ $flavor == "Forge" ]]; then
-  mv ${instdir}src/libraries ${instdir}
-  mv ${instdir}src/minecraft_server*.jar ${instdir}
 fi
 
 
@@ -893,7 +913,16 @@ cd "$(dirname "$0")"' > ${instdir}server
 if [[ $flavor == "Cuberite" ]]; then
   echo ${instdir}cuberite/Cuberite >> ${instdir}server
 else
-  echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+  # Forge requires its own unix_args be included
+  if [[ $flavor == "Forge" ]]; then
+    # Forge servers
+    forge_args=$(ls ${instdir}libraries/net/minecraftforge/forge/*/unix_args.txt | head -n 1)
+    forge_args="@${forge_args}"
+    echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M ${forge_args}" >> ${instdir}server
+  else
+    # Non-forge servers
+    echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+  fi
 fi
 chmod +x ${instdir}server
 # Set ownership to the user
@@ -904,6 +933,8 @@ if [[ $upgrade == 0 ]] || [[ ! -e ${instdir}server.properties ]]; then
   dialog --infobox "Initializing server..." 3 34 ; sleep 1
   su - $user -c ${instdir}server > /dev/null 2>&1
 fi
+
+# Accepting the EULA
 if [[ $eula == "accepted" ]]; then
   echo "# https://account.mojang.com/documents/minecraft_eula ACCEPTED by user during installation
 # $eula_stamp
@@ -1022,7 +1053,7 @@ sudo ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 ###############################################
 
 if [[ ! $oc_volt == 0 ]]; then
-  dialog --infobox "Overclocking your system to ${oc_friendly}..." 3 34 ; sleep 1
+  dialog --infobox "Overclocking your system..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
   cp $configfile /boot/config-${datestamp}.txt
@@ -1177,6 +1208,14 @@ chown -R $user:$user $instdir
 # /Run the server now
 ###############################################
 
+# Forge is a bit funny because it doesn't create server.properties file during initialization, so that file is created from assets.
+# However, upon initialization, and 'mods' folder is created, so we will use that to identify if initialization was successful.
+if [[ $flavor == "Forge" ]]; then
+  if [[ ! -d ${instdir}mods ]]; then
+    # mods folder not found, so initialization failed. Remove the server.properties asset file so we don't lie about success
+    rm ${instdir}server.properties
+  fi
+fi
 
 if [[ -e ${instdir}server.properties ]]; then
   dialog --title "Success" \
