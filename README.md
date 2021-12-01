@@ -24,7 +24,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft is 3.0.
+The current version of Pinecraft is 3.1.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -46,9 +46,9 @@ Base OS
 
 For the Raspberry Pi 4 Ubuntu Server 64-bit is the recommended option. It will work on all versions of the board, but also has the advantage of being fully 64-bit, unlike Raspberry Pi OS Lite, which is 32-bit.
 
-Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications. Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
+**Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications.** Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
-Download Ubuntu Server 21.04 64-Bit here: https://ubuntu.com/download/raspberry-pi/thank-you?version=21.04&architecture=server-arm64+raspi
+Download Ubuntu Server 21.10 64-Bit here: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
 
 
 Server Versions
@@ -130,7 +130,7 @@ Software Requirements
 =====================
 
 - To play the game, you will need a valid Minecraft Java account, and to have Minecraft Java installed on your computer (Windows, Mac, AMD64 Linux). One account is required per player, and can be purchased from https://minecraft.net
-- Debian-based headless server distro for your single board computer. For a Raspberry Pi 4, opt for Raspberry Pi OS Lite.
+- The recommended Base OS (see "Base OS" section above for the currently accepted distro).
 
 **Note:** You do not need a Minecraft Java account in order to run the server. I.E., you could boot up a Pinecraft server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
 
