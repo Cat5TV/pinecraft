@@ -279,7 +279,7 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
-Pinecraft 3.1 - All applicable installers support 1.18. The Java version has been increased to 17, and the installer improved.
+Pinecraft 3.1 - All applicable installers support 1.18. The Java version has been increased to 17, and the installer improved. Also addressed some changes in the Forge installer which broke compatibility with earlier versions of Pinecraft Installer.
 
 Pinecraft 3.0 - All applicable installers support 1.17.1. A few bug fixes.
 
