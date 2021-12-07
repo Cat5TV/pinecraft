@@ -441,13 +441,13 @@ flavor=""
 
 declare -a flavors=()
 
-# Supports 1.14+
-if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
-  flavors+=("F" "Fabric (Default, ${mcver})")
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
+  flavors+=("P" "Paper (Default, ${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
-  flavors+=("P" "Paper (${mcver})")
+# Supports 1.14+
+if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
+  flavors+=("F" "Fabric (${mcver})")
 fi
 
 if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]]; then
