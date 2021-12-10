@@ -32,7 +32,7 @@ The current version of Pinecraft Installer is 3.1.
 MINECRAFT VERSION
 =================
 
-Minecraft Version 1.18 is fully supported as of Pinecraft Installer 3.1.
+Minecraft Version 1.18.1 is fully supported as of Pinecraft Installer 3.1.
 
 Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
