@@ -214,10 +214,12 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
 fi
 
 mcver="1.16.5"
-if (( $ver >= 16 )); then # Java version 16+ allows 1.18
-  mcver="1.18"
+if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
+  mcver="1.18.1"
 fi
-
+if (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
+  mcver="1.17.1"
+fi
 
 # Username may be provided on CLI as in 1.0
 user=$1
@@ -425,7 +427,9 @@ fi
 
 
 # https://www.minecraft.net/en-us/download/server
-if [[ $mcver == "1.18" ]]; then
+if [[ $mcver == "1.18.1" ]]; then
+  vanilla="https://launcher.mojang.com/v1/objects/125e5adf40c659fd3bce3e66e67a16bb49ecc1b9/server.jar"
+elif [[ $mcver == "1.18" ]]; then
   vanilla="https://launcher.mojang.com/v1/objects/3cf24a8694aca6267883b17d934efacc5e44440d/server.jar"
 elif [[ $mcver == "1.17.1" ]]; then
   vanilla="https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar"
@@ -441,7 +445,7 @@ flavor=""
 
 declare -a flavors=()
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]]; then
   flavors+=("P" "Paper (Default, ${mcver})")
 fi
 
@@ -464,7 +468,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
@@ -493,7 +497,7 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.18" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.15/forge-1.18-38.0.15-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.17/forge-1.18-38.0.17-installer.jar"
       elif [[ $mcver == "1.17.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
       else
@@ -511,8 +515,10 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.18" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/57/downloads/paper-1.18-57.jar"
+      if [[ $mcver == "1.18.1" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/68/downloads/paper-1.18.1-68.jar"
+      elif [[ $mcver == "1.18" ]]; then
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/66/downloads/paper-1.18-66.jar"
       elif [[ $mcver == "1.17.1" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/391/downloads/paper-1.17.1-391.jar"
       elif [[ $mcver == "1.17" ]]; then
