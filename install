@@ -216,8 +216,7 @@ fi
 mcver="1.16.5"
 if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
   mcver="1.18.1"
-fi
-if (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
+elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
   mcver="1.17.1"
 fi
 
