@@ -551,7 +551,6 @@ if [[ $flavor == "" ]]; then
   exit 1
 fi
 
-
 exec 3>&1
 result=$(dialog --title "Pinecraft Installer $pcver $mcver" \
          --menu "Choose your game type:" 20 40 10 \
@@ -904,6 +903,32 @@ if [[ $psi == 1 ]]; then
 fi
 
 
+###############################################
+# Patch Minecraft against exploit within Log4j
+# See https://www.minecraft.net/en-us/article/important-message--security-vulnerability-java-edition?ref=launcher
+###############################################
+
+# This exploit was patched in 1.18.1, so we only have to deal with older releases.
+
+# 1.17-1.18
+if [ $(version $mcver) -ge $(version "1.17") ] && [ $(version $mcver) -le $(version "1.18") ]; then
+  cli_args="-Dlog4j2.formatMsgNoLookups=true"
+fi
+# 1.12-1.16.5
+if [ $(version $mcver) -ge $(version "1.12") ] && [ $(version $mcver) -le $(version "1.16.5") ]; then
+  wget https://launcher.mojang.com/v1/objects/02937d122c86ce73319ef9975b58896fc1b491d1/log4j2_112-116.xml -O ${instdir}log4j2_112-116.xml > /dev/null 2>&1
+  cli_args="-Dlog4j.configurationFile=log4j2_112-116.xml"
+fi
+# 1.7-1.11.2
+if [ $(version $mcver) -ge $(version "1.7") ] && [ $(version $mcver) -le $(version "1.11.2") ]; then
+  wget https://launcher.mojang.com/v1/objects/dd2b723346a8dcd48e7f4d245f6bf09e98db9696/log4j2_17-111.xml -O ${instdir}log4j2_112-116.xml > /dev/null 2>&1
+  cli_args="-Dlog4j.configurationFile=log4j2_17-111.xml"
+fi
+
+###############################################
+# /Patch against exploit within Log4j
+###############################################
+
 
 ###############################################
 # Create the scripts
@@ -923,10 +948,10 @@ else
     # Forge servers
     forge_args=$(ls ${instdir}libraries/net/minecraftforge/forge/*/unix_args.txt | head -n 1)
     forge_args="@${forge_args}"
-    echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M ${forge_args}" >> ${instdir}server
+    echo "exec java ${cli_args} -Xms${gamememMIN}M -Xmx${gamemem}M ${forge_args}" >> ${instdir}server
   else
     # Non-forge servers
-    echo "exec java -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+    echo "exec java ${cli_args} -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
   fi
 fi
 chmod +x ${instdir}server
