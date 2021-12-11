@@ -26,7 +26,7 @@ Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/b
 
 The current version of Pinecraft Installer is 3.1.
 
-**Please Note:** An exploit in Java's Log4j was discovered in December, 2021 and all Pinecraft-installed servers using Pinecraft Installer 3.1 or higher automatically patch against this flaw. Older versions of Pinecraft Installer do not (as the exploit had not yet been discovered). Please always use the latest version of Pinecraft Installer to receive the latest versions, patches, fixes and features.
+**Please Note:** An exploit in Apache's Log4j that affects all versions of Minecraft 1.7-1.18 was discovered December 10, 2021. All Pinecraft-installed servers using Pinecraft Installer 3.1 (following the commit) or higher automatically patch against this flaw. Older versions of Pinecraft Installer do not (as the exploit had not yet been discovered). Please always use the latest version of Pinecraft Installer to receive the latest versions, patches, fixes and features.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
