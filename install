@@ -1059,6 +1059,13 @@ esac
 ' > /etc/init.d/pinecraft
 chmod a+x /etc/init.d/pinecraft
 
+# Remove old symlinks
+if [[ -s /etc/rc0.d/K01stop-pinecraft ]]; then
+  rm -f /etc/rc0.d/K01stop-pinecraft
+fi
+if [[ -s /etc/rc6.d/K01stop-pinecraft ]]; then
+  rm -f /etc/rc6.d/K01stop-pinecraft
+fi
 # Make the stop command run automatically at shutdown
 sudo ln -s ${instdir}stop /etc/rc0.d/K01stop-pinecraft
 # Make the stop command run automatically at reboot
