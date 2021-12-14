@@ -453,7 +453,7 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]]; then
   flavors+=("R" "Forge (${mcver})")
 fi
 
@@ -495,7 +495,9 @@ if [[ $? == 0 ]]; then
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      if [[ $mcver == "1.18" ]]; then
+      if [[ $mcver == "1.18.1" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.5/forge-1.18.1-39.0.5-installer.jar"
+      elif [[ $mcver == "1.18" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.17/forge-1.18-38.0.17-installer.jar"
       elif [[ $mcver == "1.17.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
@@ -515,7 +517,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.18.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/68/downloads/paper-1.18.1-68.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/74/downloads/paper-1.18.1-74.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/66/downloads/paper-1.18-66.jar"
       elif [[ $mcver == "1.17.1" ]]; then
@@ -851,6 +853,10 @@ else
 
   # Fabric and Forge use a libraries folder, so we'll keep that.
   if [[ -d ${instdir}src/libraries ]]; then
+    # Move existing Libraries folder before replacing
+    if [[ -e ${instdir}libraries ]]; then
+      mv ${instdir}libraries ${instdir}libraries~backup_$(date +%Y-%m-%d_%H-%M-%S)
+    fi
     mv ${instdir}src/libraries ${instdir}
     cp ${SCRIPT_DIR}/assets/server.properties ${instdir}
   fi
