@@ -858,7 +858,9 @@ else
       mv ${instdir}libraries ${instdir}libraries~backup_$(date +%Y-%m-%d_%H-%M-%S)
     fi
     mv ${instdir}src/libraries ${instdir}
-    cp ${SCRIPT_DIR}/assets/server.properties ${instdir}
+    if [[ ! -e ${instdir}server.properties ]]; then
+      cp ${SCRIPT_DIR}/assets/server.properties ${instdir}
+    fi
   fi
 
   if [[ $flavor == "Forge" ]]; then
