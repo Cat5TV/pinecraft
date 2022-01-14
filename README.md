@@ -12,7 +12,11 @@ If you have already installed this, running it again will allow you to upgrade.
 
 ## Log4j / Log4shell / Khonsari Ransomware with Pinecraft Installer Minecraft Server
 
-An exploit in Apache's Log4j that affects all versions of Minecraft 1.7-1.18 was discovered December 10, 2021. I was swift to take action with Pinecraft Installer and had a patch out in under a day. **All Pinecraft-installed servers using Pinecraft Installer 3.1 or higher automatically patch against this flaw in all versions of Minecraft.** If you had used an older version of Pinecraft Installer to setup your server, **you must run an upgrade install using Pinecraft Installer 3.1 or higher in order to patch your server**. Always use the latest version of Pinecraft Installer to receive the latest versions, patches, fixes and features.
+An exploit in Apache's Log4j that affects all versions of Minecraft 1.7-1.18 was discovered December 10, 2021. I was swift to take action with Pinecraft Installer and had a patch out in under a day. **All Pinecraft-installed servers using Pinecraft Installer 3.1 or higher automatically patch against this flaw in all versions of Minecraft.** If you had used an older version of Pinecraft Installer to setup your server, **you must run an upgrade install using Pinecraft Installer 3.1 or higher in order to patch your server**. Always use the latest version of Pinecraft Installer to receive the latest versions, patches, fixes and features. Even if you're staying with the same version of Minecraft server (even Cuberite), simply run an Upgrade install in Pinecraft Installer to ensure you have the latest (patched) version of your chosen server flavor.
+
+Notchian clients (used to connect to Cuberite) are believed to be vulnerable to this issue. Therefore Cuberite now sanitizes chat messages to prevent malicious payloads.
+
+## About Pinecraft Installer
 
 The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
 
