@@ -48,7 +48,7 @@ do
     echo "== Commands =="
     echo
     echo "Wipe, Create Partition and Format (all data will be lost)"
-    echo "sudo sfdisk --delete /dev/${change[2]} && echo 'type=83' | sudo sfdisk /dev/${change[2]} && mkfs.ext4 /dev/${change[2]}1"
+    echo "sudo sfdisk --delete /dev/${change[2]} && echo 'type=83' | sudo sfdisk /dev/${change[2]} && yes | sudo mkfs.ext4 /dev/${change[2]}1"
     echo
     echo "Example line to add to /etc/fstab"
     uuid=$(lsblk -no UUID /dev/${change[2]})
