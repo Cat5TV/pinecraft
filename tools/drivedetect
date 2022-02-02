@@ -1,0 +1,64 @@
+#!/bin/bash
+# V1.0
+echo "Drive Detect by Robbie Ferguson"
+echo
+echo "Plug in a new storage device to detect its info."
+echo "Press CTRL-C to exit"
+
+function blockdevs {
+  lsblk -d -n -oNAME,RO | grep '0$' | awk {'print $1'}
+}
+
+function info {
+  sleep 1 # Give it a sec to connect
+  info=$(lsblk -n -o KNAME,RO,SIZE,MODEL /dev/${change[2]})
+  readarray -t <<< $info
+  for i in "${MAPFILE[@]}"
+  do
+    infoarray=($(echo $i | sed 's/0 //'))
+    echo "Device:       ${infoarray[0]}"
+    echo "Size:         ${infoarray[1]}"
+    echo "Description:  ${infoarray[2]}"
+    echo "--"
+  done
+}
+
+bd2=$(blockdevs);
+
+while true
+do
+  bd1=$(blockdevs);
+  change=($(diff <( printf '%s\n' "$bd1" ) <( printf '%s\n' "$bd2" )))
+  if [[ ${change[1]} == '>' ]]; then
+    printf 'Device Removed: /dev/'
+    echo ${change[2]}
+  elif [[ ${change[1]} == '<' ]]; then
+    printf 'Device Added: /dev/'
+    echo ${change[2]}
+    echo
+    echo "== Information =="
+    info
+    echo
+    echo "== Disk Usage =="
+    df -h /dev/${change[2]}
+    echo
+    echo "== Unique Identifier (UUID) =="
+    lsblk -f -o NAME,UUID /dev/${change[2]}
+    echo
+    echo "== Commands =="
+    echo
+    echo "Wipe, Create Partition and Format (all data will be lost)"
+    echo "sudo sfdisk --delete /dev/${change[2]} && echo 'type=83' | sudo sfdisk /dev/${change[2]} && mkfs.ext4 /dev/${change[2]}1"
+    echo
+    echo "Example line to add to /etc/fstab"
+    uuid=$(lsblk -no UUID /dev/${change[2]})
+    echo "  UUID=${uuid/$'\n'} /mnt/mountpoint ext4 defaults,errors=remount-ro 0 1"
+    echo "(change the mountpoint appropriately, must first format as ext4 per example above)"
+    echo
+    echo "------------------------------"
+    echo
+  fi
+  bd2=$bd1
+  sleep 1
+done
+
