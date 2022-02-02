@@ -54,6 +54,8 @@ do
     echo
     echo "---"
     echo
+    echo "Press CTRL-C to exit"
+    echo
   fi
   bd2=$bd1
   sleep 1
