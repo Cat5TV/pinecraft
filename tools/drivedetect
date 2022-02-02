@@ -48,10 +48,15 @@ do
     echo "== Commands =="
     echo
     echo "Wipe, Create Partition and Format (all data will be lost)"
+    echo "---"
     echo
-    echo "sudo sfdisk --delete /dev/${change[2]} && echo 'type=83' | sudo sfdisk /dev/${change[2]} && yes | sudo mkfs.ext4 /dev/${change[2]}1 && sleep 1 && echo \"Sample line for /etc/fstab:\" && echo -n \"UUID=$(lsblk -no UUID /dev/${change[2]}1) /mnt/mountpoint ext4 defaults,errors=remount-ro 0 1\" && echo"
+    echo "sudo sfdisk --delete /dev/${change[2]} && echo 'type=83' | \
+sudo sfdisk /dev/${change[2]} && yes | sudo mkfs.ext4 /dev/${change[2]}1 && \
+sleep 1 && echo \"Sample line for /etc/fstab:\" && \
+echo -n \"UUID=$\
+(lsblk -no UUID /dev/${change[2]}1) /mnt/mountpoint ext4 defaults,errors=remount-ro 0 1\" && echo"
     echo
-    echo "------------------------------"
+    echo "---"
     echo
   fi
   bd2=$bd1
