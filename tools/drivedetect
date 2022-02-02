@@ -1,5 +1,6 @@
 #!/bin/bash
 # V1.0
+echo
 echo "Drive Detect by Robbie Ferguson"
 echo
 echo "Plug in a new storage device to detect its info."
