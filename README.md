@@ -56,6 +56,8 @@ Base Distro OS
 
 **Do not use Pinecraft Installer on a Base Distro OS that contains a desktop environment, or any other running applications.** Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
+**NEVER install Pinecraft on your desktop system. This is a dedicated server. That means once you install it, the system is no longer useable for anything else.**
+
 For the Raspberry Pi 4 Ubuntu Server 64-bit is the officially supported and recommended option.
 
 Download Ubuntu Server 21.10 64-Bit here: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
