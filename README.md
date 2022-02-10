@@ -44,19 +44,19 @@ Minecraft Version 1.18.1 is fully supported as of Pinecraft Installer 3.1.
 
 Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
-**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base OS section below.
+**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base Distro OS section below.
 
-Note that as system requirements change for Minecraft, you may need to update or even switch your base OS since older distros may not have current enough versions of needed libraries. Please see the Base OS information below, which will be updated along with these requirements.
+Note that as system requirements change for Minecraft, you may need to update or even switch your Base Distro OS since older distros may not have current enough versions of needed libraries. Please see the Base Distro OS information below, which will be updated along with these requirements.
 
 Always have an up-to-date backup of your world files.
 
 
-Base OS
-=======
+Base Distro OS
+==============
 
-For the Raspberry Pi 4 Ubuntu Server 64-bit is the recommended option. It will work on all versions of the board, but also has the advantage of being fully 64-bit, unlike Raspberry Pi OS Lite, which is 32-bit.
+**Do not use Pinecraft Installer on a Base Distro OS that contains a desktop environment, or any other running applications.** Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
 
-**Do not use Pinecraft Installer on a base OS that contains a desktop environment, or any other running applications.** Pinecraft Installer is intended to setup a *dedicated* Minecraft Java server, and the device should be used for nothing else.
+For the Raspberry Pi 4 Ubuntu Server 64-bit is the officially supported and recommended option.
 
 Download Ubuntu Server 21.10 64-Bit here: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
 
