@@ -32,7 +32,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft Installer is 3.1.
+The current version of Pinecraft Installer is 3.2.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -40,9 +40,10 @@ The current version of Pinecraft Installer is 3.1.
 MINECRAFT VERSION
 =================
 
-Minecraft Version 1.18.1 is fully supported as of Pinecraft Installer 3.1.
+- Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
+- Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
 
-Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
+The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
 **Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base Distro OS section below.
 
@@ -289,7 +290,9 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
-Pinecraft 3.1 - All applicable installers support 1.18. The Java version has been increased to 17, and the installer improved. Also addressed some changes in the Forge installer which broke compatibility with earlier versions of Pinecraft Installer.
+Pinecraft 3.2 - Minecraft 1.18.2 is now supported.
+
+Pinecraft 3.1 - All applicable installers support 1.18.1. The Java version has been increased to 17, and the installer improved. Also addressed some changes in the Forge installer which broke compatibility with earlier versions of Pinecraft Installer.
 
 Pinecraft 3.0 - All applicable installers support 1.17.1. A few bug fixes.
 
