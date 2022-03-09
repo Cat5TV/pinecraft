@@ -70,6 +70,26 @@ if [[ $dialog == "" ]]; then
   fi
 fi
 
+# wget is used to download each server installer
+# I don't distribute the installers with Pinecraft directly since
+# Minecraft itself is not open source.
+# The RADXA Rock 3A does not have wget pre-installed, so I'll install it if it doesn't exist.
+wget=$(which wget)
+if [[ $wget == "" ]]; then
+  printf "Installing wget... "
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install wget > /dev/null 2>&1
+  wget=$(which wget)
+  if [[ $wget == "" ]]; then
+    echo "Failed. Aborting. Install wget first."
+    exit 0
+  else
+    echo "Success."
+  fi
+fi
 
 dialog --title "Pinecraft Installer $pcver" \
 --msgbox "
@@ -498,7 +518,7 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.18.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.0.3/forge-1.18.2-40.0.3-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.0.12/forge-1.18.2-40.0.12-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.85/forge-1.18.1-39.0.85-installer.jar"
       elif [[ $mcver == "1.18" ]]; then
@@ -521,7 +541,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.18.2" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/230/downloads/paper-1.18.2-230.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/237/downloads/paper-1.18.2-237.jar"
       elif [[ $mcver == "1.18.1" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/214/downloads/paper-1.18.1-214.jar"
       elif [[ $mcver == "1.18" ]]; then
