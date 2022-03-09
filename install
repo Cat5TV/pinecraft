@@ -70,27 +70,6 @@ if [[ $dialog == "" ]]; then
   fi
 fi
 
-# wget is used to download each server installer
-# I don't distribute the installers with Pinecraft directly since
-# Minecraft itself is not open source.
-# The RADXA Rock 3A does not have wget pre-installed, so I'll install it if it doesn't exist.
-wget=$(which wget)
-if [[ $wget == "" ]]; then
-  printf "Installing wget... "
-  if [[ $updated == 0 ]]; then
-    apt-get update > /dev/null 2>&1
-    updated=1
-  fi
-  apt-get -y install wget > /dev/null 2>&1
-  wget=$(which wget)
-  if [[ $wget == "" ]]; then
-    echo "Failed. Aborting. Install wget first."
-    exit 0
-  else
-    echo "Success."
-  fi
-fi
-
 dialog --title "Pinecraft Installer $pcver" \
 --msgbox "
 
@@ -231,6 +210,19 @@ if [ $(dpkg-query -W -f='${Status}' screen 2>/dev/null | grep -c "ok installed")
     updated=1
   fi
   apt-get -y install screen > /dev/null 2>&1
+fi
+
+# wget is used to download each server installer
+# I don't distribute the installers with Pinecraft directly since
+# Minecraft itself is not open source.
+# The RADXA Rock 3A does not have wget pre-installed, so I'll install it if it doesn't exist.
+if [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  dialog --infobox "Installing wget..." 3 34 ;
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install wget > /dev/null 2>&1
 fi
 
 mcver="1.16.5"
