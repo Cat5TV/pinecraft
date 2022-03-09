@@ -59,8 +59,8 @@ Base OS (Distro)
 
 **NEVER install Pinecraft on your desktop system. This is a dedicated server. That means once you install it, the system is no longer useable for anything else.**
 
-Download Base OS
-----------------
+Download Supported Base OS
+--------------------------
 
 **Raspberry Pi 4 8 GB**
 
