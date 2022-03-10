@@ -215,7 +215,7 @@ fi
 # wget is used to download each server installer
 # I don't distribute the installers with Pinecraft directly since
 # Minecraft itself is not open source.
-# The RADXA Rock 3A does not have wget pre-installed, so I'll install it if it doesn't exist.
+# The Radxa ROCK 3A does not have wget pre-installed, so I'll install it if it doesn't exist.
 if [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   dialog --infobox "Installing wget..." 3 34 ;
   if [[ $updated == 0 ]]; then
@@ -223,6 +223,16 @@ if [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -
     updated=1
   fi
   apt-get -y install wget > /dev/null 2>&1
+fi
+
+# crontab isn't included on Radxa ROCK 3A ... add it.
+if [ $(dpkg-query -W -f='${Status}' cron 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  dialog --infobox "Installing cron..." 3 34 ;
+  if [[ $updated == 0 ]]; then
+    apt-get update > /dev/null 2>&1
+    updated=1
+  fi
+  apt-get -y install cron > /dev/null 2>&1
 fi
 
 mcver="1.16.5"
