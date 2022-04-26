@@ -59,16 +59,30 @@ Base OS (Distro)
 
 **NEVER install Pinecraft on your desktop system. This is a dedicated server. That means once you install it, the system is no longer useable for anything else.**
 
-Download Supported Base OS
---------------------------
+Supported Base OS
+-----------------
 
 **Raspberry Pi 4 8 GB**
 
-- Ubuntu Server 21.10 64-Bit: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
+- Download Ubuntu Server 21.10 64-Bit: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
+- Default Login/Password: ubuntu/ubuntu
 
-**Radxa ROCK 3A 8 GB**
+**Khadas VIM4**
 
-- Ubuntu Server Ubuntu 20.04.4 64-bit: https://github.com/radxa/debos-radxa/releases/download/main-91a03e59/rock-3a-ubuntu-focal-server-arm64-20220308-1252-gpt.img.xz
+- Boot into OOWOW and install Ubuntu Server 20.04 Server.
+- Default Login/Password: khadas/khadas
+
+Compatibility Tests
+-------------------
+
+**Pass**
+
+- Raspberry Pi 4 8 GB
+- Khadas VIM4
+
+**Fail**
+
+- Radxa ROCK 3A 8 GB
 
 
 Server Versions
