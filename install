@@ -477,12 +477,12 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("R" "Forge (${mcver})")
 fi
 
 # Supports 1.9+
-if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.9") ]; then
+if  [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]]; then
   flavors+=("S" "Spigot (${mcver})")
 fi
 
@@ -501,13 +501,23 @@ result=$(dialog --title "Pinecraft Installer $pcver" --menu "Choose your Minecra
 if [[ $? == 0 ]]; then
   case $result in
     S)
-      # https://hub.spigotmc.org/jenkins/job/BuildTools/
-      # NOTE: BuildTools (Spigot) AUTOMATICALLY ensures the correct Minecraft version is installed (see switches below)
-      #       No need to update the script manually.
-      flavor="Spigot"
-      url="https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
-      jarname="spigot-*.jar"
-      switches="--rev ${mcver}"
+   # Spigot Downloads from The offical https://getbukkit.org/ (Required- DO NOT USE ANY OTHER SITES THAN THIS. THIS IS THE OFFICAL!)
+         flavor="Spigot"
+      if [[ $mcver == "1.18.2" ]]; then
+        url="https://download.getbukkit.org/spigot/spigot-1.18.2.jar"
+      elif [[ $mcver == "1.18.1" ]]; then
+        url="https://download.getbukkit.org/spigot/spigot-1.18.1.jar"
+      elif [[ $mcver == "1.18" ]]; then
+        url="https://download.getbukkit.org/spigot/spigot-1.18.jar"
+      elif [[ $mcver == "1.17.1" ]]; then
+        url="https://download.getbukkit.org/spigot/spigot-1.17.1.jar"
+      elif [[ $mcver == "1.17" ]]; then
+        url="https://download.getbukkit.org/spigot/spigot-1.17.jar"
+      else
+        url="https://cdn.getbukkit.org/spigot/spigot-1.16.5.jar"
+      fi
+      jarname="Spigot-Server.jar"
+      switches=""
       ;;
     F)
       # https://fabricmc.net/use/
@@ -523,6 +533,8 @@ if [[ $? == 0 ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.0/forge-1.18.2-40.1.0-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.85/forge-1.18.1-39.0.85-installer.jar"
+      elif [[ $mcver == "1.12.2" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2860/forge-1.12.2-14.23.5.2860-installer.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.17/forge-1.18-38.0.17-installer.jar"
       elif [[ $mcver == "1.17.1" ]]; then
@@ -536,24 +548,24 @@ if [[ $? == 0 ]]; then
     V)
       flavor="Vanilla"
       url=$vanilla
-      jarname="server.jar"
+      jarname="Vanilla-server.jar"
       switches=""
       ;;
     P)
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.18.2" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/295/downloads/paper-1.18.2-295.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/268/downloads/paper-1.18.2-268.jar"
       elif [[ $mcver == "1.18.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/214/downloads/paper-1.18.1-214.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/216/downloads/paper-1.18.1-216.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/66/downloads/paper-1.18-66.jar"
       elif [[ $mcver == "1.17.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/391/downloads/paper-1.17.1-391.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/408/downloads/paper-1.17.1-408.jar"
       elif [[ $mcver == "1.17" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/66/downloads/paper-1.17-66.jar"
       else
-        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/790/downloads/paper-1.16.5-790.jar"
       fi
       jarname="minecraft.jar"
       switches=""
@@ -586,6 +598,7 @@ result=$(dialog --title "Pinecraft Installer $pcver $mcver" \
          --menu "Choose your game type:" 20 40 10 \
          "S"       "Survival" \
          "C"       "Creative" \
+         "H"      "Hardcore"  \
        2>&1 1>&3);
 
 if [[ $? == 0 ]]; then
@@ -595,6 +608,9 @@ if [[ $? == 0 ]]; then
       ;;
     C)
       gamemode="creative"
+      ;;
+    H)
+      hardcore="true"
       ;;
     esac
 else
@@ -894,7 +910,7 @@ else
   if [[ $flavor == "Forge" ]]; then
     # The forge installer removes itself and creates instead a minecraft.jar file
     # Use this instead to measure whether compile was successful
-    jarname="minecraft.jar"
+    jarname="minecraft-forge.jar"
   fi
 
   jarfile=$(ls ${instdir}src/${jarname})
@@ -1305,10 +1321,11 @@ clear
   echo
   echo "Minecraft server is now running on $ip"
   echo
-  echo "Remember: World generation can take a few minutes. Be patient."
+  echo "Remember: World generation can take a few minutes. Please Wait Until it Has Finished."
   echo
   echo "Documentation: https://github.com/Cat5TV/Pinecraft"
   echo
   echo "Support The Project: https://patreon.com/Pinecraft"
   echo
+  echo "Questions? Go here to: https://forms.gle/Vxf27h2KJw2yomSf9"
 
