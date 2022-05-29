@@ -520,7 +520,7 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.18.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.0/forge-1.18.2-40.1.0-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.25/forge-1.18.2-40.1.25-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.85/forge-1.18.1-39.0.85-installer.jar"
       elif [[ $mcver == "1.18" ]]; then
@@ -543,7 +543,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.18.2" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/295/downloads/paper-1.18.2-295.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/350/downloads/paper-1.18.2-350.jar"
       elif [[ $mcver == "1.18.1" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/214/downloads/paper-1.18.1-214.jar"
       elif [[ $mcver == "1.18" ]]; then
