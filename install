@@ -991,8 +991,7 @@ else
   fi
 fi
 chmod +x ${instdir}server
-# Set ownership to the user
-chown -R $user:$user $instdir
+
 # Need to generate the config and EULA
 # Note: Because the EULA is not yet accepted within eula.txt, the server will init and quit immediately.
 if [[ $upgrade == 0 ]] || [[ ! -e ${instdir}server.properties ]]; then
@@ -1221,9 +1220,8 @@ fi
 echo $pcver > ${instdir}cat5tv.ver
 
 # Set ownership to the user
+dialog --infobox "Setting ownership..." 3 24
 chown -R $user:$user $instdir
-
-
 
 ###############################################
 # Install cronjob to auto-start server on boot
