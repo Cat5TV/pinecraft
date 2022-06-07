@@ -32,7 +32,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft Installer is 3.2.
+The current version of Pinecraft Installer is 3.3.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -40,6 +40,7 @@ The current version of Pinecraft Installer is 3.2.
 MINECRAFT VERSION
 =================
 
+- Minecraft Version 1.19 is supported as of Pinecraft Installer 3.3.
 - Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
 - Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
 
@@ -311,7 +312,9 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
-Pinecraft 3.2 - Minecraft 1.18.2 is now supported.
+Pinecraft 3.3 - Minecraft 1.19 is now supported.
+
+Pinecraft 3.2 - Minecraft 1.18.2 is now supported. Khadas VIM4 SBC is now supported as an alternative to the Raspberry Pi 4.
 
 Pinecraft 3.1 - All applicable installers support 1.18.1. The Java version has been increased to 17, and the installer improved. Also addressed some changes in the Forge installer which broke compatibility with earlier versions of Pinecraft Installer.
 
