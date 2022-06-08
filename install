@@ -237,7 +237,8 @@ fi
 
 mcver="1.16.5"
 if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
-  mcver="1.18.2"
+  #mcver="1.18.2"
+  mcver="1.19"
 elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
   mcver="1.17.1"
 fi
@@ -493,7 +494,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
