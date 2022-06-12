@@ -523,7 +523,7 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.19" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.0.16/forge-1.19-41.0.16-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.0.17/forge-1.19-41.0.17-installer.jar"
       elif [[ $mcver == "1.18.2" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.45/forge-1.18.2-40.1.45-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
