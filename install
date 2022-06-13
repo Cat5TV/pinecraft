@@ -548,7 +548,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.19" ]]; then
-        url="https://api.papermc.io/v2/projects/paper/versions/1.19/builds/11/downloads/paper-1.19-11.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.19/builds/12/downloads/paper-1.19-12.jar"
       elif [[ $mcver == "1.18.2" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/375/downloads/paper-1.18.2-375.jar"
       elif [[ $mcver == "1.18.1" ]]; then
