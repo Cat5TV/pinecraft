@@ -1103,9 +1103,9 @@ if [[ -s /etc/rc6.d/K01stop-pinecraft ]]; then
   rm -f /etc/rc6.d/K01stop-pinecraft
 fi
 # Make the stop command run automatically at shutdown
-sudo ln -s ${instdir}stop /etc/rc0.d/K01stop-pinecraft
+ln -s ${instdir}stop /etc/rc0.d/K01stop-pinecraft
 # Make the stop command run automatically at reboot
-sudo ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
+ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 
 ###############################################
 # /Create the scripts
