@@ -669,6 +669,7 @@ if
    [[ "$revision" == *"b03111" ]] ||
    [[ "$revision" == *"b03112" ]] ||
    [[ "$revision" == *"b03114" ]] ||
+   [[ "$revision" == *"b03115" ]] ||
    [[ "$revision" == *"c03111" ]] ||
    [[ "$revision" == *"c03112" ]] ||
    [[ "$revision" == *"c03114" ]] ||
