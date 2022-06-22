@@ -673,7 +673,9 @@ if
    [[ "$revision" == *"c03111" ]] ||
    [[ "$revision" == *"c03112" ]] ||
    [[ "$revision" == *"c03114" ]] ||
-   [[ "$revision" == *"d03114" ]]; then
+   [[ "$revision" == *"c03115" ]] ||
+   [[ "$revision" == *"d03114" ]] ||
+   [[ "$revision" == *"d03115" ]]; then
      board='Raspberry Pi 4'
      boardnum=1
      oc_volt=4
@@ -1317,4 +1319,3 @@ clear
   echo
   echo "Support The Project: https://patreon.com/Pinecraft"
   echo
-
