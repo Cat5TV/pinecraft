@@ -982,6 +982,9 @@ fi
 
 dialog --infobox "Creating scripts..." 3 34 ; sleep 1
 
+# Setup Aikars Flags
+aikars="-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
+
 # Create the run script
 echo '#!/bin/bash
 user=$(whoami); if [[ $user != "'${user}'" ]]; then echo "Cannot run as ${user} - expecting '${user}'"; exit; fi
@@ -997,7 +1000,7 @@ else
     echo "exec java ${cli_args} -Xms${gamememMIN}M -Xmx${gamemem}M ${forge_args}" >> ${instdir}server
   else
     # Non-forge servers
-    echo "exec java ${cli_args} -Xms${gamememMIN}M -Xmx${gamemem}M -jar `basename $jarfile` --nogui" >> ${instdir}server
+    echo "exec java ${cli_args} -Xms${gamememMIN}M -Xmx${gamemem}M ${aikars} -jar `basename $jarfile` nogui" >> ${instdir}server
   fi
 fi
 chmod +x ${instdir}server
