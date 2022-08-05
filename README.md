@@ -27,7 +27,13 @@ The installer attempts to detect things like how much RAM you have (and availabl
 
 Check out Pinecraft 2.6 on Category5 Technology TV:
 
+**Pinecraft Installer 2.6 Featured on Category5 Technology TV**
+
 [![Pinecraft Installer 2.6 Featured on Category5 Technology TV](https://img.youtube.com/vi/1A4FtaiNkrg/0.jpg)](https://www.youtube.com/watch?v=1A4FtaiNkrg)
+
+**Top 5 Pinecraft Questions Post-Install:**
+
+[![Top 5 Pinecraft Questions Post-Install on Category5 Technology TV](https://img.youtube.com/vi/4YgS5M4t_Qg/0.jpg)](https://www.youtube.com/watch?v=4YgS5M4t_Qg)
 
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
