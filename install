@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="3.3"
+pcver="3.4"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -237,8 +237,7 @@ fi
 
 mcver="1.16.5"
 if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
-  #mcver="1.18.2"
-  mcver="1.19"
+  mcver="1.19.2"
 elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
   mcver="1.17.1"
 fi
@@ -449,7 +448,9 @@ fi
 
 
 # https://www.minecraft.net/en-us/download/server
-if [[ $mcver == "1.19" ]]; then
+if [[ $mcver == "1.19.2" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
+elif [[ $mcver == "1.19" ]]; then
   vanilla="https://launcher.mojang.com/v1/objects/e00c4052dac1d59a1188b2aa9d5a87113aaf1122/server.jar"
 elif [[ $mcver == "1.18.2" ]]; then
   vanilla="https://launcher.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar"
@@ -522,7 +523,9 @@ if [[ $? == 0 ]]; then
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      if [[ $mcver == "1.19" ]]; then
+      if [[ $mcver == "1.19.2" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.0.0/forge-1.19.2-43.0.0-installer.jar"
+      elif [[ $mcver == "1.19" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.0.110/forge-1.19-41.0.110-installer.jar"
       elif [[ $mcver == "1.18.2" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.45/forge-1.18.2-40.1.45-installer.jar"
@@ -547,7 +550,9 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.19" ]]; then
+      if [[ $mcver == "1.19.2" ]]; then
+        url="https://api.papermc.io/v2/projects/paper/versions/1.19.2/builds/112/downloads/paper-1.19.2-112.jar"
+      elif [[ $mcver == "1.19" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19/builds/81/downloads/paper-1.19-81.jar"
       elif [[ $mcver == "1.18.2" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/375/downloads/paper-1.18.2-375.jar"
