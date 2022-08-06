@@ -38,7 +38,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft Installer is 3.3.
+The current version of Pinecraft Installer is 3.4.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -46,6 +46,7 @@ The current version of Pinecraft Installer is 3.3.
 MINECRAFT VERSION
 =================
 
+- Minecraft Version 1.19.2 is supported as of Pinecraft Installer 3.4.
 - Minecraft Version 1.19 is supported as of Pinecraft Installer 3.3.
 - Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
 - Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
@@ -317,6 +318,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 3.4 - Minecraft 1.19.2 is now supported.
 
 Pinecraft 3.3 - Minecraft 1.19 is now supported.
 
