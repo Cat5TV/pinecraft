@@ -75,7 +75,7 @@ Supported Base OS
 - Download Ubuntu Server 21.10 64-Bit: https://cdimage.ubuntu.com/releases/21.10/release/ubuntu-21.10-preinstalled-server-arm64+raspi.img.xz
 - Default Login/Password: ubuntu/ubuntu
 
-**Khadas VIM4**
+**Khadas VIM4 8 GB**
 
 - Boot into OOWOW (hold the middle button and tap the button nearest the USB port, continue holding the middle button).
 - Enter the downloads menu and choose Refresh Images List.
