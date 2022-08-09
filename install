@@ -639,6 +639,9 @@ dialog --title "End-User License Agreement"  --yesno "In order to proceed, you m
 
 # Gather some info about your system which will be used to determine the config
 revision=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
+if [[ $revision == "" ]]; then
+  revision=$(cat /proc/cpuinfo | grep 'Hardware' | awk '{print $4}')
+fi
 board="Unknown" # Default will be overridden if determined
 memtotal=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}') # Amount of memory in KB
 memavail=$(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') # Amount of memory in KB
@@ -692,6 +695,12 @@ elif [[ "$revision" == *"c03130" ]]; then
   oc_volt=6
   oc_freq=2000
   oc_friendly="2.0 GHz"
+elif [[ "$revision" == *"VIM4" ]]; then
+  board='Khadas VIM4'
+  boardnum=3
+  oc_friendly="Not Required"
+
+
 fi
 
 if (( $gamemem > 3800 )); then
