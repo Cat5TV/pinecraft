@@ -77,7 +77,9 @@ Supported Base OS
 
 **Khadas VIM4**
 
-- Boot into OOWOW and install Ubuntu Server 20.04 Server.
+- Boot into OOWOW (hold the middle button and tap the button nearest the USB port, continue holding the middle button).
+- Enter the downloads menu and choose Refresh Images List.
+- Install vim4-ubuntu-22.04-**server**-linux-5.4-fenix-... (make absolutely certain you have selected the **server** version).
 - Default Login/Password: khadas/khadas
 
 Compatibility Tests
