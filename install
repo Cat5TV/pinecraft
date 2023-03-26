@@ -6,7 +6,7 @@
 
 # Corresponding video series: https://category5.tv/feature/minecraft
 
-pcver="3.5"
+pcver="3.6"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root" 2>&1
@@ -237,7 +237,7 @@ fi
 
 mcver="1.16.5"
 if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
-  mcver="1.19.3"
+  mcver="1.19.4"
 elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
   mcver="1.17.1"
 fi
@@ -448,7 +448,9 @@ fi
 
 
 # https://www.minecraft.net/en-us/download/server
-if [[ $mcver == "1.19.3" ]]; then
+if [[ $mcver == "1.19.4" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar"
+elif [[ $mcver == "1.19.3" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar"
 elif [[ $mcver == "1.19.2" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
@@ -474,7 +476,7 @@ flavor=""
 
 declare -a flavors=()
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]]; then
   flavors+=("P" "Paper (Default, ${mcver})")
 fi
 
@@ -483,7 +485,7 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]]; then
   flavors+=("R" "Forge (${mcver})")
 fi
 
@@ -497,7 +499,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
@@ -525,7 +527,9 @@ if [[ $? == 0 ]]; then
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      if [[ $mcver == "1.19.3" ]]; then
+      if [[ $mcver == "1.19.4" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.0.25/forge-1.19.4-45.0.25-installer.jar"
+      elif [[ $mcver == "1.19.3" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.3-44.1.23/forge-1.19.3-44.1.23-installer.jar"
       elif [[ $mcver == "1.19.2" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.2.1/forge-1.19.2-43.2.1-installer.jar"
@@ -554,7 +558,9 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.19.3" ]]; then
+      if [[ $mcver == "1.19.4" ]]; then
+        url="https://api.papermc.io/v2/projects/paper/versions/1.19.4/builds/471/downloads/paper-1.19.4-471.jar"
+      elif [[ $mcver == "1.19.3" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/448/downloads/paper-1.19.3-448.jar"
       elif [[ $mcver == "1.19.2" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19.2/builds/307/downloads/paper-1.19.2-307.jar"
