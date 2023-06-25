@@ -75,7 +75,7 @@ Supported Base OS
 
 **Raspberry Pi 4 8 GB**
 
-- Download Ubuntu Server 22.04.1 64-Bit: https://cdimage.ubuntu.com/releases/22.04.1/release/ubuntu-22.04.1-preinstalled-server-arm64+raspi.img.xz
+- Download Ubuntu Server 22.04.1 64-Bit: https://cdimage.ubuntu.com/releases/22.04.2/release/ubuntu-22.04.2-preinstalled-server-arm64+raspi.img.xz
 - Default Login/Password: ubuntu/ubuntu
 
 **Khadas VIM4 8 GB**
