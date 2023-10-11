@@ -20,7 +20,7 @@ The installer attempts to detect things like how much RAM you have (and availabl
 
 ## Monitor Your Pinecraft Server
 
-[NEMS Linux](https://nemslinux.com/) is a free Enterprise-grade asset monitoring tool which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server! Download [NEMS Linux](https://nemslinux.com/) today.
+[NEMS Linux](https://nemslinux.com/) is a free Enterprise-grade asset monitoring tool which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server! Download [NEMS Linux](https://nemslinux.com/) for free today.
 
 ## Videos
 
