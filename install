@@ -448,10 +448,16 @@ fi
 
 
 # https://www.minecraft.net/en-us/download/server
+if [[ $mcver == "1.20.4" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar"
+if [[ $mcver == "1.20.3" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/4fb536bfd4a83d61cdbaf684b8d311e66e7d4c49/server.jar"
 if [[ $mcver == "1.20.2" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/5b868151bd02b41319f54c8d4061b8cae84e665c/server.jar"
 elif [[ $mcver == "1.20.1" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar"
+elif [[ $mcver == "1.20" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar"
 elif [[ $mcver == "1.19.4" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar"
 elif [[ $mcver == "1.19.3" ]]; then
@@ -480,7 +486,7 @@ flavor=""
 
 declare -a flavors=()
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.1" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]]; then
   flavors+=("P" "Paper (Default, ${mcver})")
 fi
 
@@ -489,7 +495,7 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.1" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.3" ]] || [[ $mcver == "1.20.4" ]]; then
   flavors+=("R" "Forge (${mcver})")
 fi
 
@@ -503,7 +509,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.3" ]] || [[ $mcver == "1.20.4" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
@@ -531,28 +537,36 @@ if [[ $? == 0 ]]; then
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
+      if [[ $mcver == "1.20.4" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.4-49.0.11/forge-1.20.4-49.0.11-installer.jar"
+      if [[ $mcver == "1.20.3" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.3-49.0.2/forge-1.20.3-49.0.2-installer.jar"
       if [[ $mcver == "1.20.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.2-48.0.23/forge-1.20.2-48.0.23-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.2-48.1.0/forge-1.20.2-48.1.0-installer.jar"
       elif [[ $mcver == "1.20.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.1/forge-1.20.1-47.2.1-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.18/forge-1.20.1-47.2.18-installer.jar"
+      elif [[ $mcver == "1.20" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20-46.0.14/forge-1.20-46.0.14-installer.jar"
       elif [[ $mcver == "1.19.4" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.1.0/forge-1.19.4-45.1.0-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.2.6/forge-1.19.4-45.2.6-installer.jar"
       elif [[ $mcver == "1.19.3" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.3-44.1.23/forge-1.19.3-44.1.23-installer.jar"
       elif [[ $mcver == "1.19.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.2.1/forge-1.19.2-43.2.1-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.3.5/forge-1.19.2-43.3.5-installer.jar"
+      elif [[ $mcver == "1.19.1" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.1-42.0.9/forge-1.19.1-42.0.9-installer.jar"
       elif [[ $mcver == "1.19" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.0.110/forge-1.19-41.0.110-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.1.0/forge-1.19-41.1.0-installer.jar"
       elif [[ $mcver == "1.18.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.45/forge-1.18.2-40.1.45-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.2.14/forge-1.18.2-40.2.14-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.85/forge-1.18.1-39.0.85-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.1.2/forge-1.18.1-39.1.2-installer.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.17/forge-1.18-38.0.17-installer.jar"
       elif [[ $mcver == "1.17.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.1.1/forge-1.17.1-37.1.1-installer.jar"
       else
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.2.41/forge-1.16.5-36.2.41-installer.jar"
       fi
       jarname="forge-installer.jar"
       switches="--installServer ."
@@ -566,30 +580,36 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
+      if [[ $mcver == "1.20.4" ]]; then
+        url='https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/342/downloads/paper-1.20.4-342.jar'
       if [[ $mcver == "1.20.2" ]]; then
-        url="https://api.papermc.io/v2/projects/paper/versions/1.20.2/builds/233/downloads/paper-1.20.2-233.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.20.2/builds/318/downloads/paper-1.20.2-318.jar"
       elif [[ $mcver == "1.20.1" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.20.1/builds/196/downloads/paper-1.20.1-196.jar"
+      elif [[ $mcver == "1.20" ]]; then
+        url="https://api.papermc.io/v2/projects/paper/versions/1.20/builds/17/downloads/paper-1.20-17.jar"
       elif [[ $mcver == "1.19.4" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19.4/builds/550/downloads/paper-1.19.4-550.jar"
       elif [[ $mcver == "1.19.3" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/448/downloads/paper-1.19.3-448.jar"
       elif [[ $mcver == "1.19.2" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19.2/builds/307/downloads/paper-1.19.2-307.jar"
+      elif [[ $mcver == "1.19.1" ]]; then
+        url="https://api.papermc.io/v2/projects/paper/versions/1.19.1/builds/111/downloads/paper-1.19.2-111.jar"
       elif [[ $mcver == "1.19" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.19/builds/81/downloads/paper-1.19-81.jar"
       elif [[ $mcver == "1.18.2" ]]; then
-        url="https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/375/downloads/paper-1.18.2-375.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/388/downloads/paper-1.18.2-388.jar"
       elif [[ $mcver == "1.18.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/214/downloads/paper-1.18.1-214.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/216/downloads/paper-1.18.1-216.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://papermc.io/api/v2/projects/paper/versions/1.18/builds/66/downloads/paper-1.18-66.jar"
       elif [[ $mcver == "1.17.1" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/391/downloads/paper-1.17.1-391.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17.1/builds/411/downloads/paper-1.17.1-411.jar"
       elif [[ $mcver == "1.17" ]]; then
-        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/28/downloads/paper-1.17-28.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.17/builds/79/downloads/paper-1.17-79.jar"
       else
-        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/778/downloads/paper-1.16.5-778.jar"
+        url="https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/794/downloads/paper-1.16.5-794.jar"
       fi
       jarname="minecraft.jar"
       switches=""
