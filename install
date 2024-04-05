@@ -524,7 +524,7 @@ if [[ $? == 0 ]]; then
     F)
       # https://fabricmc.net/use/
       flavor="Fabric"
-      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.2/fabric-installer-0.11.2.jar"
+      url="https://maven.fabricmc.net/net/fabricmc/fabric-installer/1.0.0/fabric-installer-1.0.0.jar"
       jarname="fabric-server-launch.jar"
       switches="server -mcversion ${mcver} -downloadMinecraft"
       ;;
@@ -532,7 +532,7 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.20.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.2-48.0.23/forge-1.20.2-48.0.23-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.2-48.1.0/forge-1.20.2-48.1.0-installer.jar"
       elif [[ $mcver == "1.20.1" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.1/forge-1.20.1-47.2.1-installer.jar"
       elif [[ $mcver == "1.19.4" ]]; then
@@ -567,7 +567,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.20.2" ]]; then
-        url="https://api.papermc.io/v2/projects/paper/versions/1.20.2/builds/233/downloads/paper-1.20.2-233.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.20.2/builds/318/downloads/paper-1.20.2-318.jar"
       elif [[ $mcver == "1.20.1" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.20.1/builds/196/downloads/paper-1.20.1-196.jar"
       elif [[ $mcver == "1.19.4" ]]; then
