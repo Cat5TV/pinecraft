@@ -28,6 +28,7 @@ Download [NEMS Linux](https://nemslinux.com/) for free today.
 
 | Minecraft Version | Pinecraft Release |
 | --- | --- |
+| 1.20.6 | 4.0 |
 | 1.20.4 | 3.9 |
 | 1.20.2 | 3.8 |
 | 1.20.1 | 3.7 |
@@ -61,7 +62,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft Installer is 3.9.
+The current version of Pinecraft Installer is 4.0.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -326,6 +327,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 4.0 - Anniversary Edition! Minecraft 1.20.6 is now supported. Skipped 1.20.5 due to critical bug [MC-271109](https://bugs.mojang.com/browse/MC-271109).
 
 Pinecraft 3.9 - Minecraft 1.20.4 is now supported. Skipped 1.20.3 due to critical bug [MC-267185](https://bugs.mojang.com/browse/MC-267185).
 
