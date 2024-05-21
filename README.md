@@ -13,14 +13,16 @@ If you have already installed this, running it again will allow you to upgrade.
 MINECRAFT VERSION
 =================
 
-- Minecraft Version 1.20.2 is supported as of Pinecraft Installer 3.8.
-- Minecraft Version 1.20.1 is supported as of Pinecraft Installer 3.7.
-- Minecraft Version 1.19.4 is supported as of Pinecraft Installer 3.6.
-- Minecraft Version 1.19.3 is supported as of Pinecraft Installer 3.5.
-- Minecraft Version 1.19.2 is supported as of Pinecraft Installer 3.4.
-- Minecraft Version 1.19 is supported as of Pinecraft Installer 3.3.
-- Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
-- Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
+| Minecraft Version | Pinecraft Release |
+| --- | --- |
+| 1.20.2 | 3.8 |
+| 1.20.1 | 3.7 |
+| 1.19.4 | 3.6 |
+| 1.19.3 | 3.5 |
+| 1.19.2 | 3.4 |
+| 1.19 | 3.3 |
+| 1.18.2 | 3.2 |
+| 1.18.1 | 3.1 |
 
 The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
