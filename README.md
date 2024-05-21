@@ -24,8 +24,7 @@ The installer attempts to detect things like how much RAM you have (and availabl
 
 Download [NEMS Linux](https://nemslinux.com/) for free today.
 
-MINECRAFT VERSION
-=================
+## Available Releases
 
 | Minecraft Version | Pinecraft Release |
 | --- | --- |
