@@ -10,6 +10,20 @@ If you have already installed this, running it again will allow you to upgrade.
 
 [![Support Me on Patreon](https://cdn.zecheriah.com/img/patreon_button.png)](https://patreon.com/pinecraft)
 
+## About Pinecraft Installer
+
+The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
+
+The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
+
+**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
+
+## Monitor Your Pinecraft Server
+
+[NEMS Linux](https://nemslinux.com/) is a free Enterprise-grade asset monitoring tool which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server!
+
+Download [NEMS Linux](https://nemslinux.com/) for free today.
+
 MINECRAFT VERSION
 =================
 
@@ -31,20 +45,6 @@ The current version of Pinecraft Installer always installs the latest version of
 Note that as system requirements change for Minecraft, you may need to update or even switch your Base Distro OS since older distros may not have current enough versions of needed libraries. Please see the Base Distro OS information below, which will be updated along with these requirements.
 
 Always have an up-to-date backup of your world files.
-
-## About Pinecraft Installer
-
-The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
-
-The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
-
-**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
-
-## Monitor Your Pinecraft Server
-
-[NEMS Linux](https://nemslinux.com/) is a free Enterprise-grade asset monitoring tool which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server!
-
-Download [NEMS Linux](https://nemslinux.com/) for free today.
 
 ## Videos
 
