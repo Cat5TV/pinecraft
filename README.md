@@ -10,6 +10,26 @@ If you have already installed this, running it again will allow you to upgrade.
 
 [![Support Me on Patreon](https://cdn.zecheriah.com/img/patreon_button.png)](https://patreon.com/pinecraft)
 
+MINECRAFT VERSION
+=================
+
+- Minecraft Version 1.20.2 is supported as of Pinecraft Installer 3.8.
+- Minecraft Version 1.20.1 is supported as of Pinecraft Installer 3.7.
+- Minecraft Version 1.19.4 is supported as of Pinecraft Installer 3.6.
+- Minecraft Version 1.19.3 is supported as of Pinecraft Installer 3.5.
+- Minecraft Version 1.19.2 is supported as of Pinecraft Installer 3.4.
+- Minecraft Version 1.19 is supported as of Pinecraft Installer 3.3.
+- Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
+- Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
+
+The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
+
+**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base Distro OS section below.
+
+Note that as system requirements change for Minecraft, you may need to update or even switch your Base Distro OS since older distros may not have current enough versions of needed libraries. Please see the Base Distro OS information below, which will be updated along with these requirements.
+
+Always have an up-to-date backup of your world files.
+
 ## About Pinecraft Installer
 
 The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
@@ -42,27 +62,6 @@ Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/b
 The current version of Pinecraft Installer is 3.8.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
-
-
-MINECRAFT VERSION
-=================
-
-- Minecraft Version 1.20.2 is supported as of Pinecraft Installer 3.8.
-- Minecraft Version 1.20.1 is supported as of Pinecraft Installer 3.7.
-- Minecraft Version 1.19.4 is supported as of Pinecraft Installer 3.6.
-- Minecraft Version 1.19.3 is supported as of Pinecraft Installer 3.5.
-- Minecraft Version 1.19.2 is supported as of Pinecraft Installer 3.4.
-- Minecraft Version 1.19 is supported as of Pinecraft Installer 3.3.
-- Minecraft Version 1.18.2 is supported as of Pinecraft Installer 3.2.
-- Minecraft Version 1.18.1 is supported as of Pinecraft Installer 3.1.
-
-The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
-
-**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base Distro OS section below.
-
-Note that as system requirements change for Minecraft, you may need to update or even switch your Base Distro OS since older distros may not have current enough versions of needed libraries. Please see the Base Distro OS information below, which will be updated along with these requirements.
-
-Always have an up-to-date backup of your world files.
 
 
 Base OS (Distro)
