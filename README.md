@@ -2,6 +2,8 @@
 
 [![Discord](https://img.shields.io/discord/495592877728989194?logo=discord)](https://discord.gg/dKz5RYc) [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/LinuxTechShow) [![Twitter URL](https://img.shields.io/twitter/follow/category5tv?style=flat-square&logo=twitter)](https://twitter.com/category5tv)
 
+![Minecraft](assets/minecraft15.jpg?raw=true)
+
 ## Minecraft Java Server Installer for Raspberry Pi, PINE64 and Other SBCs.
 
 This installer simplifies the installation and setup of a Minecraft Java Server.
