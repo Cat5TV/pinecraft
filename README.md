@@ -28,6 +28,7 @@ Download [NEMS Linux](https://nemslinux.com/) for free today.
 
 | Minecraft Version | Pinecraft Release |
 | --- | --- |
+| 1.20.4 | 3.9 |
 | 1.20.2 | 3.8 |
 | 1.20.1 | 3.7 |
 | 1.19.4 | 3.6 |
