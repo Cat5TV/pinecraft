@@ -33,18 +33,18 @@ You'll need to download PinecraftOS for Raspberry Pi 4/5. PinecraftOS will not r
 
 ## Available Releases
 
-| Minecraft Version | Pinecraft Release |
+| Minecraft Version | Pinecraft Release | PinecraftOS Build |
 | --- | --- |
-| 1.20.6 | 4.0 |
-| 1.20.4 | 3.9 |
-| 1.20.2 | 3.8 |
-| 1.20.1 | 3.7 |
-| 1.19.4 | 3.6 |
-| 1.19.3 | 3.5 |
-| 1.19.2 | 3.4 |
-| 1.19 | 3.3 |
-| 1.18.2 | 3.2 |
-| 1.18.1 | 3.1 |
+| 1.20.6 | 4.0 | 1 |
+| 1.20.4 | 3.9 | - |
+| 1.20.2 | 3.8 | - |
+| 1.20.1 | 3.7 | - |
+| 1.19.4 | 3.6 | - |
+| 1.19.3 | 3.5 | - |
+| 1.19.2 | 3.4 | - |
+| 1.19 | 3.3 | - |
+| 1.18.2 | 3.2 | - |
+| 1.18.1 | 3.1 | - |
 
 The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
 
