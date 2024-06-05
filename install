@@ -720,6 +720,7 @@ if (( $gamemem > 12000 )); then
     gamememMIN=1500
 fi
 oc_volt=0
+oc_freq=0
 oc_friendly="N/A"
 if (( $gamememMIN < 0 )); then
   dialog --title "Error" \
@@ -759,6 +760,14 @@ elif [[ "$revision" == *"c03130" ]]; then
   oc_volt=6
   oc_freq=2000
   oc_friendly="2.0 GHz"
+elif
+  [[ "$revision" == *"c04170" ]] ||
+  [[ "$revision" == *"d04170" ]]; then
+  board='Raspberry Pi 5'
+  boardnum=4
+  oc_volt_delta=250000
+  oc_freq=2400
+  oc_friendly="2.4 GHz"
 elif [[ "$revision" == *"VIM4" ]]; then
   board='Khadas VIM4'
   boardnum=3
@@ -833,7 +842,7 @@ $user
 Server Version:
 $flavor $mcver ($gamemode)" 20 50
 
-if [[ ! $oc_volt == 0 ]]; then
+if [[ ! $oc_freq == 0 ]]; then
   dialog --title "Confirmation"  --yesno "\nI will be modifying ${configfile} to overclock this ${board}. I am not responsible for damage to your system, and you do this at your own risk.\n\nContinue?" 12 50
   case $? in
   1)
@@ -1215,7 +1224,7 @@ ln -s ${instdir}stop /etc/rc6.d/K01stop-pinecraft
 # Overclock
 ###############################################
 
-if [[ ! $oc_volt == 0 ]]; then
+if [[ ! $oc_freq == 0 ]]; then
   dialog --infobox "Overclocking your system..." 3 34 ; sleep 1
   datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
@@ -1223,9 +1232,16 @@ if [[ ! $oc_volt == 0 ]]; then
 
   # Replace existing overclock settings or add new ones if none exist
 
-  /bin/sed -i -- "/over_voltage=/c\over_voltage=${oc_volt}" $configfile
-  if ! grep -q "over_voltage=" $configfile; then
-    echo "over_voltage=$oc_volt" >> $configfile
+  if [[ ! $oc_volt == 0 ]]; then
+    /bin/sed -i -- "/over_voltage=/c\over_voltage=${oc_volt}" $configfile
+    if ! grep -q "over_voltage=" $configfile; then
+      echo "over_voltage=$oc_volt" >> $configfile
+    fi
+  elif [[ ! $oc_volt_delta == 0 ]]; then
+    /bin/sed -i -- "/over_voltage_delta=/c\over_voltage_delta=${oc_volt_delta}" $configfile
+    if ! grep -q "over_voltage_delta=" $configfile; then
+      echo "over_voltage_delta=$oc_volt_delta" >> $configfile
+    fi
   fi
 
   /bin/sed -i -- "/arm_freq=/c\arm_freq=${oc_freq}" $configfile
