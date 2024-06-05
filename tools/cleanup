@@ -13,7 +13,7 @@ else
 
   # Reset to default password and force user to set a new password on boot
   echo -e "pinecraft\npinecraft" | passwd pinecraft >/tmp/init 2>&1
-  passwd --expire pinecraft
+  passwd -n 0 -x 1 pinecraft
 
   # Remove our git information
   rm /home/pinecraft/.gitconfig
