@@ -34,7 +34,7 @@ You'll need to download PinecraftOS for Raspberry Pi 4/5. PinecraftOS will not r
 ## Available Releases
 
 | Minecraft Version | Pinecraft Release | PinecraftOS Build |
-| --- | --- |
+| --- | --- | --- |
 | 1.20.6 | 4.0 | 1 |
 | 1.20.4 | 3.9 | - |
 | 1.20.2 | 3.8 | - |
