@@ -79,17 +79,15 @@ Base OS (Distro)
 Supported Base OS
 -----------------
 
-**Raspberry Pi 4 8 GB**
+**Raspberry Pi 4/5**
 
-- Download Ubuntu Server 22.04.3 64-Bit: https://cdimage.ubuntu.com/releases/22.04.3/release/ubuntu-22.04.3-preinstalled-server-arm64+raspi.img.xz
-- Default Login/Password: ubuntu/ubuntu
+It is recommended you only use a model of RPi 4 or 5 that has 8GB RAM or higher.
 
-**Khadas VIM4 8 GB**
+As of Pinecraft 4.0, the Pinecraft Base OS has been provided. This is because both the most recent version of Ubuntu and Raspberry Pi OS do not support the latest version of Minecraft. Watching the Issue Tracker it became apparent to me that a custom-built OS would be the easiest way for many users to get started with a Pinecraft 4.0+ server. That said, if you are technically savvy, note that Minecraft as of 1.20.6, requires Java 21, which is not available until Trixie.
 
-- Boot into OOWOW (hold the middle button and tap the button nearest the USB port, continue holding the middle button).
-- Enter the downloads menu and choose Refresh Images List.
-- Install vim4-ubuntu-22.04-**server**-linux-5.4-fenix-... (make absolutely certain you have selected the **server** version).
-- Default Login/Password: khadas/khadas
+- Download Pinecraft Base OS: Coming Soon
+- Default Login/Password: pinecraft/pinecraft
+
 
 Compatibility Tests
 -------------------
