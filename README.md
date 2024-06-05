@@ -14,7 +14,7 @@ If you have already installed this, running it again will allow you to upgrade.
 
 ## About Pinecraft Installer
 
-The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, or a Creative world to hone your skills as a master builder.
+The installer will setup a "Normal" difficulty server and allow you to select between a Survival world complete with mobs, nether and more, a Creative world to hone your skills as a master builder, or an Adventure world to explore.
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
 
@@ -145,6 +145,10 @@ Players must collect resources, build structures, battle mobs, eat, and explore 
 
 Creative mode strips away the survival aspects of Minecraft and allows players to easily create and destroy structures and mechanisms with the inclusion of an infinite use of blocks and flying.
 
+**Adventure**
+
+Adventure mode lets you and your family/friends run around and explore, but you can't place or break blocks.
+
 
 We're open to suggestions. Let us know what you'd like to see.
 
@@ -164,12 +168,12 @@ To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
 Hardware Requirements
 =====================
 
-- A vanilla server OS based on Debian (such as Raspberry Pi OS Lite) with nothing else running and no desktop environment.
-- If your board has more than 4 GB RAM, you must use a 64-Bit OS to utilize it effectively. Running a 32-bit OS will result in less RAM dedicated to your Minecraft Server.
+- A vanilla server OS based on Debian Trixie or higher with nothing else running and no desktop environment (I provide PinecraftOS for Raspberry Pi to ease the deployment process for novice Linux users).
+- You must use a 64-Bit OS to utilize your RAM effectively. Running a 32-bit OS will result in less RAM dedicated to your Minecraft Server.
 - Minimum 4 GB RAM.
 - GOOD Power Supply.
 - Adequate Cooling for Overclock During Heavy Load.
-- Reliable Storage Media (Kingston Endurance microSD or UASP-enabled USB 3 SSD).
+- Reliable and FAST Storage Media.
 - Ethernet connection to network (don't use Wi-Fi).
 
 
@@ -179,7 +183,7 @@ Software Requirements
 - To play the game, you will need a valid Minecraft Java account, and to have Minecraft Java installed on your computer (Windows, Mac, AMD64 Linux). One account is required per player, and can be purchased from https://minecraft.net
 - The recommended Base OS (see "Base OS" section above for the currently accepted distro).
 
-**Note:** You do not need a Minecraft Java account in order to run the server. I.E., you could boot up a Pinecraft server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
+**Note:** You do not need a Minecraft Java account in order to run a Pinecraft Server. I.e., you could boot up a Pinecraft Server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
 
 
 Plugin Support
@@ -229,7 +233,7 @@ An ideal seed for colossal builds. The level plains of Paradise Valley are surro
 License
 =======
 
-This project (Pinecraft, the install script) is free, open source software. However, Minecraft itself is not (hence why we are distributing an installer, not a pre-compiled distro). In order to use your Minecraft server, you must first accept the Minecraft EULA found here: https://account.mojang.com/documents/minecraft_eula
+This project (Pinecraft, the install script) is free, open source software. However, Minecraft itself is not (hence why we are distributing an installer, not a pre-compiled server). In order to use your Minecraft server, you must first accept the Minecraft EULA found here: https://account.mojang.com/documents/minecraft_eula
 
 Of course, other projects utilized for Pinecraft carry other licenses (such as Java, Spigot, etc.). Ours is just an installer / configuration tool and we are not distributing any software.
 
