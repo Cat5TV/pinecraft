@@ -85,8 +85,12 @@ It is recommended you only use a model of RPi 4 or 5 that has 8GB RAM or higher.
 
 As of Pinecraft 4.0, the Pinecraft Base OS has been provided. This is because both the most recent version of Ubuntu and Raspberry Pi OS do not support the latest version of Minecraft. Watching the Issue Tracker it became apparent to me that a custom-built OS would be the easiest way for many users to get started with a Pinecraft 4.0+ server. That said, if you are technically savvy, note that Minecraft as of 1.20.6, requires Java 21, which is not available until Trixie.
 
-- Download Pinecraft Base OS: Coming Soon
+- Download PinecraftOS: Coming Soon
 - Default Login/Password: pinecraft/pinecraft
+
+Once logged in to PinecraftOS, simply type `sudo pinecraft` to install your Pinecraft Server. Run it again in future to upgrade your Minecraft version (PinecraftOS checks for updates every 6 hours).
+
+DO NOT run as root user. If you do, you will not be able to initialize your Minecraft server. The correct command to install a Pinecraft Server in PinecraftOS is as the `pinecraft` user, type `sudo pinecraft`
 
 
 Server Versions
