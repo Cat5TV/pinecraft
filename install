@@ -28,7 +28,7 @@
 pcver="4.0"
 
 if [[ $EUID -ne 0 ]]; then
-  echo "ERROR: This script must be run as root" 2>&1
+  echo "ERROR: This script must be run as root. Try: sudo $0" 2>&1
   exit 1
 fi
 
@@ -120,7 +120,7 @@ dialog --title "Pinecraft Installer $pcver" \
 dialog --infobox "Checking dependencies..." 3 34 ; sleep 2
 
 javaminver=8; # The minimum version of Java for Minecraft Server to run
-javamaxver=17; # The current max version available in known repositories that Minecraft Server can run on.
+javamaxver=21; # The current max version available in known repositories that Minecraft Server can run on.
 
 if [[ $updated == 0 ]]; then
   dialog --infobox "Updating repositories..." 3 34 ;
@@ -254,11 +254,19 @@ if [ $(dpkg-query -W -f='${Status}' cron 2>/dev/null | grep -c "ok installed") -
   apt-get -y install cron > /dev/null 2>&1
 fi
 
-mcver="1.16.5"
-if (( $ver >= 17 )); then # Java version 17+ allows 1.18.x
+mcver="1.16.5" # Set a default old version
+if (( $ver >= 21 )); then # Java version 21+ allows 1.20.6-
   mcver="1.20.6"
+elif (( $ver >= 17 )); then # Java version 17+ allows 1.18.x-1.20.4
+  mcver="1.20.4"
 elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
   mcver="1.17.1"
+fi
+
+if (( $ver < 21 )); then
+dialog --title "Java $ver" --msgbox "
+Your installed version of Java ($ver) can only support up to Minecraft $mcver. To install a newer version of Minecraft, please see the Pinecraft documentation to obtain the recommended Base OS.
+" 12 48
 fi
 
 # Username may be provided on CLI as in 1.0
@@ -595,7 +603,7 @@ if [[ $? == 0 ]]; then
       # https://papermc.io/downloads
       flavor="Paper"
       if [[ $mcver == "1.20.6" ]]; then
-        url="https://api.papermc.io/v2/projects/paper/versions/1.20.6/builds/128/downloads/paper-1.20.6-128.jar"
+        url="https://api.papermc.io/v2/projects/paper/versions/1.20.6/builds/137/downloads/paper-1.20.6-137.jar"
       elif [[ $mcver == "1.20.4" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/496/downloads/paper-1.20.4-496.jar"
       elif [[ $mcver == "1.20.2" ]]; then
