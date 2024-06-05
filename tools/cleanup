@@ -116,3 +116,5 @@ Run the following command to clear history and halt:
 > /root/.bash_history && history -c && history -w && > /home/pinecraft/.bash_history && su - pinecraft -c \"history -c\" && su - pinecraft -c \"history -w\" && halt
 
 "
+
+fi
