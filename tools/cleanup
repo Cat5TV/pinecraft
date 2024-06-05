@@ -1,0 +1,117 @@
+#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+  echo "ERROR: This script must be run as root" 2>&1
+  exit 1
+else
+
+  read -r -p "What build number is this? " buildnum
+  echo $buildnum > /root/pinecraftOS
+
+  # Tell other tools not to place files that we're about to cleanup
+  touch /tmp/cleanup.lock
+
+  # Reset to default password and force user to set a new password on boot
+  echo -e "pinecraft\npinecraft" | passwd pinecraft >/tmp/init 2>&1
+  passwd --expire pinecraft
+
+  # Remove our git information
+  rm /home/pinecraft/.gitconfig
+
+
+  # Delete system email
+  rm /var/spool/mail/*
+
+  # Remove nano search history and such
+  rm -rf /root/.nano
+  rm -rf /home/pinecraft/.nano
+
+  sudo apt-get clean
+  sudo apt-get autoclean
+  apt-get autoremove
+
+# Delete all Samba users
+  pdbedit -L | while read USER; do pdbedit -x -u $(echo $USER | cut -d: -f1); done
+
+  # Empty old logs
+  find /var/log/ -iname "*.gz" -type f -delete
+  find /var/log/ -iname "*.log.*" -type f -delete
+  cat /dev/null > /var/log/wtmp
+  cat /dev/null > /var/log/btmp
+
+  # Clear system mail
+  find /var/mail/ -type f -exec cp /dev/null {} \;
+
+  cd /root
+  rm .nano_history
+  history -c
+  history -w
+  rm .bash_history
+
+  cd /home/pinecraft
+  rm .nano_history
+  su - pinecraft -c "history -c"
+  su - pinecraft -c "history -w"
+  rm .bash_history
+
+  rm /var/log/lastlog
+  touch /var/log/lastlog
+
+  # Remove Robbie's key pair
+  rm /home/pinecraft/.ssh/authorized_keys
+
+  # Remove DNS Resolver config (will be auto-generated on first boot)
+  echo "# Default resolv.conf file
+
+# Cloudflare
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+nameserver 2606:4700:4700::1111
+nameserver 2606:4700:4700::1001
+
+# Google
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 2001:4860:4860::8888
+nameserver 2001:4860:4860::8844
+" > /etc/resolv.conf
+
+  # remove any package data left behind after removal
+  apt-get purge $(dpkg -l | awk '/^rc/ { print $2 }')
+
+  # Remove all docs except copyright
+  find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true
+  find /usr/share/doc -empty|xargs rmdir || true
+  rm -rf /usr/share/groff/* /usr/share/info/*
+  rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*
+
+  # Remove dphys-swapfile swap file if applicable (will be re-created at first boot)
+  if [[ -e /var/swap ]]; then
+    echo "Removing swap file (will be re-created at first boot)."
+    dphys-swapfile swapoff
+    systemctl stop dphys-swapfile
+    rm /var/swap
+  fi
+
+  sync
+
+  # Raspberry Pi - universal resize tool from NEMS Linux
+     wget https://raw.githubusercontent.com/NEMSLinux/nems-admin/master/resize_rootfs/nems-fs-resize -O /usr/local/bin/nems-fs-resize && chmod +x /usr/local/bin/nems-fs-resize
+     addition="/usr/local/bin/nems-fs-resize\n"
+     if grep -q "exit" /etc/rc.local; then
+       # This file contains an exit command, so make sure our new command comes before it
+       /bin/sed -i -- 's,exit,'"$addition"'exit,g' /etc/rc.local
+     else
+       # No exit command within the file, so just add it
+       echo "PLACEHERE" >> /etc/rc.local
+       /bin/sed -i -- 's,PLACEHERE,'"$addition"'exit 0,g' /etc/rc.local
+     fi
+
+
+echo "
+
+Run the following command to clear history and halt:
+
+> /root/.bash_history && history -c && history -w && > /home/pinecraft/.bash_history && su - pinecraft -c \"history -c\" && su - pinecraft -c \"history -w\" && halt
+
+"
