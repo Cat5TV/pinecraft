@@ -26,6 +26,11 @@ The installer attempts to detect things like how much RAM you have (and availabl
 
 Download [NEMS Linux](https://nemslinux.com/) for free today.
 
+## Install Pinecraft Server
+
+You'll need to download PinecraftOS for Raspberry Pi 4/5. PinecraftOS will not run on any other board. See Supported Base OS below.
+
+
 ## Available Releases
 
 | Minecraft Version | Pinecraft Release |
