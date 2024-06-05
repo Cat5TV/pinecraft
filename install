@@ -564,31 +564,31 @@ if [[ $? == 0 ]]; then
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
       if [[ $mcver == "1.20.6" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.6-50.0.26/forge-1.20.6-50.0.26-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.6-50.1.3/forge-1.20.6-50.1.3-installer.jar"
       elif [[ $mcver == "1.20.4" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.4-49.0.50/forge-1.20.4-49.0.50-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.4-49.1.0/forge-1.20.4-49.1.0-installer.jar"
       elif [[ $mcver == "1.20.2" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.2-48.1.0/forge-1.20.2-48.1.0-installer.jar"
       elif [[ $mcver == "1.20.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.1/forge-1.20.1-47.2.1-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.3.1/forge-1.20.1-47.3.1-installer.jar"
       elif [[ $mcver == "1.19.4" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.1.0/forge-1.19.4-45.1.0-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.3.0/forge-1.19.4-45.3.0-installer.jar"
       elif [[ $mcver == "1.19.3" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.3-44.1.23/forge-1.19.3-44.1.23-installer.jar"
       elif [[ $mcver == "1.19.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.2.1/forge-1.19.2-43.2.1-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.2-43.3.13/forge-1.19.2-43.3.13-installer.jar"
       elif [[ $mcver == "1.19" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.0.110/forge-1.19-41.0.110-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.19-41.1.0/forge-1.19-41.1.0-installer.jar"
       elif [[ $mcver == "1.18.2" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.1.45/forge-1.18.2-40.1.45-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.2.21/forge-1.18.2-40.2.21-installer.jar"
       elif [[ $mcver == "1.18.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.0.85/forge-1.18.1-39.0.85-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.1-39.1.2/forge-1.18.1-39.1.2-installer.jar"
       elif [[ $mcver == "1.18" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.18-38.0.17/forge-1.18-38.0.17-installer.jar"
       elif [[ $mcver == "1.17.1" ]]; then
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.107/forge-1.17.1-37.0.107-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.1.1/forge-1.17.1-37.1.1-installer.jar"
       else
-        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.1.0/forge-1.16.5-36.1.0-installer.jar"
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.2.42/forge-1.16.5-36.2.42-installer.jar"
       fi
       jarname="forge-installer.jar"
       switches="--installServer ."
