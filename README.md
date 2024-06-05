@@ -89,19 +89,6 @@ As of Pinecraft 4.0, the Pinecraft Base OS has been provided. This is because bo
 - Default Login/Password: pinecraft/pinecraft
 
 
-Compatibility Tests
--------------------
-
-**Pass**
-
-- Raspberry Pi 4 8 GB (Fast SD Card can accommodate 2-3 players no problem, add external fast USB 3.0 storage for 10+ players)
-- Khadas VIM4 (Excellent performance for 10+ players out of the box)
-
-**Fail**
-
-- Radxa ROCK 3A 8 GB (Worldgen is unusably slow)
-
-
 Server Versions
 ===============
 
