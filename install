@@ -1429,6 +1429,21 @@ chown -R $user:$user $instdir
 
   dialog --infobox "Starting the server..." 3 26 ;
   su - $user -c "/usr/bin/screen -dmS Pinecraft ${instdir}server"
+  sleep 3
+  dialog --infobox "Initializing config..." 3 26 ;
+
+  # Allow up to 30 seconds for the server to initialize. If still not, resume anyways.
+  waited_time=0
+  while [[ $waited_time -lt 30 ]]; do
+    if [[ -e ${instdir}server.properties ]]; then
+        dialog --infobox "Server is loading..." 3 26 ; # This message signifies a successful install
+        sleep 3
+        break
+    else
+        sleep 1
+        waited_time=$((waited_time + 1))
+    fi
+  done
 
 ###############################################
 # /Run the server now
