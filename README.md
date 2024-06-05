@@ -328,7 +328,7 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 Version History
 ===============
 
-Pinecraft 4.0 - Anniversary Edition! Minecraft 1.20.6 is now supported. Skipped 1.20.5 due to critical bug [MC-271109](https://bugs.mojang.com/browse/MC-271109). PinecraftOS introduced.
+Pinecraft 4.0 - Anniversary Edition! Minecraft 1.20.6 is now supported. Skipped 1.20.5 due to critical bug [MC-271109](https://bugs.mojang.com/browse/MC-271109). PinecraftOS introduced. User can now select level-type, and added Adventure game mode.
 
 Pinecraft 3.9 - Minecraft 1.20.4 is now supported. Skipped 1.20.3 due to critical bug [MC-267185](https://bugs.mojang.com/browse/MC-267185).
 
