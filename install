@@ -25,7 +25,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-pcver="4.0"
+pcver="4.1"
 
 if [[ $EUID -ne 0 ]]; then
   echo "ERROR: This script must be run as root. Try: sudo $0" 2>&1
@@ -255,8 +255,8 @@ if [ $(dpkg-query -W -f='${Status}' cron 2>/dev/null | grep -c "ok installed") -
 fi
 
 mcver="1.16.5" # Set a default old version
-if (( $ver >= 21 )); then # Java version 21+ allows 1.20.6-
-  mcver="1.20.6"
+if (( $ver >= 21 )); then # Java version 21+ allows 1.20.6+
+  mcver="1.21"
 elif (( $ver >= 17 )); then # Java version 17+ allows 1.18.x-1.20.4
   mcver="1.20.4"
 elif (( $ver >= 16 )); then # Java version 16+ allows 1.17.x
@@ -476,7 +476,9 @@ fi
 
 # https://www.minecraft.net/en-us/download/server
 # https://mcversions.net/
-if [[ $mcver == "1.20.6" ]]; then
+if [[ $mcver == "1.21" ]]; then
+  vanilla="https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d7c804ef0fe6369dd1ba/server.jar"
+elif [[ $mcver == "1.20.6" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
 elif [[ $mcver == "1.20.4" ]]; then
   vanilla="https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar"
@@ -512,7 +514,7 @@ flavor=""
 
 declare -a flavors=()
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]] || [[ $mcver == "1.21" ]]; then
   flavors+=("P" "Paper (Default, ${mcver})")
 fi
 
@@ -521,7 +523,7 @@ if [[ $mcverANY == "1" ]] || [ $(version $mcver) -ge $(version "1.14.0") ]; then
   flavors+=("F" "Fabric (${mcver})")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]] || [[ $mcver == "1.21" ]]; then
   flavors+=("R" "Forge (${mcver})")
 fi
 
@@ -535,7 +537,7 @@ if [[ $mcverANY == "1" ]] || [[ $mcver == "1.12.2" ]]; then
   flavors+=("C" "Cuberite (1.12)")
 fi
 
-if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]]; then
+if [[ $mcverANY == "1" ]] || [[ $mcver == "1.17.1" ]] || [[ $mcver == "1.17" ]] || [[ $mcver == "1.16.5" ]] || [[ $mcver == "1.18" ]] || [[ $mcver == "1.18.1" ]] || [[ $mcver == "1.18.2" ]] || [[ $mcver == "1.19" ]] || [[ $mcver == "1.19.2" ]] || [[ $mcver == "1.19.3" ]] || [[ $mcver == "1.19.4" ]] || [[ $mcver == "1.20.1" ]] || [[ $mcver == "1.20.2" ]] || [[ $mcver == "1.20.4" ]] || [[ $mcver == "1.20.6" ]] || [[ $mcver == "1.21" ]]; then
   flavors+=("V" "Vanilla (${mcver})")
 fi
 
@@ -563,7 +565,9 @@ if [[ $? == 0 ]]; then
     R)
       # https://files.minecraftforge.net/net/minecraftforge/forge/
       flavor="Forge"
-      if [[ $mcver == "1.20.6" ]]; then
+      if [[ $mcver == "1.21" ]]; then
+        url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.21-51.0.26/forge-1.21-51.0.26-installer.jar"
+      elif [[ $mcver == "1.20.6" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.6-50.1.12/forge-1.20.6-50.1.12-installer.jar"
       elif [[ $mcver == "1.20.4" ]]; then
         url="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.4-49.1.0/forge-1.20.4-49.1.0-installer.jar"
@@ -602,7 +606,9 @@ if [[ $? == 0 ]]; then
     P)
       # https://papermc.io/downloads
       flavor="Paper"
-      if [[ $mcver == "1.20.6" ]]; then
+      if [[ $mcver == "1.21" ]]; then
+        url="https://api.papermc.io/v2/projects/paper/versions/1.21/builds/109/downloads/paper-1.21-109.jar"
+      elif [[ $mcver == "1.20.6" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.20.6/builds/148/downloads/paper-1.20.6-148.jar"
       elif [[ $mcver == "1.20.4" ]]; then
         url="https://api.papermc.io/v2/projects/paper/versions/1.20.4/builds/496/downloads/paper-1.20.4-496.jar"
