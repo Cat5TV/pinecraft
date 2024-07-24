@@ -2,8 +2,6 @@
 
 [![Discord](https://img.shields.io/discord/495592877728989194?logo=discord)](https://discord.gg/dKz5RYc) [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/LinuxTechShow) [![Twitter URL](https://img.shields.io/twitter/follow/category5tv?style=flat-square&logo=twitter)](https://twitter.com/category5tv)
 
-![Minecraft](assets/minecraft15.jpg?raw=true)
-
 ## Minecraft Java Server Installer for Raspberry Pi
 
 This installer simplifies the installation and setup of a Minecraft Java Server.
@@ -35,6 +33,7 @@ You'll need to download PinecraftOS for Raspberry Pi 4/5. PinecraftOS will not r
 
 | Minecraft Version | Pinecraft Release | PinecraftOS Build |
 | --- | --- | --- |
+| 1.21 | 4.1 | 1 |
 | 1.20.6 | 4.0 | 1 |
 | 1.20.4 | 3.9 | - |
 | 1.20.2 | 3.8 | - |
@@ -69,7 +68,7 @@ Check out Pinecraft 2.6 on Category5 Technology TV:
 
 Pinecraft Installer 1.0 was also featured on ameriBlog: https://ameridroid.com/blogs/ameriblogs/raspberry-pi-4-as-a-multiplayer-minecraft-server
 
-The current version of Pinecraft Installer is 4.0.
+The current version of Pinecraft Installer is 4.1.
 
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
@@ -327,6 +326,8 @@ The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/lat
 
 Version History
 ===============
+
+Pinecraft 4.1 - Minecraft 1.21 is now supported.
 
 Pinecraft 4.0 - Anniversary Edition! Minecraft 1.20.6 is now supported. Skipped 1.20.5 due to critical bug [MC-271109](https://bugs.mojang.com/browse/MC-271109). PinecraftOS introduced. User can now select level-type, and added Adventure game mode.
 
