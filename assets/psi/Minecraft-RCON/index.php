@@ -23,7 +23,7 @@
         <div class="panel-heading">
           <h3 class="panel-title pull-left"><span class="glyphicon glyphicon-console"></span> Console</h3>
           <div class="btn-group btn-group-xs pull-right">
-            <a class="btn btn-default" href="http://minecraft.gamepedia.com/Commands" target="_blank"><span class="glyphicon glyphicon-question-sign"></span><span class="hidden-xs"> Commands</span></a>
+            <a class="btn btn-default" href="http://minecraft.wiki/w/Commands" target="_blank"><span class="glyphicon glyphicon-question-sign"></span><span class="hidden-xs"> Commands</span></a>
             <a class="btn btn-default" href="http://www.minecraftinfo.com/idlist.htm" target="_blank"><span class="glyphicon glyphicon-info-sign"></span><span class="hidden-xs"> Items IDs</span></a>
           </div>
         </div>

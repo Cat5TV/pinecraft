@@ -16,7 +16,7 @@ The installer will setup a "Normal" difficulty server and allow you to select be
 
 The installer attempts to detect things like how much RAM you have (and available), and adjusts the server settings based on what it finds.
 
-**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [the Minecraft documentation](https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
+**Looking For Help?** Pinecraft Installer *installs* Minecraft Java servers. If your question has to do with something other than *installing* a Minecraft server with Pinecraft Installer, the question likely is not for us. Questions surrounding gameplay, how to use a Minecraft server, etc., should be directed to [The Minecraft Wiki](https://minecraft.wiki/w/Tutorials/Setting_up_a_server). Once your Minecraft server is installed, Pinecraft's job is done.
 
 ## Monitor Your Pinecraft Server
 
@@ -392,7 +392,7 @@ Give your Minecraft server a try before you start changing the config. It's very
 
 You'll find your config file here: ~/minecraft/server.properties
 
-Mojang Documentation: https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
+Minecraft Wiki: https://minecraft.wiki/w/Server.properties#Keys
 
 
 Frequently Asked Questions
@@ -406,7 +406,7 @@ That said, we get some questions regularly, and we're here to help if we can, so
 **First, here are some helpful links:**
 
 Modify server.properties, the main config file for your server's settings
-https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
+https://minecraft.wiki/w/Server.properties#Keys
 
 **Find Plugins for Spigot / Paper / Fabric**
 https://www.spigotmc.org/resources/categories/spigot.4/
