@@ -278,7 +278,7 @@ To reboot **do not** use traditional Linux commands. You must use:
 
 ### Important Note: First Boot
 
-On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready. You can tail the log file if you'd like to see the progress, or sipmly retry connecting via Minecraft Java after a few minutes.
+On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready. You can tail the log file if you'd like to see the progress, or simply retry connecting via Minecraft Java after a few minutes.
 
 
 Post-Install
