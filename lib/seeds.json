@@ -1,0 +1,149 @@
+{
+  "_comment": [
+    "Pinecraft seed database.",
+    "Add seed entries to the seeds array below.",
+    "versions may contain exact versions like 1.16.5, version lanes like 1.16.x, classic versions like b1.7.3 or a1.0.16, or * for any version.",
+    "policy may be exact or highest_patch.",
+    "exact means only the listed version or versions are valid.",
+    "highest_patch means Pinecraft will choose the highest available patch within the listed version lane.",
+    "Users may add their own seeds by adding entries to the seeds array and submitting a pull request."
+  ],
+  "seeds": [
+    {
+      "id": "cat5-rpi-server",
+      "name": "Category5 TV RPi Server",
+      "seed": "-4385290424787160722",
+      "description": "Curated seed from the Category5 Raspberry Pi server.",
+      "versions": ["1.16.5"],
+      "policy": "exact"
+    },
+    {
+      "id": "jeffs-tutorial-world",
+      "name": "Jeff's Tutorial World",
+      "seed": "6421417242871949536",
+      "description": "Tutorial world seed from the Pinecraft project.",
+      "versions": ["1.16.5"],
+      "policy": "exact"
+    },
+    {
+      "id": "slime-farm",
+      "name": "Slime Farm",
+      "seed": "7000",
+      "description": "Useful slime-oriented world setup.",
+      "versions": ["1.16.5"],
+      "policy": "exact"
+    },
+    {
+      "id": "obsidian-farm",
+      "name": "Obsidian Farm",
+      "seed": "-8880302588844065321",
+      "description": "World seed suitable for obsidian farming.",
+      "versions": ["1.9.4"],
+      "policy": "exact"
+    },
+    {
+      "id": "woodland-mansion",
+      "name": "Woodland Mansion",
+      "seed": "throwlow",
+      "description": "Quick access to a woodland mansion.",
+      "versions": ["1.12.2"],
+      "policy": "exact"
+    },
+    {
+      "id": "spruce-village-coral-reef",
+      "name": "Spruce Village and Coral Reef",
+      "seed": "673900667",
+      "description": "Spruce village with coral reef nearby.",
+      "versions": ["1.14.4"],
+      "policy": "exact"
+    },
+    {
+      "id": "shipwreck-village",
+      "name": "Shipwreck Village",
+      "seed": "-613756530319979507",
+      "description": "Shipwreck and village world generation combo.",
+      "versions": ["1.14.4"],
+      "policy": "exact"
+    },
+    {
+      "id": "underwater-temple",
+      "name": "Underwater Temple",
+      "seed": "-5181140359215069925",
+      "description": "Ocean monument oriented world seed.",
+      "versions": ["1.9.4"],
+      "policy": "exact"
+    },
+    {
+      "id": "diamond-paradise",
+      "name": "Diamond Paradise",
+      "seed": "1785852800490497919",
+      "description": "Curated seed from earlier Pinecraft releases.",
+      "versions": ["1.9.4"],
+      "policy": "exact"
+    },
+    {
+      "id": "all-biome-world",
+      "name": "All Biome World",
+      "seed": "1083719637794",
+      "description": "Broad biome variety close to spawn.",
+      "versions": ["1.12.2"],
+      "policy": "exact"
+    },
+    {
+      "id": "paradise-valley",
+      "name": "Paradise Valley",
+      "seed": "4725084288293652062",
+      "description": "Scenic world seed from prior Pinecraft versions.",
+      "versions": ["1.16.5"],
+      "policy": "exact"
+    },
+    {
+      "id": "triple-island-ocean-monument",
+      "name": "Triple Island Ocean Monument",
+      "seed": "6073041046072376055",
+      "description": "Triple island monument setup.",
+      "versions": ["1.14.x"],
+      "policy": "highest_patch"
+    },
+    {
+      "id": "minecraft-title-screen",
+      "name": "Minecraft Title Screen",
+      "seed": "2151901553968352745",
+      "description": "Historical title screen panorama seed.",
+      "versions": ["b1.7.3"],
+      "policy": "exact"
+    },
+    {
+      "id": "gargamel",
+      "name": "Gargamel",
+      "seed": "gargamel",
+      "description": "Legendary survival terrain seed from Minecraft Beta.",
+      "versions": ["b1.7.3"],
+      "policy": "exact"
+    },
+    {
+      "id": "glacier",
+      "name": "Glacier",
+      "seed": "Glacier",
+      "description": "Huge mountains and dramatic terrain.",
+      "versions": ["b1.7.3"],
+      "policy": "exact"
+    },
+    {
+      "id": "pack-png",
+      "name": "pack.png",
+      "seed": "3257840388504953787",
+      "description": "Historical pack.png title screen seed.",
+      "versions": ["a1.2.2"],
+      "policy": "exact"
+    },
+    {
+      "id": "herobrine",
+      "name": "Herobrine",
+      "seed": "478868574082066804",
+      "description": "Historical Herobrine world seed.",
+      "versions": ["a1.0.16"],
+      "policy": "exact"
+    }
+  ]
+}
