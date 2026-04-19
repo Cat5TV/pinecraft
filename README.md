@@ -4,9 +4,9 @@
 
 ## Minecraft Java Server Installer for Raspberry Pi
 
-This installer simplifies the installation and setup of a Minecraft Java Server.
+This installer simplifies the installation, setup and optimization of a Minecraft Java Server.
 
-If you have already installed this, running it again will allow you to upgrade.
+If you have already installed this, running it again will allow you to upgrade the installed Minecraft version, or switch to a different flavor.
 
 [![Support Me on Patreon](https://cdn.zecheriah.com/img/patreon_button.png)](https://patreon.com/pinecraft)
 
@@ -20,38 +20,20 @@ The installer attempts to detect things like how much RAM you have (and availabl
 
 ## Monitor Your Pinecraft Server
 
-[NEMS Linux](https://nemslinux.com/) is a free Enterprise-grade asset monitoring tool which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server!
+[NEMS Linux](https://nemslinux.com/) is an Enterprise-grade asset monitoring tool created by Robbie Ferguson (the creator of Pinecraft Installer) which includes [check_minecraft](https://docs.nemslinux.com/en/latest/check_commands/check_minecraft.html) to monitor your Pinecraft server.
 
-Download [NEMS Linux](https://nemslinux.com/) for free today.
+Download [NEMS Linux](https://nemslinux.com/) today.
 
 ## Install Pinecraft Server
-
-You'll need to download PinecraftOS for Raspberry Pi 4/5. PinecraftOS will not run on any other board. See Supported Base OS below.
 
 
 ## Available Releases
 
-| Minecraft Version | Pinecraft Release | PinecraftOS Build |
-| --- | --- | --- |
-| 1.21 | 4.1 | 1 |
-| 1.20.6 | 4.0 | 1 |
-| 1.20.4 | 3.9 | - |
-| 1.20.2 | 3.8 | - |
-| 1.20.1 | 3.7 | - |
-| 1.19.4 | 3.6 | - |
-| 1.19.3 | 3.5 | - |
-| 1.19.2 | 3.4 | - |
-| 1.19 | 3.3 | - |
-| 1.18.2 | 3.2 | - |
-| 1.18.1 | 3.1 | - |
+Pinecraft Installer allows you to install any available version of Minecraft for each server type.
 
-The current version of Pinecraft Installer always installs the latest version of Minecraft available for each server type, unless you select a seed which requires a specific version. The update to each installer is the responsibility of the server development team (E.G., Paper, Fabric, Spigot) and I check for updates regularly and update Pinecraft as quickly as possible following an update.
+**Note:** Selecting a seed will restrict your available Minecraft version to that which is compatible with the seed.
 
-**Note:** If you run Pinecraft Installer and are not getting the latest Minecraft version as an option, 1) ensure you have not selected a Level Seed that requires a different version and 2) make sure you are using the recommended distro as outlined in the Base Distro OS section below.
-
-Note that as system requirements change for Minecraft, you may need to update or even switch your Base Distro OS since older distros may not have current enough versions of needed libraries. Please see the Base Distro OS information below, which will be updated along with these requirements.
-
-Always have an up-to-date backup of your world files.
+Always keep an up-to-date backup of your world files.
 
 ## Videos
 
@@ -73,6 +55,18 @@ The current version of Pinecraft Installer is 4.1.
 ![Screenshot of Pinecraft Installer 2.0](assets/pinecraft-2.0.png?raw=true)
 
 
+Hardware Requirements
+=====================
+
+- A vanilla server OS based on Debian stable (such as Debian, Ubuntu Server, or Raspberry Pi OS Lite) with nothing else running and no desktop environment.
+- You must use a 64-Bit OS to utilize your RAM effectively. Running a 32-bit OS will result in less RAM dedicated to your Minecraft Server.
+- Minimum 8 GB RAM.
+- GOOD Power Supply.
+- Adequate Cooling for Overclock During Heavy Load.
+- Reliable and FAST SSD Storage Media.
+- Ethernet connection to network (don't use Wi-Fi).
+
+
 Base OS (Distro)
 ================
 
@@ -80,56 +74,146 @@ Base OS (Distro)
 
 **NEVER install Pinecraft on your desktop system. This is a dedicated server. That means once you install it, the system is no longer useable for anything else.**
 
+
 Supported Base OS
 -----------------
 
-**Raspberry Pi 4/5**
+**Debian Requirement**
 
-It is recommended you only use a model of RPi 4 or 5 that has 8GB RAM or higher.
+Pinecraft Installer is designed to build a Minecraft server on a Debian-based Linux base OS. This includes Debian Stable, Ubuntu, or Raspberry Pi OS (for example). You'll want to use the latest stable version, and continue to keep it up-to-date to be compatible with current versions of Minecraft.
 
-As of Pinecraft 4.0, the Pinecraft Base OS has been provided. This is because both the most recent version of Ubuntu and Raspberry Pi OS do not support the latest version of Minecraft. Watching the Issue Tracker it became apparent to me that a custom-built OS would be the easiest way for many users to get started with a Pinecraft 4.0+ server. That said, if you are technically savvy, note that Minecraft as of 1.20.6, requires Java 21, which is not available until Trixie.
+**Single Board Computers**
 
-- Download PinecraftOS: [Download from DittoDistro](https://dittodistro.com/files/cTXkg70P/PinecraftOS-Build1.zip)
-- Default Login/Password: pinecraft/pinecraft
+If installing your Pinecraft Server on a single board computer, it must meet the minimum system requirements. For example, a Raspberry Pi 4 or 5 that has 8GB RAM or higher.
 
-Once logged in to PinecraftOS, simply type `sudo pinecraft` to install your Pinecraft Server. Run it again in future to upgrade your Minecraft version (PinecraftOS checks for updates every 6 hours).
-
-DO NOT run as root user. If you do, you will not be able to initialize your Minecraft server. The correct command to install a Pinecraft Server in PinecraftOS is as the `pinecraft` user, type `sudo pinecraft`
+With Pinecraft 4.0, a Pinecraft Base OS was provided to help ease deployment on Raspberry Pi. With Pinecraft 5.0+ this is no longer required.
 
 
-Server Versions
-===============
+Buy a Single Board Computer for Pinecraft Server
+================================================
 
-**Fabric** Supports Plugins / Fast Build Time
+Visit [![ameriDroid](assets/ameridroid.png?raw=true)](https://ameridroid.com) to purchase a single board computer for your Pinecraft Server. Make sure it meets or exceeds the system requirements above.
 
-A lightweight, modular Minecraft server. [More Info](https://fabricmc.net/)
-
-Note: Most Fabric mods will also require you install the Fabric API, which must be downloaded manually and placed in the `~/minecraft/mods` folder. Get the Fabric API here: https://www.curseforge.com/minecraft/mc-mods/fabric-api
+ameriDroid provides USA-based SBC sales with unmatched support and fast worldwide shipping.
 
 
-**Paper** Supports Plugins / Fast Build Time
+Software Requirements
+=====================
 
-A performance-optimized Minecraft server based on Spigot and compatible with Spigot plugins. [More Info](https://papermc.io/)
+- To play the game, you will need a valid Minecraft Java account, and to have the Minecraft Java client installed on your computer. One account is required per player, and can be purchased from https://minecraft.net/
+- Your Pinecraft Server will require the Base OS as detailed above.
 
-
-**Forge** Supports Plugins / Fast Build Time
-
-Yet another modular Minecraft server. [More Info](https://files.minecraftforge.net/net/minecraftforge/forge/)
-
-
-**Spigot** Supports Plugins / Slow Build Time
-
-An optimized server based on Craftbukkit, Spigot allows you to include mods in your server (both Spigot and CraftBukkit compatibility). Spigot will run a high-performance multiplayer Minecraft server on a Raspberry Pi 4 with 4GB or 8GB RAM, or other devices with a minimum of 4GB RAM. Spigot was the original Pinecraft default server, circa Pinecraft 1.x. [More Info](https://www.spigotmc.org/)
+**Note:** You do not need a Minecraft Java account in order to run a Pinecraft Server. I.e., you could boot up a Pinecraft Server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
 
 
-**Cuberite** (Currently Experimental) Slow Build Time
+Server Flavors
+==============
 
-Cuberite is an alternate server which, while written in C++ accepts connections from Java clients. Note that you will need to use an old client to connect (currently supports 1.12.2). Advantage to Cuberite is that it will run on extremely under-powered devices, such as older Raspberry Pi.
+# Server Flavors
 
+Pinecraft supports several different Minecraft server flavors, each with its own strengths. Some focus on maximum performance, some support plugins or mods, and others are designed to run on extremely low-powered hardware.
 
-**Vanilla** Fast Build Time
+---
 
-Vanilla is the official Mojang Minecraft server release. It does not allow mods, and is not as well optimized for SBC use, but will run great on a Raspberry Pi 4 with 4GB RAM or higher. [More Info](https://minecraft.net)
+## Vanilla
+
+**Official Mojang Server**
+**Build Time:** Fast
+**Supports:** No plugins or mods
+
+Vanilla is the official Minecraft server released by Mojang. It provides the pure, unmodified Minecraft experience.
+
+While it is not as optimized for single-board computers as some other flavors, it runs well on a Raspberry Pi 4 with 4GB RAM or greater.
+
+[More Information](https://minecraft.net)
+
+---
+
+## Paper
+
+**Performance Optimized / Plugin Support**
+**Build Time:** Fast
+**Supports:** Bukkit / Spigot / Paper plugins
+
+Paper is a high-performance Minecraft server based on Spigot. It is fully compatible with most Spigot plugins while offering better performance and additional features.
+
+Paper is an excellent choice for most servers and is recommended if you want strong plugin support with fast startup times.
+
+[More Information](https://papermc.io/)
+
+---
+
+## Purpur
+
+**Enhanced Paper-Based Server / Extensive Customization**
+**Build Time:** Fast
+**Supports:** Bukkit / Spigot / Paper / Purpur plugins
+
+Purpur is based on Paper and includes all Paper features, while adding a large number of optional gameplay tweaks, configuration options, and quality-of-life improvements.
+
+Purpur is ideal if you want the performance of Paper but with additional control over gameplay and server behavior.
+
+[More Information](https://purpurmc.org/)
+
+---
+
+## Fabric
+
+**Lightweight / Modular / Mod Support**
+**Build Time:** Fast
+**Supports:** Fabric mods
+
+Fabric is a lightweight, modular Minecraft server platform with very fast startup and update times. It is commonly used for modern modded Minecraft servers.
+
+Most Fabric mods also require the Fabric API, so Pinecraft Installer automatically installs this as well. [NOT YET; coming soon]
+
+[More Information](https://fabricmc.net/)
+
+---
+
+## Forge
+
+**Traditional Modded Minecraft Server**
+**Build Time:** Fast
+**Supports:** Forge mods
+
+Forge is the long-standing standard platform for heavily modded Minecraft servers. Many large modpacks and older mod collections are built around Forge.
+
+Choose Forge if you plan to run a traditional modded server or a modpack designed specifically for Forge.
+
+[More Information](https://files.minecraftforge.net/net/minecraftforge/forge/)
+
+---
+
+## Spigot
+
+**Plugin Support / Legacy Favorite**
+**Build Time:** Slow
+**Supports:** Bukkit / CraftBukkit / Spigot plugins
+
+Spigot is an optimized Minecraft server based on CraftBukkit. It supports a large ecosystem of plugins and was the original default server flavor used by Pinecraft in the 1.x era.
+
+Spigot can run very well on a Raspberry Pi 4 with 4GB or higher, and remains a solid choice for plugin-based servers.
+
+[More Information](https://www.spigotmc.org/)
+
+---
+
+## Cuberite
+
+**Experimental / Extremely Lightweight**
+**Build Time:** Slow
+**Supports:** Limited plugin support
+
+Cuberite is an alternate Minecraft-compatible server written in C++. Unlike the other server flavors, it is designed to run on extremely low-powered hardware.
+
+Cuberite currently supports clients up to Minecraft 1.12.2, so players must use an older client version to connect.
+
+Its main advantage is that it can run on devices that would struggle to run any Java-based Minecraft server, including older Raspberry Pi models.
+
+> Note: Cuberite is currently considered experimental within Pinecraft.
+
+[More Information](https://cuberite.org/)
 
 
 Game Modes
@@ -149,48 +233,12 @@ Creative mode strips away the survival aspects of Minecraft and allows players t
 Adventure mode lets you and your family/friends run around and explore, but you can't place or break blocks.
 
 
-We're open to suggestions. Let us know what you'd like to see.
-
-
-Buy Your Raspberry Pi (Or Other SBC)
-====================================
-
-This feature on Category5 Technology TV sponsored by ameriDroid.com
-
-[![ameriDroid](assets/ameridroid.png?raw=true)](https://ameridroid.com)
-
-USA-based SBC sales with unmatched support and fast shipping
-
-To power your Minecraft Server, get a Raspberry Pi 4 from https://ameridroid.com
-
-
-Hardware Requirements
-=====================
-
-- A vanilla server OS based on Debian Trixie or higher with nothing else running and no desktop environment (I provide PinecraftOS for Raspberry Pi to ease the deployment process for novice Linux users).
-- You must use a 64-Bit OS to utilize your RAM effectively. Running a 32-bit OS will result in less RAM dedicated to your Minecraft Server.
-- Minimum 4 GB RAM.
-- GOOD Power Supply.
-- Adequate Cooling for Overclock During Heavy Load.
-- Reliable and FAST Storage Media.
-- Ethernet connection to network (don't use Wi-Fi).
-
-
-Software Requirements
-=====================
-
-- To play the game, you will need a valid Minecraft Java account, and to have Minecraft Java installed on your computer (Windows, Mac, AMD64 Linux). One account is required per player, and can be purchased from https://minecraft.net
-- The recommended Base OS (see "Base OS" section above for the currently accepted distro).
-
-**Note:** You do not need a Minecraft Java account in order to run a Pinecraft Server. I.e., you could boot up a Pinecraft Server even without an account, and players with accounts can use it. However, it is quite handy to be able to sign in the game to moderate disputes or deal with grief. This can only be done if you have an account.
-
-
 Plugin Support
 ==============
 
-For any of the server versions which support plugins (see "Server Versions" above) simply place the plugin ZIP file in ~/minecraft/plugins and then run `~/minecraft/restart`
+For any of the server flavors which support plugins, simply place the plugin ZIP file in /srv/pinecraft/server/plugins/ and then run `systemctl restart pinecraft`
 
-Remember, adding plugins can have a negative impact on your server performance. Some plugins may also introduce bugs, glitches or other issues. Be selective about which plugins you add to your server.
+Remember, adding plugins can have a negative impact on your server performance. Some plugins may also introduce bugs, glitches or other issues. Be selective about which plugins you add to your server, and obtain support from the plugin developers and their community.
 
 You can download plugins from https://www.spigotmc.org/resources/ or any other Bukkit / Spigot plugin resource.
 
@@ -198,7 +246,11 @@ You can download plugins from https://www.spigotmc.org/resources/ or any other B
 Level Seeds
 ===========
 
-During installation, you can choose from one of our provided level seeds, or use your own.
+During installation, you can choose from one of our provided level seeds, use your own, or generate a new random seed.
+
+See the complete list of currently included seeds in `./lib/seeds.json`
+
+Here are details about some of the included seeds:
 
 **Category5 TV RPi Server** [via Category5 Technology TV](https://cat5.tv/minecraft)
 
@@ -240,7 +292,7 @@ Of course, other projects utilized for Pinecraft carry other licenses (such as J
 Note About Backups
 ==================
 
-Please consider automating a backup of your world. You can first stop the server with the provided `stop` script, then run your backup, and then restart your server with the provided `server` script.
+Please consider automating a backup of your world. You can first stop the server with the provided `systemctl stop pinecraft` command, run your backup, and then restart your server with the provided `systemctl start pinecraft` command.
 
 
 Automated Overclocking
@@ -248,17 +300,17 @@ Automated Overclocking
 
 If your board is supported and tested by me, the installer will automatically set overclock settings to maximize performance.
 
-Therefore, you must absolutely ensure your power supply is a good one. We'll be using a bit more power than normal.
+Ensure your power supply is a good one to ensure maximum performance.
 
-You are welcome to adjust the overclock settings if desired. However, I would recommend trying my defaults first.
+You are welcome to adjust the overclock settings if desired. However, I would recommend trying the automated defaults first.
 
-I have chosen to be conservative with my overclocking for two reasons:
+I have chosen to be conservative with my overclocking for three reasons:
 
 1) I want you to get the best possible performance out of your Minecraft server, but also wish to ensure it is rock-solid stable.
-2) I do not want to void your warranty. I.E., I will NOT enable force_turbo.
+2) I do not want to void your warranty. I.e., I will NOT enable force_turbo.
 3) I do not wish to damage your Pi.
 
-When I overwrite your /boot/config.txt file, I first create a backup of your original at /boot/config-DATETIME.txt, so if you're unable to boot for some reason, hopefully you can easily recover. Note that you are running this script at your own risk, and I am not responsible for anything that happens as a result of your running this installer. Except smiles. I'll accept responsibility for smiles.
+When I overwrite your /boot/config.txt file, I first create a backup of your original at /boot/config-DATETIME.txt, so if you're unable to boot for some reason, hopefully you can easily recover. Note that you are running this script at your own risk, and I am not responsible for anything that happens as a result of your running this installer. Except smiles; I'll accept responsibility for smiles.
 
 
 Usage
@@ -270,15 +322,15 @@ The command is simple:
 
 `sudo ./install`
 
-Once installation is complete, you must reboot for the server to begin functioning. If you selected to auto-load at boot, your server will immediately begin generating the world on first boot. Otherwise, you'll need to run the server manually.
+To reboot your Pinecraft Server, I recommend stopping your Minecraft server safely first, to ensure all blocks are saved.
 
-To reboot **do not** use traditional Linux commands. You must use:
+`sudo systemctl stop pinecraft`
 
-`sudo ~/minecraft/reboot`
+asdf - restore previous statement? build stop into shutdown systemd?
 
-### Important Note: First Boot
+### Important Note: First Run
 
-On first boot, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from Minecraft Java as soon as it is ready. You can tail the log file if you'd like to see the progress, or sipmly retry connecting via Minecraft Java after a few minutes.
+On first run, your Minecraft Server will generate the world. This can take around 10 minutes, so hang tight while this happens, and then connect to your Minecraft Server's IP address from your Minecraft Java client as soon as it is ready. You can view the Minecraft server screen session to see the progress, or simply retry connecting via Minecraft Java after a few minutes.
 
 
 Post-Install
@@ -290,22 +342,22 @@ If you opted to have Pinecraft load your Minecraft server at boot, your Minecraf
 
 **Important Note:** All commands must be run as the user you originally specified in Pinecraft Installer (do not run as *root*, for example).
 
-`screen -ls` will reveal running screen sessions. There should be one called *Pinecraft*.
+`screen -ls` will reveal running screen sessions. There should be one called `pinecraft`
 
-`screen -r Pinecraft` re-attaches to the Pinecraft screen session (the Minecraft console) where you can enter console commands directly.
+`screen -r pinecraft` re-attaches to the Pinecraft screen session (the Minecraft console) where you can enter console commands directly.
 
 From within the screen session, detach (exit) by pressing `CTRL-A` followed by `D`. This will detach the screen session but leave your Minecaft server running.
 
 ### Scripts
 
-`~/minecraft/stop`
-Safely stop your Minecraft server. **Never reboot your system or power off using traditional Linux commands unless you have first run this script and allowed it to complete.** Failure to safely stop your Minecraft server will result in lost blocks and potentially world corruption. Running this script is the same as entering the `stop` command within the Minecraft console.
+`sudo systemctl stop pinecraft`
+Safely stop your Minecraft server. **Do not reboot your system or power off using traditional Linux commands unless you have first stopped your Pinecraft Server.** Failure to safely stop your Minecraft server will result in lost blocks and potentially world corruption. Running this script is the same as entering the `stop` command within the Minecraft console.
 
-`~/minecraft/server`
+`sudo systemctl start pinecraft`
 Start the Minecraft server. This script is automatically run upon boot if you selected this feature. Of course, if you specified for Pinecraft to automatically load your Minecraft server on boot, you generally won't need this script.
 
 `sudo ~/minecraft/reboot`
-**Note:** This is the only of the scripts where sudo is required. When you need to reboot your Minecraft server, you must do so safely, otherwise all blocks that are stored in RAM will be lost (could be a full day's worth). Run this script to shutdown the Minecraft server software, store all blocks, and reboot the server. Note: It can easily take 15-20 minutes to stop the Minecraft server. Don't abort once you run this script. It is working hard to save all the blocks for your world and if you stop it or force a reboot, you will lose blocks.
+When you need to reboot your Minecraft server, you must do so safely, otherwise all blocks that are stored in RAM will be lost (could be a full day's worth). Run this script to shutdown the Minecraft server software, store all blocks, and reboot the server. Note: It can easily take 15-20 minutes to stop the Minecraft server. Don't abort once you run this script. It is working hard to save all the blocks for your world and if you stop it or force a reboot, you will lose blocks.
 
 
 Networking
@@ -313,19 +365,21 @@ Networking
 
 Your Minecraft server runs on port 25565. If you'd like others to be able to join your server, forward that port to your Minecraft server in your firewall.
 
-Within your LAN, you can access your Minecraft server by the IP address of your Raspberry Pi Minecraft server.
+Within your LAN, you can access your Minecraft server by the IP address of your Pinecraft Server.
 
-**Note:** If you open up your server to the world you introduce the risk of someone connecting and griefing (damaging your builds). To protect your server world, either limit the logins to specific users (see Minecraft documentation), restrict your firewall to only allow trusted IPs that you specify (see your networking documentation) or if you truly want it to be a public server, add some mods to protect your world (see Spigot documentation).
+**Note:** If you open up your server to the world you introduce the risk of someone connecting and griefing (damaging your builds). To protect your server world, either limit the logins to specific users (see Minecraft documentation), restrict your firewall to only allow trusted IPs that you specify (see your networking documentation) or if you truly want it to be a public server, add some mods to protect your world (see the documentation for your running server flavor).
 
 Log Files
 =========
 
-### ~/minecraft/logs/latest.log
-The current Minecraft Server log file. You can run `tail -f ~/minecraft/logs/latest.log` on your Minecraft Server to see what's happening. Logs are rotated and gzipped by date.
+### /srv/pinecraft/server/logs/latest.log
+The current Minecraft Server log file. You can run `tail -f /srv/pinecraft/server/logs/latest.log` on your Minecraft Server to see what's happening. Logs are rotated and gzipped by date.
 
 
 Version History
 ===============
+
+Pinecraft 5.0 - All versions of Minecraft are now supported, and you may choose specifically which version to install.
 
 Pinecraft 4.1 - Minecraft 1.21 is now supported.
 
@@ -390,7 +444,7 @@ Post-Install Configuration
 
 Give your Minecraft server a try before you start changing the config. It's very possible to break things if you modify the config, so it's a good start to test your server first, and then just tweak what's needed / desired.
 
-You'll find your config file here: ~/minecraft/server.properties
+You'll find your config file here: /srv/pinecraft/server/server.properties
 
 Minecraft Wiki: https://minecraft.wiki/w/Server.properties#Keys
 
@@ -418,9 +472,9 @@ https://www.spigotmc.org/resources/categories/spigot.4/
 
 ### How do I become admin? /op says I don't have permission.
 
-After connecting to your server as the user you want to make admin, look at your `~/minecraft/logs/latest.log` file and find the UUID for that user.
+After connecting to your server as the user you want to make admin, look at your `/srv/pinecraft/server/logs/latest.log` file and find the UUID for that user.
 
-Edit `~/minecraft/ops.json` as follows:
+Edit `/srv/pinecraft/server/ops.json` as follows:
 
 ```
 [
@@ -436,7 +490,7 @@ Replace UUID with your UUID, and USERNAME with the actual username.
 
 Here is a helpful tool I created to assist: https://category5.tv/tools/minecraft/uuid/
 
-Then, restart your Pinecraft server with `~/minecraft/reboot`
+Then, restart your Pinecraft server with `systemctl restart pinecraft`
 
 When your server comes back online, that user will be admin, and can now use the /op command to create other admins.
 
@@ -444,8 +498,8 @@ When your server comes back online, that user will be admin, and can now use the
 
 To completely destroy your world and regenerate it, you simply need to remove the files.
 
-Step 1: Stop your Minecraft server. `~/minecraft/stop`
+Step 1: Stop your Minecraft server. `systemctl stop pinecraft`
 
-Step 2: Remove the world (this cannot be undone): `rm -rf ~/minecraft/world*`
+Step 2: Remove the world (this cannot be undone): `rm -rf /srv/pinecraft/server/world*`
 
-Step 3: Restart your Minecraft server by whichever means you prefer (E.G., reboot your server with `sudo ~/minecraft/reboot`) - Remember, the first time the server loads, it will generate a new world. Give it 10 minutes or so before you attempt to connect.
+Step 3: Restart your Minecraft server by whichever means you prefer (E.g., reboot your server with `sudo ~/minecraft/reboot`) - Remember, the first time the server loads, it will generate a new world. Give it 10 minutes or so before you attempt to connect.
