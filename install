@@ -440,7 +440,7 @@ pc_choose_version_for_flavour() {
   local -a menu=()
   local v
   for v in "${filtered[@]}"; do
-    menu+=("$v" "Install ${flavour} ${v}")
+    menu+=("$v" "Install ${flavour^} ${v}")
   done
 
   version=$(dialog --stdout --title "Choose Minecraft Version" \
